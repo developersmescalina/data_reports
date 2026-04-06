@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Grand Goleador — Simulador de Journeys</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface-2: #1c1c1c;
+    --surface-3: #242424;
+    --green-accent: #1DB954;
+    --green-dark: #158a3e;
+    --green-light: #25D366;
+    --wa-green: #005C4B;
+    --wa-green-light: #025144;
+    --wa-bubble-out: #005C4B;
+    --wa-bubble-in: #1F2C34;
+    --wa-bg: #0B141A;
+    --wa-header: #1F2C34;
+    --text: #E9EDEF;
+    --text-muted: #8696A0;
+    --text-dark: #667781;
+    --white: #ffffff;
+    --orange: #F5A623;
+    --red: #EF4444;
+    --blue: #53BDEB;
+    --gold: #FFD700;
+    --border: rgba(255,255,255,0.06);
+    --radius: 12px;
+    --radius-lg: 18px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+
+  #app {
+    width: 100%;
+    max-width: 430px;
+    height: 100dvh;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  /* ============ HOME SCREEN ============ */
+  #home {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #home.hidden { transform: translateX(-100%); pointer-events: none; }
+
+  .home-header {
+    padding: 20px 20px 12px;
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .home-header .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .home-header .brand-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--green-accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .home-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .home-header h1 span { color: var(--green-accent); }
+  .home-header p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .home-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 16px 30px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .category-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 20px 0 10px 4px;
+  }
+  .category-label:first-child { margin-top: 8px; }
+
+  .journey-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .journey-card:hover { background: var(--surface-3); transform: translateY(-1px); }
+  .journey-card:active { transform: scale(0.98); }
+
+  .jc-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .jc-content { flex: 1; min-width: 0; }
+  .jc-content h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .jc-content p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .jc-arrow {
+    color: var(--text-dark);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* Category card colors */
+  .cat-registro .jc-icon { background: rgba(29,185,84,0.15); }
+  .cat-premio .jc-icon { background: rgba(255,215,0,0.15); }
+  .cat-sorteo .jc-icon { background: rgba(83,189,235,0.15); }
+  .cat-alerta .jc-icon { background: rgba(245,166,35,0.15); }
+  .cat-bloqueo .jc-icon { background: rgba(239,68,68,0.15); }
+  .cat-ayuda .jc-icon { background: rgba(255,255,255,0.08); }
+
+  /* ============ CHAT SCREEN ============ */
+  #chat {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--wa-bg);
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 20;
+  }
+  #chat.active { transform: translateX(0); }
+
+  .chat-header {
+    background: var(--wa-header);
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 56px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .chat-back {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    font-size: 20px;
+    border-radius: 50%;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .chat-back:hover { background: rgba(255,255,255,0.06); }
+  .chat-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--green-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .chat-info { flex: 1; min-width: 0; }
+  .chat-info h2 {
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .chat-info small {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* WA-style background pattern */
+  .chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px 20px;
+    -webkit-overflow-scrolling: touch;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .msg-group { margin-bottom: 4px; }
+
+  .bubble {
+    max-width: 85%;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+    animation: bubbleIn 0.3s ease-out;
+    word-wrap: break-word;
+    white-space: pre-line;
+  }
+  @keyframes bubbleIn {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .bubble.bot {
+    background: var(--wa-bubble-in);
+    border-top-left-radius: 2px;
+    margin-right: auto;
+    color: var(--text);
+  }
+  .bubble.bot b, .bubble.bot strong { color: var(--white); }
+
+  .bubble.user {
+    background: var(--wa-bubble-out);
+    border-top-right-radius: 2px;
+    margin-left: auto;
+    color: var(--text);
+  }
+
+  .bubble .time {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  .system-msg {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.04);
+    padding: 6px 14px;
+    border-radius: 8px;
+    margin: 12px auto;
+    max-width: 80%;
+    animation: bubbleIn 0.3s ease-out;
+  }
+
+  .typing-indicator {
+    display: inline-flex;
+    gap: 4px;
+    padding: 12px 16px;
+    background: var(--wa-bubble-in);
+    border-radius: 10px;
+    border-top-left-radius: 2px;
+    animation: bubbleIn 0.2s ease-out;
+  }
+  .typing-indicator span {
+    width: 7px;
+    height: 7px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    animation: typingDot 1.4s infinite;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingDot {
+    0%, 60%, 100% { opacity: 0.3; transform: scale(0.8); }
+    30% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ============ BUTTONS AREA ============ */
+  .chat-buttons {
+    padding: 10px 14px 16px;
+    background: var(--wa-header);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 45vh;
+    overflow-y: auto;
+  }
+
+  .btn-wa {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--surface-2);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-wa:hover { background: var(--surface-3); border-color: rgba(255,255,255,0.15); }
+  .btn-wa:active { transform: scale(0.98); }
+  .btn-wa .btn-emoji { font-size: 16px; flex-shrink: 0; }
+
+  .btn-wa.primary {
+    background: var(--wa-green);
+    border-color: var(--green-accent);
+    color: var(--white);
+    font-weight: 600;
+  }
+  .btn-wa.primary:hover { background: var(--green-dark); }
+
+  .btn-wa.home-btn {
+    background: transparent;
+    border: 1px dashed rgba(255,255,255,0.12);
+    color: var(--text-muted);
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  .btn-divider {
+    font-size: 11px;
+    color: var(--text-dark);
+    text-align: center;
+    padding: 4px 0 2px;
+  }
+
+  /* Landing page simulation overlay */
+  .landing-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #0d2818 0%, #0a1f14 100%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    animation: fadeIn 0.4s ease;
+    text-align: center;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .landing-overlay .scratch-card {
+    width: 260px;
+    height: 180px;
+    background: linear-gradient(135deg, #1a472a, #2d7a4a);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 2px solid rgba(255,255,255,0.1);
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .scratch-card .ball {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    animation: revealBall 0.5s ease backwards;
+  }
+  .scratch-card .ball:nth-child(1) { animation-delay: 0.3s; }
+  .scratch-card .ball:nth-child(2) { animation-delay: 0.6s; }
+  .scratch-card .ball:nth-child(3) { animation-delay: 0.9s; }
+  @keyframes revealBall {
+    from { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+    to { opacity: 1; transform: scale(1) rotate(0); }
+  }
+
+  .scratch-card.win { border-color: var(--gold); box-shadow: 0 0 40px rgba(255,215,0,0.2); }
+  .scratch-card.lose { border-color: rgba(255,255,255,0.08); }
+
+  .landing-overlay h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 16px;
+  }
+  .landing-overlay h2.win-title { color: var(--gold); }
+  .landing-overlay h2.lose-title { color: var(--text); }
+  .landing-overlay p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .landing-overlay .counter {
+    margin-top: 16px;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .landing-overlay .counter b { color: var(--green-accent); }
+
+  .landing-btn {
+    margin-top: 24px;
+    padding: 14px 32px;
+    background: var(--green-accent);
+    color: var(--bg);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .landing-btn:hover { background: var(--green-light); }
+  .landing-btn:active { transform: scale(0.97); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ HOME ============ -->
+  <div id="home">
+    <div class="home-header">
+      <div class="brand">
+        <div class="brand-icon">⚽</div>
+        <h1>Grand <span>Goleador</span></h1>
+      </div>
+      <p>Simulador de Journeys — Non Loyalty Program · Grand Pet</p>
+    </div>
+    <div class="home-body" id="homeBody"></div>
+  </div>
+
+  <!-- ============ CHAT ============ -->
+  <div id="chat">
+    <div class="chat-header">
+      <button class="chat-back" id="chatBack">←</button>
+      <div class="chat-avatar">⚽</div>
+      <div class="chat-info">
+        <h2>Grand Goleador</h2>
+        <small>en línea</small>
+      </div>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-buttons" id="chatButtons"></div>
+  </div>
+
+  <!-- ============ LANDING OVERLAY ============ -->
+  <div class="landing-overlay" id="landingOverlay" style="display:none;"></div>
+
+</div>
+
+<script>
+// ============================================================
+//  GRAND GOLEADOR — JOURNEY SIMULATOR ENGINE
+// ============================================================
+
+const $ = id => document.getElementById(id);
+const homeEl = $('home');
+const chatEl = $('chat');
+const chatBody = $('chatBody');
+const chatButtons = $('chatButtons');
+const landingOverlay = $('landingOverlay');
+
+let currentJourney = null;
+let currentStep = 0;
+
+// ============================================================
+//  JOURNEY DEFINITIONS
+// ============================================================
+
+const JOURNEYS = [
+  // ─── REGISTRO Y JUEGO ───
+  {
+    id: 'registro_valido_win_fisico',
+    cat: 'registro',
+    icon: '🎉',
+    title: 'Registro → Hat-trick → Compra física → Tarjeta Amazon',
+    desc: 'Primer registro, gana hat-trick y al indicar compra física recibe Tarjeta Amazon.',
+    steps: [
+      { type:'system', text:'Usuario escanea QR del empaque' },
+      { type:'bot', text:'¡Bienvenido a Grand Goleador! 🐶⚽🐱\nTu lomito o michi está listo para jugar.\n\nAsí funciona:\n📦 Encuentra el <b>código dentro de tu empaque</b> GrandPet.\n✉️ Envíalo aquí\n🎫 Recibe tu <b>Rasca Gol</b> y descubre si metiste gol ganador\n\n👇 Escribe tu código aquí para empezar.' },
+      { type:'buttons', items:[
+        { text:'Enviar código', emoji:'📦', action:'next' }
+      ]},
+      { type:'user', text:'GP-2026-ABCD12' },
+      { type:'system', text:'Endpoint: Validar código ✅' },
+      { type:'bot', text:'¡Código validado!\n\nAntes de rascar tu tarjeta, necesito registrar tu <b>canal de compra</b>.\n\n<b>¿Compraste en línea o en tienda física?</b>' },
+      { type:'buttons', items:[
+        { text:'Compré en tienda física', emoji:'🏪', action:'next', primary: true },
+        { text:'Compré en línea', emoji:'💻', action:'journey_registro_valido_win_cupon' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]},
+      { type:'user', text:'Compré en tienda física' },
+      { type:'system', text:'Canal registrado: tienda física ✅ / cupo Amazon disponible esta semana' },
+      { type:'bot', text:'Perfecto.\n\nTu compra ya sumó <b>1 punto</b> y hoy juegas por una <b>Tarjeta Amazon de $100 MXN</b> si metes <b>hat-trick</b>.\n\n⚡ <b>Ahora sí, da clic para rascar tu tarjeta:</b>' },
+      { type:'buttons', items:[
+        { text:'🎮 Abrir Rasca Gol', emoji:'', action:'landing_win_fisico', primary: true }
+      ]},
+      { type:'landing', variant:'win_fisico' },
+      { type:'system', text:'Endpoint: participation.completed → Salesforce' },
+      { type:'bot', text:'🎉🎉🎉 <b>¡HAT-TRICK!</b>\n\n<b>Ana</b>, metiste gol ganador.\n\n🎁 <b>Tu premio instantáneo es una Tarjeta Amazon de $100 MXN</b>\n\nTe la compartimos aquí mismo para que puedas guardarla.\n\nAdemás, esta compra ya sumó <b>1 punto</b> para el sorteo semanal y el ranking final.' },
+      { type:'buttons', items:[
+        { text:'Entendido', emoji:'✅', action:'journey_canje_premio_fisico', primary: true },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'registro_valido_win_cupon',
+    cat: 'registro',
+    icon: '🎟️',
+    title: 'Registro → Hat-trick → Compra online → Cupón GP2U',
+    desc: 'Primer registro, gana hat-trick y al indicar compra online recibe cupón GP2U.',
+    steps: [
+      { type:'system', text:'Usuario escanea QR del empaque' },
+      { type:'bot', text:'¡Bienvenido a Grand Goleador! 🐶⚽🐱\nTu lomito o michi está listo para jugar.\n\nAsí funciona:\n📦 Encuentra el <b>código dentro de tu empaque</b> GrandPet.\n✉️ Envíalo aquí\n🎫 Recibe tu <b>Rasca Gol</b> y descubre si metiste gol ganador\n\n👇 Escribe tu código aquí para empezar.' },
+      { type:'buttons', items:[
+        { text:'Enviar código', emoji:'📦', action:'next' }
+      ]},
+      { type:'user', text:'GP-2026-WXYZ99' },
+      { type:'system', text:'Endpoint: Validar código ✅' },
+      { type:'bot', text:'¡Código validado!\n\nAntes de rascar tu tarjeta, necesito registrar tu <b>canal de compra</b>.\n\n<b>¿Compraste en línea o en tienda física?</b>' },
+      { type:'buttons', items:[
+        { text:'Compré en línea', emoji:'💻', action:'next', primary: true },
+        { text:'Compré en tienda física', emoji:'🏪', action:'journey_registro_valido_win_fisico' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]},
+      { type:'user', text:'Compré en línea' },
+      { type:'system', text:'Canal registrado: compra online ✅' },
+      { type:'bot', text:'Perfecto.\n\nTu compra ya sumó <b>1 punto</b> y hoy juegas por un <b>Cupón GP2U</b> si metes <b>hat-trick</b>.\n\n⚡ <b>Ahora sí, da clic para rascar tu tarjeta:</b>' },
+      { type:'buttons', items:[
+        { text:'🎮 Abrir Rasca Gol', emoji:'', action:'landing_win_cupon', primary: true }
+      ]},
+      { type:'landing', variant:'win_cupon' },
+      { type:'system', text:'Endpoint: participation.completed → Salesforce' },
+      { type:'bot', text:'🎉🎉🎉 <b>¡HAT-TRICK!</b>\n\n<b>Ana</b>, metiste gol ganador.\n\n🎟️ <b>Tu premio instantáneo es un Cupón GP2U</b>\nCódigo: <b>GP2U-GOL-9K3M</b>\nVálido hasta: <b>20/07/2026</b>\n\nAdemás, esta compra ya sumó <b>1 punto</b> para el sorteo semanal y el ranking final.' },
+      { type:'buttons', items:[
+        { text:'Ver cómo usarlo', emoji:'🛒', action:'next', primary: true },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]},
+      { type:'bot', text:'Úsalo en <b>GP2U</b> antes de su vencimiento y sigue registrando productos para aumentar tus probabilidades en el sorteo semanal y pelear por entrar al <b>Top 3 final</b>.' },
+      { type:'buttons', items:[
+        { text:'Tengo otro código', emoji:'📦', action:'next' },
+        { text:'Ver mis premios', emoji:'🎁', action:'journey_menu_mispremios' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'registro_valido_sin_hattrick',
+    cat: 'registro',
+    icon: '😤',
+    title: 'Registro → Sin Hat-trick',
+    desc: 'Código válido, juega rasca pero no obtiene los 3 balones.',
+    steps: [
+      { type:'system', text:'Usuario escanea QR del empaque' },
+      { type:'bot', text:'¡Bienvenido a Grand Goleador! 🐶⚽🐱\nTu lomito o michi está listo para jugar.\n\nAsí funciona:\n📦 Encuentra el <b>código dentro de tu empaque</b> GrandPet.\n✉️ Envíalo aquí\n🎫 Recibe tu <b>Rasca Gol</b> y descubre si metiste gol ganador\n\n👇 Escribe tu código aquí para empezar.' },
+      { type:'buttons', items:[
+        { text:'Enviar código', emoji:'📦', action:'next' }
+      ]},
+      { type:'user', text:'GP-2026-MNOP56' },
+      { type:'system', text:'Endpoint: Validar código ✅' },
+      { type:'bot', text:'¡Código validado!\n\nAntes de rascar tu tarjeta, necesito registrar tu <b>canal de compra</b>.\n\n<b>¿Compraste en línea o en tienda física?</b>' },
+      { type:'buttons', items:[
+        { text:'Compré en tienda física', emoji:'🏪', action:'next', primary: true },
+        { text:'Compré en línea', emoji:'💻', action:'next' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]},
+      { type:'user', text:'Compré en tienda física' },
+      { type:'system', text:'Canal registrado: tienda física ✅ / sin cupo Amazon disponible esta semana' },
+      { type:'bot', text:'Tu compra ya sumó <b>1 punto</b>.\n\nComo esta semana ya no hay cupo de Tarjetas Amazon para compra física, tu registro sigue entrando al juego y al sorteo semanal.\n\n⚡ <b>Ahora sí, da clic para rascar tu tarjeta:</b>' },
+      { type:'buttons', items:[
+        { text:'🎮 Abrir Rasca Gol', emoji:'', action:'landing_lose', primary: true }
+      ]},
+      { type:'landing', variant:'lose' },
+      { type:'system', text:'Endpoint: participation.completed → Salesforce' },
+      { type:'bot', text:'¡Cerca, <b>Ana</b>! ⚽\n\nEsta vez no cayó premio instantáneo, pero tu compra ya quedó registrada correctamente.\n\nLlevas <b>1 compra = 1 punto = 1 oportunidad</b> para el sorteo semanal.\n\nTodavía puedes seguir subiendo en el marcador para pelear por el <b>Top 3 final</b>.' },
+      { type:'buttons', items:[
+        { text:'Ver menú de opciones', emoji:'📋', action:'next', primary: true },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]},
+      { type:'bot', text:'¿Qué quieres hacer ahora?\n\n📦 Registrar otro código\n📊 Revisar tu marcador\n🏆 Ver premios disponibles\n❓ Resolver dudas de la dinámica\n\nSigue jugando: cada compra cuenta.' },
+      { type:'buttons', items:[
+        { text:'Registrar otro código', emoji:'📦', action:'next', primary: true },
+        { text:'Ver marcador', emoji:'📊', action:'journey_menu_marcador' },
+        { text:'Ver premios', emoji:'🏆', action:'journey_menu_premios' },
+        { text:'Necesito ayuda', emoji:'❓', action:'journey_menu_ayuda' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'codigo_utilizado',
+    cat: 'registro',
+    icon: '⚠️',
+    title: 'Código Ya Utilizado',
+    desc: 'El usuario envía un código que ya fue canjeado antes.',
+    steps: [
+      { type:'system', text:'Usuario ya registrado envía código' },
+      { type:'user', text:'GP-2026-ABCD12' },
+      { type:'system', text:'Endpoint: Validar código ❌ — Código ya usado' },
+      { type:'bot', text:'⚠️ <b>Ese código ya jugó este partido.</b>\n\nCada código de <b>Grand Goleador</b> solo puede usarse <b>una vez</b>.\n\nSi tienes otro empaque de <b>GrandPet (Kisha o Noble)</b>, busca el código dentro y envíalo aquí para volver a jugar.\n\n⚽ ¡Más códigos = más oportunidades de ganar!' },
+      { type:'buttons', items:[
+        { text:'Enviar otro código', emoji:'📦', action:'next' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'codigo_invalido',
+    cat: 'registro',
+    icon: '❌',
+    title: 'Código Inválido',
+    desc: 'El código no existe en el sistema.',
+    steps: [
+      { type:'system', text:'Usuario envía código incorrecto' },
+      { type:'user', text:'HOLAQUETAL123' },
+      { type:'system', text:'Endpoint: Validar código ❌ — No encontrado' },
+      { type:'bot', text:'🔍 <b>Ups… ese código no lo encontramos en la cancha.</b>\n\nRevisa que lo hayas escrito <b>exactamente como aparece en tu tarjeta</b> dentro del empaque.\n\n⚽ Intenta enviarlo nuevamente para seguir jugando en <b>Grand Goleador</b>.\n<b>Escribe tu código otra vez aquí.</b>' },
+      { type:'buttons', items:[
+        { text:'Reintentar código', emoji:'🔄', action:'next' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'usuario_recurrente',
+    cat: 'registro',
+    icon: '🔄',
+    title: 'Usuario Recurrente → Nuevo Código',
+    desc: 'Usuario que ya ha jugado antes registra un nuevo código.',
+    steps: [
+      { type:'system', text:'Usuario recurrente envía nuevo código' },
+      { type:'user', text:'GP-2026-RSTU78' },
+      { type:'system', text:'Endpoint: Validar código ✅ (usuario con 3 compras previas)' },
+      { type:'bot', text:'⚡ <b>Nueva jugada registrada</b>\n\nTu lomito o michi sumó más compras en Grand Goleador.\n\n📊 Tu marcador actual:\n<b>4 compras registradas</b>\n\n⚡ Ahora rasca tu tarjeta para descubrir si te llevas:\n🏆 Premio al instante\n⭐ Más puntos para subir en el ranking final\n\n👉 <b>Da clic aquí para rascar tu tarjeta:</b>' },
+      { type:'buttons', items:[
+        { text:'🎮 Abrir Rasca Gol', emoji:'', action:'landing_lose_recurrent', primary: true }
+      ]},
+      { type:'landing', variant:'lose_recurrent' },
+      { type:'system', text:'Endpoint: participation.completed → Salesforce' },
+      { type:'bot', text:'¡Cerca, <b>Ana</b>! ⚽\n\nEsta vez no cayó premio instantáneo, pero tu compra quedó registrada.\n\nAhora llevas <b>4 compras = 4 puntos = 4 probabilidades</b> para el sorteo semanal del lunes.\n\n¿Quieres seguir jugando o revisar tu avance?' },
+      { type:'buttons', items:[
+        { text:'Registrar otro código', emoji:'📦', action:'next', primary: true },
+        { text:'Ver marcador', emoji:'📊', action:'journey_menu_marcador' },
+        { text:'Ver premios', emoji:'🏆', action:'journey_menu_premios' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'instant_win_fisico_resultado',
+    cat: '_hidden',
+    steps: [
+      { type:'user', text:'Compré en tienda física' },
+      { type:'system', text:'Canal validado: compra física ✅ / cupo semanal de Amazon disponible' },
+      { type:'bot', text:`🎉🎉🎉 <b>¡GOOOOL!</b>
+
+<b>Ana</b>, como tu compra fue en <b>tienda física</b>, tu premio instantáneo es:
+
+🎁 <b>Tarjeta Amazon de $100 MXN</b>
+
+Te la mostramos y compartimos por este mismo chat para que puedas guardarla.
+
+—
+Tu compra también ya sumó <b>1 punto</b>.
+Eso significa <b>1 probabilidad</b> más para el sorteo semanal.` },
+      { type:'buttons', items:[
+        { text:'Recibir mi tarjeta', emoji:'🎫', action:'next', primary: true },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]},
+      { type:'bot', text:`📩 <b>Aquí está tu Tarjeta Amazon</b>
+
+Código: <b>AMZ-GP26-41K8</b>
+
+Guárdalo para usarlo en Amazon México.
+
+Si registras más compras, sigues subiendo en el marcador para quedar dentro del <b>Top 3 final</b>. ⚽` },
+      { type:'buttons', items:[
+        { text:'Tengo otro código', emoji:'📦', action:'next' },
+        { text:'Ver mis premios', emoji:'🎁', action:'journey_menu_mispremios' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'instant_win_online_resultado',
+    cat: '_hidden',
+    steps: [
+      { type:'user', text:'Compré en línea' },
+      { type:'system', text:'Canal validado: compra online ✅' },
+      { type:'bot', text:`🎉🎉🎉 <b>¡GOOOOL!</b>
+
+<b>Ana</b>, como tu compra fue en <b>línea</b>, tu premio instantáneo es:
+
+🎟️ <b>Cupón de descuento para GP2U</b>
+
+Código: <b>GP2U-GOL-9K3M</b>
+Válido hasta: 20/07/2026
+
+—
+Tu compra también ya sumó <b>1 punto</b>.
+Eso significa <b>1 probabilidad</b> más para el sorteo semanal.` },
+      { type:'buttons', items:[
+        { text:'Usar después', emoji:'🛒', action:'next' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]},
+      { type:'bot', text:'⚽ Sigue registrando productos para aumentar tus probabilidades en el sorteo semanal y pelear por entrar al <b>Top 3 final</b>.' },
+      { type:'buttons', items:[
+        { text:'Tengo otro código', emoji:'📦', action:'next' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  // ─── PREMIOS Y CANJE ───
+  {
+    id: 'canje_premio_fisico',
+    cat: 'premio',
+    icon: '🎁',
+    title: 'Entrega de Tarjeta Amazon',
+    desc: 'Flujo simple de entrega por WhatsApp del código digital cuando el usuario gana instant win en compra física.',
+    steps: [
+      { type:'system', text:'Usuario ganó instant win físico en Rasca Gol' },
+      { type:'bot', text:'🎉🎉🎉 <b>¡GOOOOL!</b>\n\n<b>Ana</b>, ganaste una <b>Tarjeta Amazon de $100 MXN</b>.\n\nAquí te mostramos cómo se vería su entrega por WhatsApp.' },
+      { type:'buttons', items:[
+        { text:'Recibir mi tarjeta', emoji:'🎫', action:'next', primary: true }
+      ]},
+      { type:'system', text:'Endpoint: Entrega de código digital ✅' },
+      { type:'bot', text:'📩 <b>Aquí está tu Tarjeta Amazon</b>\n\nCódigo: <b>AMZ-GP26-41K8</b>\n\nGuárdalo para usarlo en Amazon México.\n\n⚽ Tus compras siguen acumulándose para el sorteo semanal y para el <b>Top 3 final</b>.' },
+      { type:'buttons', items:[
+        { text:'Ver mis premios', emoji:'🎁', action:'journey_menu_mispremios' },
+        { text:'Registrar otro código', emoji:'📦', action:'next', primary: true },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'premio_por_expirar',
+    cat: 'premio',
+    icon: '⏰',
+    title: 'Recordatorio de vencimiento — Cupón GP2U',
+    desc: 'Flujo de recordatorio para usuarios que ya ganaron un cupón GP2U y todavía no lo han usado.',
+    steps: [
+      { type:'system', text:'— Journey para ganador online con cupón activo — 7 días antes del vencimiento —' },
+      { type:'bot', text:'⏳ <b>Recordatorio: tu Cupón GP2U vence en 7 días</b>\n\nEste mensaje solo aplica si ya ganaste un <b>instant win online</b> y todavía no usas tu premio.\n\n🎟️ Código: <b>GP2U-GOL-9K3M</b>\n📅 Vigencia: <b>20/07/2026</b>\n\nÚsalo antes de que expire para aprovechar tu descuento.' },
+      { type:'buttons', items:[
+        { text:'Ver mi cupón', emoji:'🎟️', action:'next', primary: true },
+        { text:'Ir al último recordatorio', emoji:'⏰', action:'skip' }
+      ]},
+      { type:'bot', text:'🛒 Puedes usar tu código en <b>GP2U</b>. Si todavía no compras, este mensaje funciona como recordatorio previo al vencimiento.' },
+      { type:'buttons', items:[
+        { text:'Continuar', emoji:'➡️', action:'next' }
+      ]},
+      { type:'system', text:'— Último día de vigencia del cupón —' },
+      { type:'bot', text:'🚨 <b>Último recordatorio: hoy vence tu Cupón GP2U</b>\n\n🎟️ Código: <b>GP2U-GOL-9K3M</b>\n\nSi quieres aprovecharlo, hoy es el último día para usarlo en GP2U.' },
+      { type:'buttons', items:[
+        { text:'Entendido', emoji:'✅', action:'next', primary: true },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]},
+      { type:'bot', text:'⚽ Aunque este cupón expire, tus compras registradas siguen contando para sorteos semanales y para el <b>Top 3 final</b>.' },
+      { type:'buttons', items:[
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  // ─── SORTEOS ───
+  {
+    id: 'reminder_sorteo',
+    cat: 'sorteo',
+    icon: '📅',
+    title: 'Reminder Sorteo Semanal (Domingo)',
+    desc: 'Notificación el domingo previo al sorteo del lunes.',
+    steps: [
+      { type:'system', text:'— Domingo 7:00 PM — Journey Builder' },
+      { type:'bot', text:'⏰ <b>¡Mañana es el sorteo semanal!</b>\n\n<b>Ana</b>, entras con <b>5 oportunidades</b>.\n\nPremios de esta semana:\n🥇 Jersey adidas México 26 ($1,999)\n👕 Playera selección para tu perro ($479)\n\n¿Tienes otro código que registrar antes del sorteo? 👇' },
+      { type:'buttons', items:[
+        { text:'Registrar código', emoji:'📦', action:'next' },
+        { text:'Estoy lista para mañana', emoji:'✊', action:'skip' }
+      ]},
+      { type:'bot', text:'¡Eso es! Cada código suma.\n\nMañana lunes a las 12:00 PM anunciaremos a los ganadores. Cruza patas 🐾⚽' },
+      { type:'buttons', items:[
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'sorteo_semanal',
+    cat: 'sorteo',
+    icon: '🎲',
+    title: 'Sorteo Semanal',
+    desc: 'Journey base del lunes: se ejecuta el sorteo semanal con las probabilidades acumuladas por compra.',
+    steps: [
+      { type:'system', text:'— Lunes 12:00 PM — Sorteo semanal ejecutado con probabilidades acumuladas' },
+      { type:'bot', text:'🎲 <b>Hoy se corrió el sorteo semanal de Grand Goleador</b>\n\nCada compra registrada equivale a <b>1 punto = 1 probabilidad</b>.\n\nTus puntos acumulados participaron automáticamente en el sorteo de esta semana.' },
+      { type:'buttons', items:[
+        { text:'Ver ejemplo de no ganador', emoji:'📭', action:'journey_resultado_sorteo_semanal', primary: true },
+        { text:'Ver ejemplo de ganador', emoji:'🏆', action:'journey_ganador_sorteo_semanal' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'resultado_sorteo_semanal',
+    cat: 'sorteo',
+    icon: '📣',
+    title: 'Resultado Sorteo Semanal — No ganador',
+    desc: 'Mensaje del lunes cuando el usuario participó en el sorteo semanal pero no salió ganador esta vez.',
+    steps: [
+      { type:'system', text:'— Lunes 12:00 PM — Sorteo semanal ejecutado' },
+      { type:'bot', text:'📣 <b>Ya se realizó el sorteo semanal</b>\n\n<b>Ana</b>, esta vez no saliste ganadora, pero tus compras siguen sumando para los próximos sorteos y para el <b>Top 3 final</b>.\n\nActualmente llevas <b>5 puntos</b> acumulados. ⚽' },
+      { type:'buttons', items:[
+        { text:'Ver mi marcador', emoji:'📊', action:'journey_menu_marcador', primary: true },
+        { text:'Registrar otro código', emoji:'📦', action:'next' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]},
+      { type:'bot', text:'Cada compra registrada te da <b>1 punto = 1 probabilidad</b>. Sigue jugando para subir posiciones.' },
+      { type:'buttons', items:[
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'ganador_sorteo_semanal',
+    cat: 'sorteo',
+    icon: '🏆',
+    title: 'Ganador Sorteo Semanal',
+    desc: 'El usuario es seleccionado como ganador del sorteo ponderado del lunes.',
+    steps: [
+      { type:'system', text:'— Lunes 12:00 PM — Sorteo ponderado ejecutado' },
+      { type:'bot', text:'🏆 <b>¡GANASTE EL SORTEO DEL LUNES!</b>\n\n<b>Ana</b>, eres uno de los <b>2 ganadores</b> de esta semana.\n\nTu premio: <b>Jersey adidas adulto México 26</b> 🥇\n\nTienes <b>48 horas</b> para confirmar tu dirección de envío.\nResponde con tu dirección completa 👇' },
+      { type:'buttons', items:[
+        { text:'Enviar dirección', emoji:'📍', action:'next' }
+      ]},
+      { type:'user', text:'Ana García\nCDMX, Col. Roma Norte, Calle Orizaba 42, CP 06700' },
+      { type:'bot', text:'✅ <b>¡Dirección confirmada!</b>\n\nTu jersey adidas México 26 será enviado en los próximos <b>7-10 días hábiles</b>.\n\nTe avisaremos cuando salga tu paquete. 📦⚽\n\nRecuerda: ¡tus compras siguen sumando para quedar en el <b>Top 3 final</b>!' },
+      { type:'buttons', items:[
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'ganador_gran_final_tv',
+    cat: 'sorteo',
+    icon: '📺',
+    title: 'Ganador Gran Final — Top 1 en compras',
+    desc: 'El usuario termina Top 1 en compras y gana la TV Hisense 100\".',
+    steps: [
+      { type:'system', text:'— Día 63: cierre de promoción — Ranking final calculado' },
+      { type:'bot', text:'🎉🎉🎉 <b>¡FELICIDADES!</b> 🎉🎉🎉\n\n<b>Ana</b>, terminaste en <b>Top 1 de compras</b> y ganaste el gran premio!\n\n📺 <b>TV Hisense 100" 4K</b> (valor $36,990)\n\nCompras registradas durante la promoción: <b>12</b>\n\nTienes <b>7 días</b> para confirmar tus datos.\nResponde <b>"CONFIRMAR"</b> para continuar.' },
+      { type:'buttons', items:[
+        { text:'CONFIRMAR', emoji:'✅', action:'next', primary: true }
+      ]},
+      { type:'user', text:'CONFIRMAR' },
+      { type:'bot', text:'🎉 <b>¡Confirmación recibida!</b>\n\nPara completar la entrega de tu <b>TV Hisense 100" 4K</b>, necesitamos:\n\n👤 Nombre completo\n📍 Dirección de entrega\n📱 Teléfono de contacto\n🪪 INE (para validación)\n\nEnvíanos tus datos 👇' },
+      { type:'buttons', items:[
+        { text:'Enviar datos completos', emoji:'📋', action:'next' }
+      ]},
+      { type:'user', text:'Ana García López\nCDMX, Col. Roma Norte, Calle Orizaba 42, CP 06700\nTel: 55 1234 5678' },
+      { type:'bot', text:'✅ <b>Datos recibidos.</b>\n\nNuestro equipo validará tu información y te contactaremos para coordinar la entrega de tu TV.\n\nEnvío estimado: <b>15-20 días hábiles</b>.\n\n¡Felicidades de parte de todo el equipo Grand Pet! 🐶🐱⚽' },
+      { type:'buttons', items:[
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'ganador_gran_final_kit',
+    cat: 'sorteo',
+    icon: '🎁',
+    title: 'Ganador Gran Final — Top 2 / Top 3 en compras',
+    desc: 'El usuario termina en Top 2 o Top 3 y recibe uno de los premios grandes finales.',
+    steps: [
+      { type:'system', text:'— Día 63: cierre de promoción — Top 2 / Top 3 identificado' },
+      { type:'bot', text:'🎉🎉🎉 <b>¡FELICIDADES!</b> 🎉🎉🎉\n\n<b>Ana</b>, terminaste dentro del <b>Top 3 de compras</b>.\n\n🏅 Tu posición final: <b>Top 2</b>\n🎁 Premio asignado: <b>Premio tech Top 2</b> (valor estimado $13,230)\n\nCompras registradas durante la promoción: <b>8</b>\n\nTienes <b>7 días</b> para confirmar tus datos.\nResponde <b>"CONFIRMAR"</b> para continuar.' },
+      { type:'buttons', items:[
+        { text:'CONFIRMAR', emoji:'✅', action:'next', primary: true }
+      ]},
+      { type:'user', text:'CONFIRMAR' },
+      { type:'bot', text:'🎉 <b>¡Confirmación recibida!</b>\n\nPara completar la entrega de tu <b>Premio tech Top 2</b>, necesitamos:\n\n👤 Nombre completo\n📍 Dirección de entrega\n📱 Teléfono de contacto\n\nEnvíanos tus datos 👇' },
+      { type:'buttons', items:[
+        { text:'Enviar datos completos', emoji:'📋', action:'next' }
+      ]},
+      { type:'user', text:'Ana García López\nCDMX, Col. Roma Norte, Calle Orizaba 42, CP 06700\nTel: 55 1234 5678' },
+      { type:'bot', text:'✅ <b>Datos recibidos.</b>\n\nTu premio final será enviado en los próximos <b>15-20 días hábiles</b>.\n\nTe avisaremos cuando salga tu paquete. 📦\n\n¡Felicidades! 🐶⚽' },
+      { type:'buttons', items:[
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  // ─── ALERTAS DE CAMPAÑA ───
+  {
+    id: 'alerta_ultima_semana',
+    cat: 'alerta',
+    icon: '📢',
+    title: 'Alerta Última Semana',
+    desc: 'Notificación push: quedan 7 días para registrar códigos.',
+    steps: [
+      { type:'system', text:'— Journey Builder: Semana 8 —' },
+      { type:'bot', text:'⚽ <b>¡Última semana de Grand Goleador!</b>\n\nTu lomito o michi aún puede subir posiciones en el marcador.\n\n👉 Aprovecha estos últimos días para registrar más códigos y seguir jugando.\n\n<b>Ana</b>, llevas <b>6 compras</b> = 6 oportunidades.' },
+      { type:'buttons', items:[
+        { text:'Registrar código', emoji:'📦', action:'next' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'ultimo_dia',
+    cat: 'alerta',
+    icon: '🔴',
+    title: 'Último Día',
+    desc: 'Notificación: hoy es el último día de la promoción.',
+    steps: [
+      { type:'system', text:'— Journey Builder: Día 62 —' },
+      { type:'bot', text:'⚽ <b>Hoy termina Grand Goleador</b>\n\nEs tu última oportunidad para registrar códigos y subir en el marcador.\n\n⚡ Si tienes un código nuevo, envíalo ahora y juega tu última jugada.\n\n<b>Ana</b>, llevas <b>8 compras</b>. Cada una cuenta para definir el <b>Top 3 final de mañana</b>.' },
+      { type:'buttons', items:[
+        { text:'Registrar código', emoji:'📦', action:'next' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'post_cierre',
+    cat: 'alerta',
+    icon: '🏁',
+    title: 'Post-Cierre',
+    desc: 'Mensaje después del cierre de la promoción.',
+    steps: [
+      { type:'system', text:'— Día 63: Promoción cerrada —' },
+      { type:'bot', text:'🏁 <b>Gracias por jugar Grand Goleador</b>\n\nTu lomito o michi fue parte del torneo.\n\n🏆 Muy pronto anunciaremos a los ganadores del <b>Top 3 final por compras</b>.\n\n📋 Premios pendientes de entrega seguirán en proceso.\n\n¡Gracias por ser parte de la familia Grand Pet! 🐶🐱⚽' },
+      { type:'buttons', items:[
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'reengagement',
+    cat: 'alerta',
+    icon: '👋',
+    title: 'Re-engagement (No Responde)',
+    desc: 'El usuario escaneó QR pero nunca envió un código.',
+    steps: [
+      { type:'system', text:'— 24 horas sin actividad tras escaneo QR —' },
+      { type:'bot', text:'⚽ <b>¡El partido ya empezó!</b>\n\nPara que tu lomito o michi entre a jugar en <b>Grand Goleador</b>, solo necesitas enviarme el <b>código que viene dentro de tu empaque GrandPet</b>.\n\n👇 Escríbelo aquí y descubre si hoy metes <b>gol ganador</b>.' },
+      { type:'buttons', items:[
+        { text:'Enviar código', emoji:'📦', action:'next' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  // ─── LÍMITES Y BLOQUEOS ───
+  {
+    id: 'limite_diario',
+    cat: 'bloqueo',
+    icon: '🚫',
+    title: 'Límite Diario Alcanzado',
+    desc: 'El usuario alcanzó el máximo de 5 códigos por día.',
+    steps: [
+      { type:'system', text:'Usuario envía 6to código del día' },
+      { type:'user', text:'GP-2026-EXTRA01' },
+      { type:'system', text:'Endpoint: Límite diario ❌ — 5/5 códigos usados' },
+      { type:'bot', text:'🔴 <b>Límite de jugadas alcanzado</b>\n\nHoy ya registraste el máximo de códigos permitidos.\n\n🕐 Mañana podrás seguir jugando y registrando más códigos.\n\n<b>Ana</b>, llevas <b>9 compras</b> = 9 oportunidades para los sorteos. ⚽' },
+      { type:'buttons', items:[
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'bloqueo_temporal',
+    cat: 'bloqueo',
+    icon: '🔒',
+    title: 'Bloqueo Temporal (Anti-fraude)',
+    desc: 'Cuenta bloqueada 24h por múltiples intentos fallidos.',
+    steps: [
+      { type:'system', text:'3 intentos de código inválido en un día' },
+      { type:'user', text:'AAABBB12345' },
+      { type:'system', text:'Endpoint: Bloqueo temporal ❌ — 3 intentos fallidos' },
+      { type:'bot', text:'⚠️ <b>Cuenta bloqueada temporalmente</b>\n\nDetectamos varios intentos fallidos al registrar códigos.\n\n🔒 Tu cuenta fue bloqueada por <b>24 horas</b> por seguridad.\n\n❓ Si crees que fue un error, puedes contactar soporte.' },
+      { type:'buttons', items:[
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  // ─── AYUDA ───
+  {
+    id: 'menu_ayuda',
+    cat: 'ayuda',
+    icon: '❓',
+    title: 'Menú de Ayuda',
+    desc: 'Menú interactivo con opciones de soporte y consulta.',
+    steps: [
+      { type:'bot', text:'📋 <b>Menú Grand Goleador</b>\nElige una opción escribiendo el número:\n\n① Registrar código\n② Ver mi marcador\n③ Cómo funciona el juego\n④ Premios disponibles\n⑤ Mis premios\n⑥ Contacto' },
+      { type:'buttons', items:[
+        { text:'① Registrar código', emoji:'📦', action:'menu_registrar' },
+        { text:'② Ver mi marcador', emoji:'📊', action:'menu_marcador' },
+        { text:'③ Cómo funciona', emoji:'❓', action:'menu_como' },
+        { text:'④ Premios disponibles', emoji:'🏆', action:'menu_premios' },
+        { text:'⑤ Mis premios', emoji:'🎁', action:'menu_mispremios' },
+        { text:'⑥ Contacto', emoji:'📞', action:'menu_contacto' }
+      ]},
+    ]
+  },
+  {
+    id: 'menu_registrar',
+    cat: '_hidden',
+    steps: [
+      { type:'user', text:'① Registrar código' },
+      { type:'bot', text:'📦 <b>¡Vamos!</b>\n\nEnvíame el código que viene dentro de tu empaque GrandPet (Kisha o Noble).\n\nEs un código de 12 caracteres que encontrarás en la tarjeta impresa.\n\n👇 Escríbelo aquí:' },
+      { type:'buttons', items:[
+        { text:'Enviar código', emoji:'📦', action:'next' },
+        { text:'← Volver al menú', emoji:'', action:'journey_menu_ayuda' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'menu_marcador',
+    cat: '_hidden',
+    steps: [
+      { type:'user', text:'② Ver mi marcador' },
+      { type:'bot', text:'📊 <b>Tu marcador en Grand Goleador</b>\n\n👤 Ana\n⚽ Compras registradas: <b>6</b>\n🎫 Probabilidades acumuladas para sorteo semanal: <b>6</b>\n🏁 Posición estimada en ranking final: <b>#4</b>\n\n🎟️ Premios ganados: 1 (Cupón GP2U)\n\n¡Sigue registrando códigos para subir en el marcador! 💪' },
+      { type:'buttons', items:[
+        { text:'Registrar código', emoji:'📦', action:'next' },
+        { text:'← Volver al menú', emoji:'', action:'journey_menu_ayuda' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'menu_como',
+    cat: '_hidden',
+    steps: [
+      { type:'user', text:'③ Cómo funciona' },
+      { type:'bot', text:'⚽ <b>Así funciona Grand Goleador:</b>\n\n<b>1.</b> Compra un producto participante (Kisha o Noble)\n<b>2.</b> Busca el código dentro del empaque\n<b>3.</b> Envíalo aquí por WhatsApp\n<b>4.</b> Rasca tu tarjeta digital y descubre si hiciste hat-trick\n<b>5.</b> Si ganas, te preguntamos si compraste en línea o en tienda física\n\n<b>Cada código te da:</b>\n🎫 1 rasca y gana (25% de sacar hat-trick)\n🏆 1 probabilidad para el sorteo del lunes\n🏁 1 punto para el ranking final\n\n<b>Más compras = más puntos.</b>\nLa relación es directa: 3 compras = 3 puntos = 3 probabilidades en sorteo semanal.' },
+      { type:'buttons', items:[
+        { text:'← Volver al menú', emoji:'', action:'journey_menu_ayuda' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'menu_premios',
+    cat: '_hidden',
+    steps: [
+      { type:'user', text:'④ Premios disponibles' },
+      { type:'bot', text:'🏆 <b>Premios Grand Goleador:</b>\n\n<b>Instant Win:</b>\n🏪 Si compraste en tienda física y haces hat-trick: Tarjeta Amazon de $100 MXN\n💻 Si compraste en línea y haces hat-trick: Cupón de descuento GP2U\n\n<b>Sorteo Semanal (cada lunes):</b>\n🥇 Jersey adidas México 26\n👕 Playera selección para mascota\n\n<b>Final por ranking:</b>\n📺 Top 1 en compras: TV Hisense 100\" 4K\n🏅 Top 2 en compras: Premio tech Top 2\n🏅 Top 3 en compras: Premio tech Top 3' },
+      { type:'buttons', items:[
+        { text:'← Volver al menú', emoji:'', action:'journey_menu_ayuda' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'menu_mispremios',
+    cat: '_hidden',
+    steps: [
+      { type:'user', text:'⑤ Mis premios' },
+      { type:'bot', text:'🎁 <b>Tus premios, Ana:</b>\n\n<b>1.</b> Cupón GP2U — <b>GP2U-GOL-9K3M</b>\n   Estado: Activo · Vence: 20/07/2026\n   grandpet2u.com\n\nNo tienes tarjetas Amazon pendientes.\n\n⚽ ¡Sigue jugando para ganar más!' },
+      { type:'buttons', items:[
+        { text:'← Volver al menú', emoji:'', action:'journey_menu_ayuda' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  },
+  {
+    id: 'menu_contacto',
+    cat: '_hidden',
+    steps: [
+      { type:'user', text:'⑥ Contacto' },
+      { type:'bot', text:'📞 <b>¿Necesitas ayuda?</b>\n\nEscríbenos a:\n📧 soporte@grandpet.com.mx\n📱 WhatsApp: +52 55 1234 5678\n\nHorario de atención:\nLunes a viernes 9:00 AM - 6:00 PM\n\nTe responderemos lo antes posible. 🐾' },
+      { type:'buttons', items:[
+        { text:'← Volver al menú', emoji:'', action:'journey_menu_ayuda' },
+        { text:'🏠 Volver al inicio', emoji:'', action:'home', home: true }
+      ]}
+    ]
+  }
+];
+
+// ============================================================
+//  CATEGORY CONFIG
+// ============================================================
+
+const CATEGORIES = [
+  { id: 'registro', label: '🎮  Registro y Juego', color: 'cat-registro' },
+  { id: 'premio', label: '🏆  Premios y Canje', color: 'cat-premio' },
+  { id: 'sorteo', label: '📅  Sorteos y Final', color: 'cat-sorteo' },
+  { id: 'alerta', label: '📢  Alertas de Campaña', color: 'cat-alerta' },
+  { id: 'bloqueo', label: '🚫  Límites y Bloqueos', color: 'cat-bloqueo' },
+  { id: 'ayuda', label: '❓  Ayuda', color: 'cat-ayuda' },
+];
+
+// ============================================================
+//  RENDER HOME
+// ============================================================
+
+function renderHome() {
+  const body = $('homeBody');
+  let html = '';
+  CATEGORIES.forEach(cat => {
+    const journeys = JOURNEYS.filter(j => j.cat === cat.id);
+    if (!journeys.length) return;
+    html += `<div class="category-label">${cat.label}</div>`;
+    journeys.forEach(j => {
+      html += `
+        <div class="journey-card ${cat.color}" onclick="openJourney('${j.id}')">
+          <div class="jc-icon">${j.icon}</div>
+          <div class="jc-content">
+            <h3>${j.title}</h3>
+            <p>${j.desc}</p>
+          </div>
+          <div class="jc-arrow">›</div>
+        </div>`;
+    });
+  });
+  body.innerHTML = html;
+}
+
+// ============================================================
+//  CHAT ENGINE
+// ============================================================
+
+function openJourney(id) {
+  const journey = JOURNEYS.find(j => j.id === id);
+  if (!journey) return;
+  currentJourney = journey;
+  currentStep = 0;
+  chatBody.innerHTML = '';
+  chatButtons.innerHTML = '';
+  homeEl.classList.add('hidden');
+  chatEl.classList.add('active');
+  playSteps();
+}
+
+function goHome() {
+  chatEl.classList.remove('active');
+  homeEl.classList.remove('hidden');
+  landingOverlay.style.display = 'none';
+  currentJourney = null;
+  currentStep = 0;
+}
+
+$('chatBack').onclick = goHome;
+
+async function playSteps() {
+  if (!currentJourney) return;
+  const steps = currentJourney.steps;
+
+  while (currentStep < steps.length) {
+    const step = steps[currentStep];
+
+    if (step.type === 'system') {
+      addSystem(step.text);
+      currentStep++;
+      await wait(400);
+    }
+    else if (step.type === 'bot') {
+      await showTyping(800 + Math.random() * 600);
+      addBubble(step.text, 'bot');
+      currentStep++;
+      await wait(300);
+    }
+    else if (step.type === 'user') {
+      addBubble(step.text, 'user');
+      currentStep++;
+      await wait(500);
+    }
+    else if (step.type === 'buttons') {
+      showButtons(step.items);
+      return; // wait for user click
+    }
+    else if (step.type === 'landing') {
+      showLanding(step.variant);
+      return; // wait for user interaction on landing
+    }
+  }
+}
+
+function addBubble(html, who) {
+  const div = document.createElement('div');
+  div.className = 'msg-group';
+  const now = new Date();
+  const time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  div.innerHTML = `<div class="bubble ${who}">${html}<div class="time">${time}</div></div>`;
+  chatBody.appendChild(div);
+  scrollChat();
+}
+
+function addSystem(text) {
+  const div = document.createElement('div');
+  div.className = 'system-msg';
+  div.textContent = text;
+  chatBody.appendChild(div);
+  scrollChat();
+}
+
+async function showTyping(ms) {
+  const div = document.createElement('div');
+  div.className = 'msg-group typing-group';
+  div.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+  chatBody.appendChild(div);
+  scrollChat();
+  await wait(ms);
+  div.remove();
+}
+
+function showButtons(items) {
+  chatButtons.innerHTML = '';
+  items.forEach(item => {
+    if (item.home) {
+      const d = document.createElement('div');
+      d.className = 'btn-divider';
+      d.textContent = '— o —';
+      chatButtons.appendChild(d);
+    }
+    const btn = document.createElement('button');
+    btn.className = 'btn-wa' + (item.primary ? ' primary' : '') + (item.home ? ' home-btn' : '');
+    btn.innerHTML = (item.emoji ? `<span class="btn-emoji">${item.emoji}</span>` : '') + item.text;
+    btn.onclick = () => handleButton(item);
+    chatButtons.appendChild(btn);
+  });
+}
+
+function handleButton(item) {
+  chatButtons.innerHTML = '';
+
+  if (item.action === 'home') {
+    goHome();
+    return;
+  }
+
+  if (item.action && item.action.startsWith('journey_')) {
+    const jid = item.action.replace('journey_', '');
+    openJourney(jid);
+    return;
+  }
+
+  if (item.action && item.action.startsWith('menu_')) {
+    openJourney(item.action);
+    return;
+  }
+
+  if (item.action && item.action.startsWith('landing_')) {
+    currentStep++;
+    playSteps();
+    return;
+  }
+
+  if (item.action === 'skip') {
+    currentStep += 2; // skip next step
+    playSteps();
+    return;
+  }
+
+  // default: next
+  currentStep++;
+  playSteps();
+}
+
+// ============================================================
+//  LANDING PAGE SIMULATION
+// ============================================================
+
+function showLanding(variant) {
+  let balls, isWin, title, subtitle, compras;
+
+  if (variant === 'win_fisico' || variant === 'win_cupon') {
+    balls = ['⚽','⚽','⚽'];
+    isWin = true;
+    title = '¡¡¡HAT-TRICK!!!';
+    subtitle = 'Ganaste un instant win. Ahora confirma si compraste en línea o en tienda física';
+    compras = '1';
+  } else if (variant === 'lose' ) {
+    balls = ['⚽','❌','⚽'];
+    isWin = false;
+    title = '¡Casi!';
+    subtitle = 'Tu compra quedó registrada para los sorteos';
+    compras = '1';
+  } else if (variant === 'lose_recurrent') {
+    balls = ['❌','⚽','❌'];
+    isWin = false;
+    title = '¡Casi!';
+    subtitle = 'Tu compra quedó registrada para los sorteos';
+    compras = '4';
+  }
+
+  landingOverlay.style.display = 'flex';
+  landingOverlay.innerHTML = `
+    <div style="font-size:13px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Rasca Gol — Grand Goleador</div>
+    <div class="scratch-card ${isWin ? 'win' : 'lose'}">
+      ${balls.map(b => `<div class="ball">${b}</div>`).join('')}
+    </div>
+    <h2 class="${isWin ? 'win-title' : 'lose-title'}">${title}</h2>
+    <p>${subtitle}</p>
+    <div class="counter">Llevas <b>${compras} compra${compras>1?'s':''}</b> registrada${compras>1?'s':''}</div>
+    <button class="landing-btn" onclick="closeLanding()">↩️ Regresar a WhatsApp</button>
+  `;
+}
+
+function closeLanding() {
+  landingOverlay.style.display = 'none';
+  currentStep++; // move past landing step
+  playSteps();
+}
+
+// ============================================================
+//  UTILS
+// ============================================================
+
+function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+function scrollChat() { chatBody.scrollTop = chatBody.scrollHeight; }
+
+// ============================================================
+//  INIT
+// ============================================================
+
+renderHome();
+</script>
+</body>
+</html>
