@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mescalina Reports</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f13;
+  --surface:#0f1419;
+  --card:#161d26;
+  --border:#1e2a38;
+  --text:#e4e9ef;
+  --muted:#7a8da0;
+  --accent:#5fb8d9;
+  --warm:#f4a261;
+  --green:#2ec4b6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;
+  font-family:'Poppins',sans-serif;
+  color:var(--text);
+  background:
+    linear-gradient(180deg, rgba(11,15,19,0.78) 0%, rgba(11,15,19,0.72) 100%),
+    url('./assets/background.png') center/cover no-repeat fixed;
+  padding:40px 24px 56px;
+}
+.shell{
+  max-width:1200px;
+  margin:0 auto;
+}
+.hero{
+  background:rgba(15,20,25,0.78);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:32px;
+  margin-bottom:24px;
+  backdrop-filter:blur(8px);
+}
+.hero img{
+  height:18px;
+  width:auto;
+  opacity:.75;
+  margin-bottom:22px;
+}
+.hero h1{
+  font-size:42px;
+  line-height:1.05;
+  font-weight:700;
+  max-width:700px;
+  margin-bottom:12px;
+}
+.hero p{
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.7;
+  max-width:760px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.card{
+  background:rgba(22,29,38,0.84);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  min-height:320px;
+}
+.eyebrow{
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:700;
+}
+.card h2{
+  font-size:24px;
+  line-height:1.15;
+}
+.card p{
+  color:var(--muted);
+  line-height:1.65;
+  font-size:14px;
+}
+.links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:auto;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  text-decoration:none;
+  color:var(--text);
+  background:#1c2530;
+  font-size:13px;
+  font-weight:600;
+}
+.btn.primary{
+  background:rgba(95,184,217,0.14);
+  color:var(--accent);
+  border-color:rgba(95,184,217,0.28);
+}
+.btn.warm{
+  background:rgba(244,162,97,0.14);
+  color:var(--warm);
+  border-color:rgba(244,162,97,0.28);
+}
+.btn.green{
+  background:rgba(46,196,182,0.14);
+  color:var(--green);
+  border-color:rgba(46,196,182,0.28);
+}
+.note{
+  margin-top:22px;
+  color:var(--muted);
+  font-size:12px;
+}
+@media (max-width: 980px){
+  .grid{grid-template-columns:1fr}
+  .hero h1{font-size:34px}
+}
+</style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <img src="./assets/Logo_Mescalina_White.png" alt="Mescalina">
+      <h1>Reports & Dashboards</h1>
+      <p>Hub listo para GitHub Pages con los tres entregables organizados en rutas separadas, assets compartidos y archivos de descarga para PDF y PowerPoint.</p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="eyebrow">Social Media</div>
+        <h2>Grand Pet 2026</h2>
+        <p>Reporte de social media y pauta digital en formato deck web, con exportables para revisión y entrega.</p>
+        <div class="links">
+          <a class="btn primary" href="./social-media/">Abrir Web</a>
+          <a class="btn" href="./downloads/social-media/report.pdf">PDF</a>
+          <a class="btn" href="./downloads/social-media/report.pptx">PPTX</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="eyebrow">Social Listening</div>
+        <h2>Kokuho</h2>
+        <p>Listening report organizado como deck navegable con su versión PDF y PowerPoint publicables.</p>
+        <div class="links">
+          <a class="btn warm" href="./social-listening/">Abrir Web</a>
+          <a class="btn" href="./downloads/social-listening/report.pdf">PDF</a>
+          <a class="btn" href="./downloads/social-listening/report.pptx">PPTX</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="eyebrow">Dashboard</div>
+        <h2>Promo & Campaign Dashboards</h2>
+        <p>Versión web del dashboard y accesos directos a los PDFs de referencia incluidos en la carpeta original.</p>
+        <div class="links">
+          <a class="btn green" href="./dashboard/">Abrir Web</a>
+          <a class="btn" href="./downloads/dashboard/dashboard-grand-pet.pdf">Grand Pet PDF</a>
+          <a class="btn" href="./downloads/dashboard/dashboard-bob-esponja.pdf">Bob Esponja PDF</a>
+        </div>
+      </article>
+    </section>
+
+    <p class="note">Publica la carpeta <code>docs/</code> en tu repo y activa GitHub Pages apuntando a <code>main / docs</code>.</p>
+  </div>
+</body>
+</html>
