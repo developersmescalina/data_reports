@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte Final de Promocion - Bob Esponja Kellanova</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f13;
+  --slide-bg:#0f1419;
+  --card:#161d26;
+  --card-alt:#1c2530;
+  --accent:#18c2c7;
+  --warm:#f4b44d;
+  --green:#2ec4b6;
+  --red:#e76f51;
+  --pink:#ff5c73;
+  --purple:#9f8cff;
+  --text:#ebf2f8;
+  --muted:#92a6b7;
+  --dim:#5c7082;
+  --border:#1e2a38;
+  --line:rgba(146,166,183,0.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);
+  font-family:'Poppins',sans-serif;
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+  padding:20px 0;
+}
+.slide{
+  width:1280px;
+  height:720px;
+  background:var(--slide-bg);
+  border-radius:12px;
+  border:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  padding:56px 64px;
+}
+.slide::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(11,15,19,0.72) 0%, rgba(11,15,19,0.62) 100%),
+    url('../assets/background.png') center/cover no-repeat;
+  opacity:.34;
+  pointer-events:none;
+}
+.slide>*{position:relative;z-index:1}
+.slide-number{
+  position:absolute;
+  bottom:20px;
+  right:32px;
+  font-size:11px;
+  color:var(--dim);
+}
+.slide-brand{
+  position:absolute;
+  bottom:20px;
+  left:32px;
+  display:flex;
+  align-items:center;
+  height:12px;
+}
+.slide-brand img{
+  display:block;
+  height:12px;
+  width:auto;
+  opacity:.42;
+}
+.slide.cover{
+  background:linear-gradient(155deg,#0a0e13 0%,#0f1922 40%,#152a3a 100%);
+  justify-content:center;
+}
+.slide.cover::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 88% 24%, rgba(24,194,199,0.16) 0%, transparent 20%),
+    radial-gradient(circle at 12% 82%, rgba(244,180,77,0.10) 0%, transparent 18%),
+    linear-gradient(155deg, rgba(10,14,19,0.82) 0%, rgba(15,25,34,0.74) 40%, rgba(21,42,58,0.68) 100%),
+    url('../assets/background.png') center/cover no-repeat;
+  opacity:.95;
+}
+.slide.cover::after{
+  content:'';
+  position:absolute;
+  bottom:-120px;
+  left:-120px;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(244,180,77,0.06) 0%,transparent 70%);
+}
+.slide.divider{
+  justify-content:center;
+  background:linear-gradient(180deg,var(--slide-bg) 0%,var(--card) 100%);
+}
+.slide.divider::before{opacity:.42}
+.cover-label{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:30px;
+}
+.cover h1{
+  font-size:62px;
+  line-height:1.02;
+  font-weight:700;
+  max-width:760px;
+}
+.cover h1 em{
+  font-style:italic;
+  color:var(--warm);
+  font-weight:500;
+}
+.cover-meta{
+  display:flex;
+  gap:34px;
+  margin-top:42px;
+}
+.cover-meta-item{
+  border-left:2px solid var(--accent);
+  padding-left:14px;
+}
+.cover-meta-item .lbl{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:var(--muted);
+  margin-bottom:2px;
+}
+.cover-meta-item .val{
+  font-size:16px;
+  font-weight:600;
+}
+.sec-num{
+  font-size:12px;
+  color:var(--accent);
+  letter-spacing:3px;
+  margin-bottom:14px;
+}
+.divider h2{
+  font-size:50px;
+  line-height:1.08;
+  font-weight:700;
+  max-width:760px;
+}
+.divider h2 em{
+  font-style:italic;
+  color:var(--warm);
+  font-weight:500;
+}
+h3{
+  font-size:26px;
+  font-weight:700;
+  margin-bottom:16px;
+}
+.subtitle{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.65;
+  max-width:620px;
+  margin-bottom:18px;
+}
+.highlight{
+  background:linear-gradient(135deg,var(--warm),#e9a53d);
+  color:#091114;
+  padding:1px 8px;
+  font-weight:700;
+}
+.fw-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;flex:1}
+.fw-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.fw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.fw-card:nth-child(1)::before{background:var(--accent)}
+.fw-card:nth-child(2)::before{background:var(--warm)}
+.fw-card:nth-child(3)::before{background:var(--green)}
+.fw-card .q{
+  font-size:18px;
+  font-weight:600;
+  line-height:1.35;
+  margin-bottom:16px;
+  flex:1;
+}
+.tag{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:600;
+  margin:2px;
+}
+.tag-a{background:rgba(24,194,199,0.14);color:var(--accent)}
+.tag-w{background:rgba(244,180,77,0.14);color:var(--warm)}
+.tag-g{background:rgba(46,196,182,0.14);color:var(--green)}
+.method-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:20px}
+.method-item h4{
+  font-size:12px;
+  font-weight:600;
+  color:var(--accent);
+  margin-bottom:6px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.method-item p{font-size:13px;color:var(--muted);line-height:1.5}
+.m-row{display:grid;gap:14px;margin-bottom:18px}
+.m-row-4{grid-template-columns:repeat(4,1fr)}
+.m-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px 20px;
+}
+.m-card .lbl{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.m-card .val{
+  font-size:30px;
+  font-weight:700;
+  line-height:1;
+}
+.m-card .sub{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:6px;
+  line-height:1.45;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  padding:3px 8px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:700;
+}
+.b-green{background:rgba(46,196,182,0.12);color:var(--green)}
+.b-warm{background:rgba(244,180,77,0.12);color:var(--warm)}
+.b-pink{background:rgba(255,92,115,0.12);color:var(--pink)}
+.b-accent{background:rgba(24,194,199,0.12);color:var(--accent)}
+.table-wrap{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{
+  text-align:left;
+  padding:10px 12px;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--muted);
+  background:rgba(255,255,255,0.03);
+  border-bottom:1px solid var(--line);
+}
+.data-table td{
+  padding:10px 12px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.data-table tr:last-child td{border-bottom:none}
+.insight{
+  border-left:3px solid var(--warm);
+  padding:14px 18px;
+  background:rgba(244,180,77,0.05);
+  border-radius:0 10px 10px 0;
+  font-size:13px;
+  line-height:1.7;
+}
+.insight strong{color:var(--warm)}
+.chart-wrap{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  min-width:0;
+  min-height:0;
+}
+.chart-wrap h4{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+.chart-area{position:relative;flex:1;min-width:0;min-height:0}
+.chart-wrap canvas{width:100%!important;height:100%!important;display:block}
+.progress-stack{display:grid;gap:12px}
+.progress-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
+  padding:16px 18px;
+}
+.progress-head{display:flex;justify-content:space-between;gap:14px;margin-bottom:10px}
+.progress-title{font-size:13px;font-weight:600}
+.progress-detail{font-size:12px;color:var(--muted)}
+.progress-track{
+  width:100%;
+  height:10px;
+  background:rgba(255,255,255,0.06);
+  border-radius:999px;
+  overflow:hidden;
+}
+.progress-fill{height:100%;border-radius:999px}
+.fill-accent{background:linear-gradient(90deg,var(--accent),#66eff2)}
+.fill-warm{background:linear-gradient(90deg,var(--warm),#ffd46e)}
+.fill-green{background:linear-gradient(90deg,var(--green),#64e2d6)}
+.fill-pink{background:linear-gradient(90deg,var(--pink),#ff95a7)}
+.list-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:20px;
+}
+.list-row{
+  display:grid;
+  grid-template-columns:120px 1fr auto;
+  gap:14px;
+  align-items:center;
+  margin-bottom:14px;
+}
+.list-row:last-child{margin-bottom:0}
+.list-row .name{font-size:12px;color:var(--muted)}
+.list-row .bar{
+  height:10px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.06);
+  overflow:hidden;
+  position:relative;
+}
+.list-row .bar span{
+  position:absolute;
+  inset:0 auto 0 0;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--accent),var(--green));
+}
+.list-row .value{font-size:12px;font-weight:700}
+.funnel-wrap{display:grid;gap:12px}
+.funnel-step{
+  display:grid;
+  grid-template-columns:110px 1fr 82px;
+  gap:14px;
+  align-items:center;
+}
+.funnel-label{font-size:12px;color:var(--muted)}
+.funnel-bar{
+  height:40px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 14px;
+  font-size:13px;
+  font-weight:700;
+  color:#081416;
+}
+.funnel-bar small{font-size:11px;color:rgba(8,20,22,.72)}
+.funnel-rate{font-size:12px;color:var(--warm);text-align:right;font-weight:700}
+.winner-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.winner-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+}
+.winner-card .type{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--warm);
+  margin-bottom:10px;
+}
+.winner-card .count{font-size:30px;font-weight:700;margin-bottom:8px}
+.winner-card .text{font-size:12px;color:var(--muted);line-height:1.6}
+.kcs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;flex:1}
+.kcs-card{border-radius:14px;padding:22px;display:flex;flex-direction:column}
+.kcs-card h4{font-size:22px;font-weight:700;margin-bottom:12px}
+.kcs-card ul{list-style:none;padding:0}
+.kcs-card li{padding:6px 0;font-size:12.5px;line-height:1.55;border-bottom:1px solid rgba(255,255,255,0.04)}
+.kcs-card li:last-child{border-bottom:none}
+.kcs-card.keep{background:rgba(244,180,77,0.08);border:1px solid rgba(244,180,77,0.18)}
+.kcs-card.keep h4{color:var(--warm)}
+.kcs-card.change{background:rgba(255,92,115,0.08);border:1px solid rgba(255,92,115,0.18)}
+.kcs-card.change h4{color:var(--pink)}
+.kcs-card.start{background:rgba(24,194,199,0.08);border:1px solid rgba(24,194,199,0.18)}
+.kcs-card.start h4{color:var(--accent)}
+.conc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.conc-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:20px;
+}
+.conc-card p{font-size:13px;line-height:1.65}
+.compact-kpi{padding:16px 18px}
+.compact-kpi .val{font-size:26px}
+.compact-kpi .sub{font-size:10.5px;line-height:1.4}
+.compact-box{padding:16px}
+.compact-box h4{margin-bottom:10px!important}
+.compact-box .list-row{margin-bottom:10px}
+.compact-box .name,.compact-box .value{font-size:11.5px}
+.compact-box .bar{height:8px}
+.compact-box .progress-card{
+  padding:12px 14px;
+  border-radius:10px;
+}
+.compact-box .progress-head{margin-bottom:8px}
+.compact-box .progress-title{font-size:12px}
+.compact-box .progress-detail{font-size:11px}
+.compact-insight{
+  padding:12px 16px;
+  font-size:12px;
+  line-height:1.55;
+}
+.tight-chart{
+  padding:16px;
+}
+.tight-chart h4{margin-bottom:8px}
+.compact-table .data-table{font-size:12px}
+.compact-table .data-table th,
+.compact-table .data-table td{padding:8px 10px}
+.compact-winners{gap:12px}
+.compact-winners .winner-card{padding:16px}
+.compact-winners .winner-card .count{font-size:26px}
+.compact-winners .winner-card .text{font-size:11.5px;line-height:1.45}
+.small-kpi{padding:16px 18px}
+.small-kpi .val{font-size:24px}
+.small-kpi .sub{font-size:10.5px;line-height:1.35}
+@page{size:13.333in 7.5in;margin:0}
+@media print{
+  html,body{width:13.333in;margin:0;padding:0;background:#000}
+  body{gap:0}
+  .slide{
+    width:13.333in;
+    height:7.5in;
+    margin:0;
+    border:none;
+    border-radius:0;
+    page-break-after:always;
+    break-after:page;
+  }
+  .slide:last-of-type{page-break-after:auto;break-after:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="slide cover">
+  <div class="cover-label">mescalina ® — strategy & data intelligence</div>
+  <h1>Bob Esponja Kellanova<br>Reporte Final de Promoción<br><em>Colombia 2025–2026</em></h1>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="lbl">Periodo</div><div class="val">15 Dic 2025 — 18 May 2026</div></div>
+    <div class="cover-meta-item"><div class="lbl">Estado</div><div class="val">Activa · Semana 12/22</div></div>
+    <div class="cover-meta-item"><div class="lbl">Fuentes</div><div class="val">GA4 · Engine promo · Meta Ads</div></div>
+    <div class="cover-meta-item"><div class="lbl">Tracking</div><div class="val">Vista acumulada + semanal</div></div>
+  </div>
+  <div class="slide-number">01 / 12</div>
+</div>
+
+<div class="slide">
+  <h3>¿Qué queremos responder?</h3>
+  <p class="subtitle">Este reporte transforma el dashboard operativo en una lectura ejecutiva para entender avance comercial, calidad del tráfico, comportamiento del funnel y decisiones para el tramo final de la promoción.</p>
+  <div class="fw-grid">
+    <div class="fw-card">
+      <div class="q">¿La promoción ya aseguró el objetivo comercial o todavía depende de adquisición nueva?</div>
+      <div><span class="tag tag-a">Sesiones</span><span class="tag tag-a">Usuarios</span><span class="tag tag-a">Lotes</span><span class="tag tag-a">Ritmo</span></div>
+    </div>
+    <div class="fw-card">
+      <div class="q">¿Qué canales y experiencias están trayendo tráfico de calidad y empujando el registro?</div>
+      <div><span class="tag tag-w">Fuentes</span><span class="tag tag-w">Engagement</span><span class="tag tag-w">QR / PDV</span><span class="tag tag-w">Landing</span></div>
+    </div>
+    <div class="fw-card">
+      <div class="q">¿Qué productos, juegos y creativos están sosteniendo el cierre de la campaña?</div>
+      <div><span class="tag tag-g">SKU mix</span><span class="tag tag-g">Minijuegos</span><span class="tag tag-g">Pauta</span><span class="tag tag-g">Ciudades</span></div>
+    </div>
+  </div>
+  <div class="method-row">
+    <div class="method-item"><h4>Fuente primaria</h4><p>Dashboard de promoción Bob Esponja CO actualizado al 29 de marzo 2026.</p></div>
+    <div class="method-item"><h4>Periodo analizado</h4><p>Semana 12 de 22, con lectura acumulada desde inicio de promoción.</p></div>
+    <div class="method-item"><h4>Objetivo</h4><p>Traducir operación, tráfico y desempeño comercial a decisiones ejecutivas para cierre.</p></div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">02 / 12</div>
+</div>
+
+<div class="slide divider">
+  <div class="sec-num">01 — RESUMEN EJECUTIVO</div>
+  <h2>¿Dónde está hoy la promoción<br>y qué tan cerca está del <em>cierre exitoso</em>?</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">03 / 12</div>
+</div>
+
+<div class="slide" style="padding:44px 56px;">
+  <div style="display:grid;grid-template-rows:auto auto 1fr auto;gap:14px;flex:1;min-height:0;">
+    <h3 style="margin-bottom:0;">Vista gerencial de la promoción</h3>
+    <div class="m-row m-row-4" style="margin-bottom:0;">
+      <div class="m-card compact-kpi"><div class="lbl">Sesiones S12</div><div class="val" style="color:var(--accent)">5,946</div><div class="sub">101,620 acumuladas · 64.3% de meta total</div></div>
+      <div class="m-card compact-kpi"><div class="lbl">Usuarios S12</div><div class="val" style="color:var(--warm)">947</div><div class="sub">20,692 acumulados · 79.6% de meta total</div></div>
+      <div class="m-card compact-kpi"><div class="lbl">Lotes S12</div><div class="val" style="color:var(--green)">3,505</div><div class="sub">72,608 acumulados · 97.5% de meta total</div></div>
+      <div class="m-card compact-kpi"><div class="lbl">Productos por usuario</div><div class="val" style="color:var(--purple)">3.7</div><div class="sub">Indicador de fidelidad y repetición de carga</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:16px;min-height:0;">
+      <div class="list-box compact-box">
+        <h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);">Cumplimiento acumulado vs meta total</h4>
+        <div class="progress-stack">
+          <div class="progress-card"><div class="progress-head"><div class="progress-title">Sesiones</div><div class="progress-detail">101,620 / 158,000</div></div><div class="progress-track"><div class="progress-fill fill-accent" style="width:64.3%"></div></div></div>
+          <div class="progress-card"><div class="progress-head"><div class="progress-title">Usuarios registrados</div><div class="progress-detail">20,692 / 26,000</div></div><div class="progress-track"><div class="progress-fill fill-warm" style="width:79.6%"></div></div></div>
+          <div class="progress-card"><div class="progress-head"><div class="progress-title">Lotes / códigos</div><div class="progress-detail">72,608 / 74,500</div></div><div class="progress-track"><div class="progress-fill fill-green" style="width:97.5%"></div></div></div>
+          <div class="progress-card"><div class="progress-head"><div class="progress-title">Tiempo de promoción</div><div class="progress-detail">S12 / S22 · 69.6%</div></div><div class="progress-track"><div class="progress-fill fill-pink" style="width:69.6%"></div></div></div>
+        </div>
+      </div>
+      <div class="list-box compact-box">
+        <h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);">Estado por dimensión</h4>
+        <div class="list-row"><div class="name">Tráfico</div><div class="bar"><span style="width:64%"></span></div><div class="value">Estable</div></div>
+        <div class="list-row"><div class="name">Registro</div><div class="bar"><span style="width:97%;background:linear-gradient(90deg,var(--green),#64e2d6)"></span></div><div class="value">Cumplido</div></div>
+        <div class="list-row"><div class="name">Retención</div><div class="bar"><span style="width:88%;background:linear-gradient(90deg,var(--purple),#c4b5fd)"></span></div><div class="value">Alta</div></div>
+        <div class="list-row"><div class="name">Engagement</div><div class="bar"><span style="width:59%;background:linear-gradient(90deg,var(--pink),#ff95a7)"></span></div><div class="value">+2.3 pp</div></div>
+        <div class="list-row"><div class="name">Mobile</div><div class="bar"><span style="width:92%;background:linear-gradient(90deg,var(--accent),#5be6ea)"></span></div><div class="value">Dominante</div></div>
+      </div>
+    </div>
+    <div class="insight compact-insight"><strong>Lectura ejecutiva:</strong> La promoción ya entró en una fase donde el <strong>objetivo comercial está prácticamente asegurado</strong>: los lotes van en 97.5% de cumplimiento con 30.4% del tiempo aún disponible. El reto ya no es “salvar” la campaña, sino optimizar el cierre: sostener el hábito de carga, capitalizar a la base fiel y mover los últimos registros con menos desperdicio de tráfico.</div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">04 / 12</div>
+</div>
+
+<div class="slide" style="padding:40px 48px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1;">
+    <div class="chart-wrap"><h4>Histórico de indicadores clave</h4><div class="chart-area"><canvas id="c1"></canvas></div></div>
+    <div class="chart-wrap"><h4>Cumplimiento acumulado vs tiempo</h4><div class="chart-area"><canvas id="c2"></canvas></div></div>
+  </div>
+  <div class="insight" style="margin-top:14px;"><strong>Hallazgo:</strong> El punto de inflexión ocurrió entre S7 y S8, cuando el volumen de sesiones se aceleró y permitió que los <strong>lotes se despegaran del ritmo esperado</strong>. Desde entonces el tráfico se ha ido moderando, pero el negocio ya quedó “arriba del benchmark de tiempo”, lo que sugiere una promo que maduró bien y ahora depende más de eficiencia que de escala bruta.</div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">05 / 12</div>
+</div>
+
+<div class="slide divider">
+  <div class="sec-num">02 — FUNNEL Y CALIDAD DE TRÁFICO</div>
+  <h2>¿Qué canal trae volumen,<br>qué canal trae calidad y dónde se convierte <em>la intención</em>?</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">06 / 12</div>
+</div>
+
+<div class="slide" style="padding:42px 52px;">
+  <div style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:18px;flex:1;">
+    <div class="list-box">
+      <h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:14px;">Funnel acumulado S12</h4>
+      <div class="funnel-wrap">
+        <div class="funnel-step"><div class="funnel-label">Sesiones</div><div class="funnel-bar" style="width:100%;background:linear-gradient(90deg,var(--accent),#5be6ea);"><span>5,946</span><small>base semanal</small></div><div class="funnel-rate">100%</div></div>
+        <div class="funnel-step"><div class="funnel-label">Juegos</div><div class="funnel-bar" style="width:83%;background:linear-gradient(90deg,var(--warm),#ffd46e);"><span>4,954</span><small>de sesiones</small></div><div class="funnel-rate">83%</div></div>
+        <div class="funnel-step"><div class="funnel-label">Usuarios</div><div class="funnel-bar" style="width:16%;background:linear-gradient(90deg,var(--green),#64e2d6);"><span>947</span><small>registrados</small></div><div class="funnel-rate">16%</div></div>
+        <div class="funnel-step"><div class="funnel-label">Lotes</div><div class="funnel-bar" style="width:59%;background:linear-gradient(90deg,var(--pink),#ff95a7);"><span>3,505</span><small>cargados</small></div><div class="funnel-rate">3.7/u</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:18px;">
+        <div class="m-card" style="padding:16px;"><div class="lbl">QR / PDV</div><div class="val" style="font-size:24px;color:var(--warm)">03:22</div><div class="sub">Mayor tiempo en sitio</div></div>
+        <div class="m-card" style="padding:16px;"><div class="lbl">Perfil</div><div class="val" style="font-size:24px;color:var(--green)">96.4%</div><div class="sub">ER en recurrentes</div></div>
+        <div class="m-card" style="padding:16px;"><div class="lbl">Mobile share</div><div class="val" style="font-size:24px;color:var(--accent)">92.6%</div><div class="sub">Promo mobile first</div></div>
+      </div>
+    </div>
+    <div class="chart-wrap"><h4>Mix de origen del tráfico</h4><div class="chart-area"><canvas id="c3"></canvas></div></div>
+  </div>
+  <div class="insight" style="margin-top:14px;"><strong>Lectura clave:</strong> El funnel confirma que la promo no solo genera visitas: también <strong>retiene y convierte en interacción</strong>. Paid Social sí aporta descubrimiento, pero la calidad vive en <strong>Direct / CRM, Organic Search y QR / PDV</strong>. La mecánica ganadora no es solamente atraer, sino hacer que el usuario vuelva, juegue y cargue más de un producto.</div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">07 / 12</div>
+</div>
+
+<div class="slide">
+  <h3>Fuentes de tráfico y comportamiento en sitio</h3>
+  <div style="display:grid;grid-template-columns:1.05fr 0.95fr;gap:16px;flex:1;">
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Fuente</th><th>Sesiones</th><th>Usuarios</th><th>Interacciones</th><th>ER</th><th>Tiempo</th></tr></thead>
+        <tbody>
+          <tr><td>Paid Social</td><td>1,358</td><td>1,080</td><td>413</td><td>30.4%</td><td>02:14</td></tr>
+          <tr><td>Unassigned</td><td>1,735</td><td>1,032</td><td>1,109</td><td>63.9%</td><td>02:08</td></tr>
+          <tr><td>Direct / CRM</td><td>1,411</td><td>751</td><td>968</td><td>68.6%</td><td>02:40</td></tr>
+          <tr><td>Organic Search</td><td>1,414</td><td>606</td><td>1,037</td><td>73.3%</td><td>03:26</td></tr>
+          <tr><td>Referral</td><td>16</td><td>3</td><td>12</td><td>75.0%</td><td>01:36</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="chart-wrap"><h4>Histórico diario por fuente</h4><div class="chart-area"><canvas id="c4"></canvas></div></div>
+  </div>
+  <div class="insight" style="margin-top:16px;"><strong>Lectura:</strong> <strong>Organic Search</strong> y <strong>Direct / CRM</strong> son los canales con mejor señal de calidad, mientras <strong>Paid Social</strong> funciona más como puerta de entrada para usuarios nuevos que como canal de conversión final. Eso sugiere que el cierre debe apoyarse menos en awareness puro y más en recaptura, CRM y mensajes de “última llamada”.</div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">08 / 12</div>
+</div>
+
+<div class="slide" style="padding:42px 48px;">
+  <div style="display:grid;grid-template-rows:auto 1fr auto;gap:14px;flex:1;min-height:0;">
+    <h3 style="margin-bottom:0;">Comportamiento, eventos y juegos</h3>
+    <div style="display:grid;grid-template-columns:1fr 0.9fr;gap:16px;min-height:0;">
+      <div style="display:grid;grid-template-rows:1fr auto;gap:16px;min-height:0;">
+        <div class="chart-wrap tight-chart"><h4>Eventos más relevantes en landing</h4><div class="chart-area"><canvas id="c5"></canvas></div></div>
+        <div class="list-box compact-box">
+          <h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);">Microlecturas del sitio</h4>
+          <div class="list-row"><div class="name">Inicio registro</div><div class="bar"><span style="width:53%"></span></div><div class="value">10.5%</div></div>
+          <div class="list-row"><div class="name">Carga lote</div><div class="bar"><span style="width:48%;background:linear-gradient(90deg,var(--warm),#ffd971)"></span></div><div class="value">9.5%</div></div>
+          <div class="list-row"><div class="name">Carga fecha</div><div class="bar"><span style="width:46%;background:linear-gradient(90deg,var(--pink),#ff95a7)"></span></div><div class="value">9.1%</div></div>
+          <div class="list-row"><div class="name">Juego activo</div><div class="bar"><span style="width:50%;background:linear-gradient(90deg,var(--green),#64e2d6)"></span></div><div class="value">9.9%</div></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-rows:1fr auto;gap:16px;min-height:0;">
+        <div class="chart-wrap tight-chart"><h4>Principales juegos y ganchos</h4><div class="chart-area"><canvas id="c6"></canvas></div></div>
+        <div class="table-wrap compact-table">
+          <table class="data-table">
+            <thead><tr><th>Landing / Path</th><th>Fuente</th><th>Sesiones</th><th>ER</th><th>Tiempo</th></tr></thead>
+            <tbody>
+              <tr><td>promokelloggs.com/</td><td>qr / pdv</td><td>791</td><td>83.5%</td><td>03:22</td></tr>
+              <tr><td>promokelloggs.com/</td><td>(direct) / none</td><td>737</td><td>86.6%</td><td>02:40</td></tr>
+              <tr><td>/Perfil</td><td>(direct) / none</td><td>472</td><td>96.4%</td><td>01:39</td></tr>
+              <tr><td>/Registro</td><td>qr / pdv</td><td>448</td><td>93.1%</td><td>02:36</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="insight compact-insight"><strong>Hallazgo:</strong> El comportamiento real de la audiencia muestra que <strong>la intención se consolida dentro del sitio</strong>, no fuera de él. El usuario sí entra a jugar, pero los puntos de fricción siguen estando en los pasos finales del formulario. Resolver lote y fecha con una UX más asistida probablemente sea más rentable que seguir inflando tráfico frío.</div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">09 / 12</div>
+</div>
+
+<div class="slide" style="padding:42px 48px;">
+  <div style="display:grid;grid-template-rows:auto 1fr auto;gap:14px;flex:1;min-height:0;">
+    <h3 style="margin-bottom:0;">Resultados comerciales y ecosistema lúdico</h3>
+    <div style="display:grid;grid-template-columns:0.95fr 1.05fr;gap:16px;min-height:0;">
+      <div style="display:grid;grid-template-rows:auto auto;gap:16px;min-height:0;">
+        <div class="table-wrap compact-table">
+        <table class="data-table">
+          <thead><tr><th>Top usuario</th><th>Marca top</th><th>Productos</th><th>Puntos</th></tr></thead>
+          <tbody>
+            <tr><td>NutriPlanctonK_3504</td><td>Choco Krispis</td><td>3,474</td><td>2,119,932</td></tr>
+            <tr><td>KrustyCrunch_3057</td><td>Zucaritas</td><td>1,399</td><td>2,111,520</td></tr>
+            <tr><td>CerealEnergéticoBob_5004</td><td>Bob Esponja</td><td>1,141</td><td>1,546,923</td></tr>
+            <tr><td>VitalidadAcua_6291</td><td>Froot Loops</td><td>1,115</td><td>1,678,452</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="winner-grid compact-winners">
+          <div class="winner-card"><div class="type">Caza Cereales</div><div class="count">1,588</div><div class="text">Juego con mayor actividad en S12.</div></div>
+          <div class="winner-card"><div class="type">Memorama</div><div class="count">1,506</div><div class="text">Segundo ancla de retención.</div></div>
+          <div class="winner-card"><div class="type">Corte Submarino</div><div class="count">1,499</div><div class="text">Caída menor, señal de jugadores leales.</div></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-rows:1fr auto;gap:16px;min-height:0;">
+        <div class="chart-wrap tight-chart"><h4>Mix de productos registrados</h4><div class="chart-area"><canvas id="c7"></canvas></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="chart-wrap tight-chart"><h4>Paketikos vs resto</h4><div class="chart-area"><canvas id="c8"></canvas></div></div>
+          <div class="list-box compact-box">
+            <h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);">Lectura comercial</h4>
+            <div class="list-row"><div class="name">Choco Krispis 30g</div><div class="bar"><span style="width:100%"></span></div><div class="value">23.2%</div></div>
+            <div class="list-row"><div class="name">Zucaritas 36g</div><div class="bar"><span style="width:51%;background:linear-gradient(90deg,var(--warm),#ffd971)"></span></div><div class="value">11.8%</div></div>
+            <div class="list-row"><div class="name">Zucaritas 1600g</div><div class="bar"><span style="width:40%;background:linear-gradient(90deg,var(--green),#64e2d6)"></span></div><div class="value">9.3%</div></div>
+            <div class="list-row"><div class="name">Bob Esponja 30g</div><div class="bar"><span style="width:9%;background:linear-gradient(90deg,var(--pink),#ff95a7)"></span></div><div class="value">2.1%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="insight compact-insight"><strong>Lectura:</strong> El cierre está siendo empujado por una mezcla muy clara: <strong>heavy users</strong> que cargan mucho producto, un top de SKUs que concentra volumen y un ecosistema de minijuegos que sostiene recurrencia. La promoción no vive solo de la novedad de Bob Esponja, sino de la capacidad del sistema para convertir repetición en hábito.</div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">10 / 12</div>
+</div>
+
+<div class="slide" style="padding:42px 48px;">
+  <div style="display:grid;grid-template-rows:auto 1fr auto;gap:14px;flex:1;min-height:0;">
+    <h3 style="margin-bottom:0;">Pauta, alcance y geografía activa</h3>
+    <div style="display:grid;grid-template-columns:1.05fr 0.95fr;gap:16px;min-height:0;">
+      <div style="display:grid;grid-template-rows:auto 1fr;gap:16px;min-height:0;">
+        <div class="table-wrap compact-table">
+        <table class="data-table">
+          <thead><tr><th>Conjunto</th><th>Spend</th><th>Impresiones</th><th>Alcance</th><th>Costo / res.</th></tr></thead>
+          <tbody>
+            <tr><td>BobEsponja_Mobile_BOG</td><td>$18,450</td><td>3,245,820</td><td>1,892,415</td><td>$2.18</td></tr>
+            <tr><td>BobEsponja_Retargeting_CO</td><td>$15,890</td><td>2,987,340</td><td>1,456,720</td><td>$1.94</td></tr>
+            <tr><td>Awareness Nacional</td><td>$14,220</td><td>4,128,650</td><td>2,341,050</td><td>$3.42</td></tr>
+            <tr><td>QR / PDV</td><td>$10,340</td><td>1,892,470</td><td>985,630</td><td>$2.05</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="chart-wrap tight-chart"><h4>Alcance por anuncio</h4><div class="chart-area"><canvas id="c9"></canvas></div></div>
+      </div>
+      <div style="display:grid;grid-template-rows:auto 1fr;gap:16px;min-height:0;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="m-card small-kpi"><div class="lbl">Spend acumulado Q1</div><div class="val" style="color:var(--warm)">$142.4K</div><div class="sub">USD · 18.4M impresiones acumuladas</div></div>
+          <div class="m-card small-kpi"><div class="lbl">Mejor alcance</div><div class="val" style="color:var(--accent)">2.34M</div><div class="sub">Awareness Nacional</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;min-height:0;">
+          <div class="list-box compact-box">
+            <h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);">Top ciudades</h4>
+            <div class="list-row"><div class="name">Bogotá</div><div class="bar"><span style="width:100%;background:linear-gradient(90deg,var(--warm),#ffd971)"></span></div><div class="value">1,278</div></div>
+            <div class="list-row"><div class="name">Cali</div><div class="bar"><span style="width:27%;background:linear-gradient(90deg,var(--warm),#ffd971)"></span></div><div class="value">342</div></div>
+            <div class="list-row"><div class="name">Medellín</div><div class="bar"><span style="width:24%;background:linear-gradient(90deg,var(--warm),#ffd971)"></span></div><div class="value">313</div></div>
+            <div class="list-row"><div class="name">Barranquilla</div><div class="bar"><span style="width:17%;background:linear-gradient(90deg,var(--warm),#ffd971)"></span></div><div class="value">216</div></div>
+          </div>
+          <div style="display:grid;grid-template-rows:1fr 1fr;gap:16px;min-height:0;">
+            <div class="chart-wrap tight-chart"><h4>Dispositivo</h4><div class="chart-area"><canvas id="c10"></canvas></div></div>
+            <div class="chart-wrap tight-chart"><h4>Edad</h4><div class="chart-area"><canvas id="c11"></canvas></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="insight compact-insight"><strong>Hallazgo:</strong> La pauta sostuvo cobertura, pero el cierre lo están capitalizando sobre todo <strong>Mobile + plazas fuertes</strong> como Bogotá, Cali y Medellín. La lectura táctica es clara: concentrar la “última llamada” en esas ciudades y reforzar retargeting / QR, donde la promo muestra más probabilidad de convertir intención en carga efectiva.</div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">11 / 12</div>
+</div>
+
+<div class="slide">
+  <h3>Keep It, Change It, Start It</h3>
+  <div class="kcs-grid">
+    <div class="kcs-card keep">
+      <h4>Keep It</h4>
+      <ul>
+        <li>Mantener el enfoque mobile first: 92.6% del tráfico sigue llegando desde móvil.</li>
+        <li>Sostener QR / PDV y minijuegos como anclas de permanencia y registro.</li>
+        <li>Priorizar Bogotá, Cali y Medellín, que concentran la masa crítica del cierre.</li>
+        <li>Seguir apalancando a la base fiel: los lotes ya superan ampliamente el ritmo de tiempo.</li>
+      </ul>
+    </div>
+    <div class="kcs-card change">
+      <h4>Change It</h4>
+      <ul>
+        <li>Migrar mensajes de awareness a mensajes de urgencia y transacción para el último tramo.</li>
+        <li>Reducir fricción en lote y fecha con ayudas visuales, tutoriales y copy más directo.</li>
+        <li>Optimizar Paid Social: sí trae usuarios nuevos, pero no está aportando la mejor calidad.</li>
+        <li>Separar mejor tráfico frío de tráfico de remarketing para no inflar sesiones sin intención.</li>
+      </ul>
+    </div>
+    <div class="kcs-card start">
+      <h4>Start It</h4>
+      <ul>
+        <li>Activar “última llamada” localizada por ciudad con CRM, push y remarketing.</li>
+        <li>Construir journeys para usuarios del ranking que aún no alcanzan el umbral de puntos.</li>
+        <li>Probar pop-ups de salida y ayudas contextuales en el formulario final.</li>
+        <li>Usar el top de juegos y SKUs como eje creativo del cierre, no solo el personaje.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="conc-grid" style="margin-top:18px;">
+    <div class="conc-card"><p><span class="highlight">El objetivo comercial ya está prácticamente asegurado.</span> El reto ahora es maximizar eficiencia de cierre y exprimir el valor de la base fiel sin deteriorar experiencia.</p></div>
+    <div class="conc-card"><p><span class="highlight">La promo funciona porque combina hábito + juego + carga recurrente.</span> El cierre debe concentrarse en retención, UX final y activaciones de urgencia, no en seguir comprando volumen indiscriminado.</p></div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">12 / 12</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const C = {
+  a:'#18c2c7',
+  w:'#f4b44d',
+  g:'#2ec4b6',
+  r:'#e76f51',
+  p:'#ff5c73',
+  pr:'#9f8cff',
+  muted:'#92a6b7',
+  grid:'rgba(146,166,183,0.12)'
+};
+Chart.defaults.color = C.muted;
+Chart.defaults.font.family = "'Poppins',sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.animation = false;
+Chart.defaults.responsive = true;
+Chart.defaults.maintainAspectRatio = false;
+Chart.defaults.plugins.legend.labels.boxWidth = 10;
+Chart.defaults.plugins.legend.labels.padding = 12;
+window.addEventListener('load', () => {
+  new Chart(document.getElementById('c1'),{
+    type:'line',
+    data:{
+      labels:['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'],
+      datasets:[
+        {label:'Sesiones',data:[4731,5706,6435,6627,7481,6934,14354,11493,9177,8530,7386,5946],borderColor:C.a,backgroundColor:'rgba(24,194,199,0.1)',tension:.35,pointRadius:2},
+        {label:'Usuarios',data:[1466,1566,1757,1754,1838,1657,2702,2416,1884,1560,1145,947],borderColor:C.w,backgroundColor:'rgba(244,180,77,0.1)',tension:.35,pointRadius:2},
+        {label:'Lotes',data:[2633,5480,8282,5964,7062,7089,6107,7537,6135,4821,5738,3505],borderColor:C.g,backgroundColor:'rgba(46,196,182,0.1)',tension:.35,pointRadius:2}
+      ]
+    },
+    options:{scales:{x:{grid:{display:false}},y:{grid:{color:C.grid}}}}
+  });
+  new Chart(document.getElementById('c2'),{
+    type:'bar',
+    data:{
+      labels:['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'],
+      datasets:[
+        {label:'% acumulado lotes',data:[3.5,10.9,22.0,30.0,39.5,49.0,57.2,67.4,75.6,82.1,89.8,97.5],backgroundColor:'rgba(46,196,182,0.8)',borderRadius:6},
+        {label:'% esperado tiempo',data:[5.8,11.7,17.5,23.3,29.2,35.0,40.8,46.7,52.5,58.3,64.2,69.6],backgroundColor:'rgba(255,255,255,0.12)',borderRadius:6}
+      ]
+    },
+    options:{scales:{x:{grid:{display:false}},y:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}}}}
+  });
+  new Chart(document.getElementById('c3'),{
+    type:'doughnut',
+    data:{
+      labels:['Unassigned','Organic Search','Direct / CRM','Paid Social','Otros'],
+      datasets:[{data:[29.2,23.8,23.7,22.8,0.5],backgroundColor:[C.w,C.g,C.a,C.p,C.pr],borderWidth:0}]
+    },
+    options:{cutout:'66%',plugins:{legend:{position:'bottom'}}}
+  });
+  new Chart(document.getElementById('c4'),{
+    type:'line',
+    data:{
+      labels:['23 Mar','24 Mar','25 Mar','26 Mar','27 Mar','28 Mar','29 Mar'],
+      datasets:[
+        {label:'QR / PDV',data:[296,215,175,191,177,231,232],borderColor:C.w,tension:.35,pointRadius:2},
+        {label:'Direct',data:[148,158,162,156,152,150,154],borderColor:C.a,tension:.35,pointRadius:2},
+        {label:'Google',data:[225,218,220,215,218,220,218],borderColor:C.g,tension:.35,pointRadius:2},
+        {label:'TikTok',data:[311,280,232,175,152,130,120],borderColor:C.p,tension:.35,pointRadius:2}
+      ]
+    },
+    options:{scales:{x:{grid:{display:false}},y:{grid:{color:C.grid}}}}
+  });
+  new Chart(document.getElementById('c5'),{
+    type:'bar',
+    data:{
+      labels:['Escribe Producto','Iniciar Sesion','Ver Más Juegos','Lote / Fecha Fab.','Star Juegos','Fecha Vencim.'],
+      datasets:[{data:[10.5,10.4,9.9,9.5,9.1,9.2],backgroundColor:[C.a,C.w,C.p,C.g,C.pr,'#5ba8ff'],borderRadius:8,maxBarThickness:48}]
+    },
+    options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{maxRotation:0,minRotation:0}},y:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}}}}
+  });
+  new Chart(document.getElementById('c6'),{
+    type:'bar',
+    data:{labels:['Caza Cereales','Memorama','Corte Submarino','Trivia'],datasets:[{data:[1588,1506,1499,361],backgroundColor:[C.a,C.w,C.g,C.p],borderRadius:10}]},
+    options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:C.grid}}}}
+  });
+  new Chart(document.getElementById('c7'),{
+    type:'bar',
+    data:{labels:['ChocoKrispis 30g','Zucaritas 36g','Zucaritas 1600g','Zucaritas 39g','Zucaritas 610g','FrootLoops 33g','BobEsponja 30g'],datasets:[{data:[812,414,325,223,197,83,72],backgroundColor:[C.a,C.w,C.g,C.p,C.pr,'#5ba8ff','#ffd46e'],borderRadius:8}]},
+    options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:C.grid}}}}
+  });
+  new Chart(document.getElementById('c8'),{
+    type:'doughnut',
+    data:{labels:['Paketikos','Resto productos'],datasets:[{data:[53.9,46.1],backgroundColor:[C.w,C.a],borderWidth:0}]},
+    options:{cutout:'65%',plugins:{legend:{position:'bottom'}}}
+  });
+  new Chart(document.getElementById('c9'),{
+    type:'bar',
+    data:{labels:['Awareness Nacional','Mobile BOG','Retargeting CO','Minijuegos','QR / PDV','Lookalike CO'],datasets:[{data:[2341050,1892415,1456720,1128940,985630,876540],backgroundColor:'rgba(244,180,77,0.8)',borderRadius:8}]},
+    options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:C.grid}}}}
+  });
+  new Chart(document.getElementById('c10'),{
+    type:'doughnut',
+    data:{labels:['Mobile','Desktop','Tablet'],datasets:[{data:[92.6,6.6,0.7],backgroundColor:[C.a,C.w,C.p],borderWidth:0}]},
+    options:{cutout:'62%',plugins:{legend:{position:'bottom'}}}
+  });
+  new Chart(document.getElementById('c11'),{
+    type:'bar',
+    data:{labels:['18','17','19','20','21+'],datasets:[{data:[62,18,9,6,5],backgroundColor:[C.a,C.w,C.g,C.p,C.pr],borderRadius:8}]},
+    options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}}}}
+  });
+});
+</script>
+</body>
+</html>
