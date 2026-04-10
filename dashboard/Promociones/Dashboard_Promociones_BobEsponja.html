@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Promociones | Mescalina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f13;
+      --surface: rgba(15, 20, 25, 0.94);
+      --surface-2: rgba(22, 29, 38, 0.96);
+      --surface-3: #1c2530;
+      --surface-4: #243243;
+      --accent: #18c2c7;
+      --accent-soft: rgba(24, 194, 199, 0.12);
+      --warm: #f4b44d;
+      --warm-soft: rgba(244, 180, 77, 0.12);
+      --green: #2ec4b6;
+      --green-soft: rgba(46, 196, 182, 0.12);
+      --pink: #ff5c73;
+      --pink-soft: rgba(255, 92, 115, 0.12);
+      --purple: #9f8cff;
+      --purple-soft: rgba(159, 140, 255, 0.12);
+      --text: #ebf2f8;
+      --muted: #92a6b7;
+      --dim: #5c7082;
+      --line: rgba(146, 166, 183, 0.14);
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --content: 1460px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(24, 194, 199, 0.18), transparent 26%),
+        radial-gradient(circle at 12% 16%, rgba(244, 180, 77, 0.10), transparent 18%),
+        linear-gradient(180deg, #0b0f13 0%, #0f1419 42%, #0d1318 100%);
+      color: var(--text);
+      font-family: "Poppins", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.45;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .dashboard {
+      max-width: var(--content);
+      margin: 0 auto;
+      padding: 28px 22px 60px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(15, 20, 25, 0.94), rgba(22, 29, 38, 0.88)),
+        linear-gradient(160deg, rgba(24, 194, 199, 0.08), transparent 50%);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 280px;
+      height: 280px;
+      right: -120px;
+      top: -120px;
+      background: rgba(24, 194, 199, 0.18);
+    }
+
+    .hero::after {
+      width: 220px;
+      height: 220px;
+      left: -110px;
+      bottom: -140px;
+      background: rgba(244, 180, 77, 0.10);
+    }
+
+    .hero-top,
+    .hero-bottom {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 30px;
+      align-items: start;
+    }
+
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .brand-dot {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), #5be6ea);
+      color: #08272b;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-copy small {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .brand-copy strong {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.02;
+      font-weight: 700;
+      max-width: 720px;
+      margin-bottom: 16px;
+    }
+
+    h1 em {
+      color: var(--warm);
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .hero-copy p {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .hero-panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 20px;
+      padding: 22px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card h3 {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-card p {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .hero-card strong {
+      color: var(--warm);
+      font-weight: 700;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .hero-stat {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .hero-stat .label {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+
+    .hero-stat .value {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .hero-stat .detail {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .looker-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+
+    .looker-pill {
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+    }
+
+    section {
+      margin-top: 54px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-head-left {
+      min-width: 0;
+    }
+
+    .section-label {
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 8px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+
+    .section-head p {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .section-meta {
+      color: var(--muted);
+      font-size: 12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      white-space: nowrap;
+    }
+
+    .grid-8 {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .grid-4,
+    .grid-3,
+    .grid-2,
+    .grid-2-1,
+    .grid-1-2,
+    .grid-3-2 {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-2-1 { grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr); }
+    .grid-1-2 { grid-template-columns: minmax(300px, 1fr) minmax(0, 2fr); }
+    .grid-3-2 { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+    .align-start { align-items: start; }
+
+    .card {
+      min-width: 0;
+      background: linear-gradient(180deg, rgba(22, 29, 38, 0.96), rgba(18, 24, 31, 0.96));
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-inner {
+      padding: 24px;
+    }
+
+    .kpi-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 182px;
+      padding: 22px;
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: var(--accent);
+    }
+
+    .kpi-card.warm::before { background: var(--warm); }
+    .kpi-card.green::before { background: var(--green); }
+    .kpi-card.pink::before { background: var(--pink); }
+    .kpi-card.purple::before { background: var(--purple); }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .kpi-label {
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .kpi-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge-accent { background: var(--accent-soft); color: var(--accent); }
+    .badge-green { background: var(--green-soft); color: var(--green); }
+    .badge-warm { background: var(--warm-soft); color: var(--warm); }
+    .badge-pink { background: var(--pink-soft); color: var(--pink); }
+    .badge-purple { background: var(--purple-soft); color: var(--purple); }
+
+    .kpi-value {
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .kpi-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .progress-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .progress-card {
+      padding: 18px 20px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .progress-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .progress-detail {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .fill-accent { background: linear-gradient(90deg, var(--accent), #66eff2); }
+    .fill-green { background: linear-gradient(90deg, var(--green), #5ed9ce); }
+    .fill-warm { background: linear-gradient(90deg, var(--warm), #ffd46e); }
+    .fill-pink { background: linear-gradient(90deg, var(--pink), #ff8da1); }
+
+    .insight {
+      padding: 22px 24px;
+      border-radius: 20px;
+      border: 1px solid rgba(244, 180, 77, 0.18);
+      background: linear-gradient(180deg, rgba(244, 180, 77, 0.08), rgba(244, 180, 77, 0.03));
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .insight strong {
+      color: var(--warm);
+    }
+
+    .chart-card,
+    .table-card,
+    .module-card {
+      padding: 24px;
+    }
+
+    .tall-side-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .tall-side-card .split-list {
+      flex: 1;
+      grid-auto-rows: minmax(0, 1fr);
+      align-content: stretch;
+    }
+
+    .tall-side-card .list-row {
+      height: 100%;
+      align-content: center;
+    }
+
+    .reading-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .reading-card .split-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+      gap: 14px;
+    }
+
+    .reading-card .list-row {
+      grid-template-columns: 118px 1fr auto;
+      min-height: 58px;
+      padding: 8px 0;
+    }
+
+    .reading-card .list-row .name,
+    .reading-card .list-row .value {
+      font-size: 13px;
+    }
+
+    .reading-card .list-row .bar {
+      height: 11px;
+    }
+
+    .card-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .card-title h3 {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .card-title p {
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .chart-shell {
+      position: relative;
+      height: 320px;
+    }
+
+    .chart-shell.tall { height: 380px; }
+    .chart-shell.short { height: 240px; }
+    .chart-shell.compact { height: 260px; }
+
+    .chart-shell.mix-origin { height: 340px; }
+    .chart-shell.events-shell { height: 340px; }
+
+    .chart-shell canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    .split-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .list-row {
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .list-row .name {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .list-row .bar {
+      position: relative;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .list-row .bar span {
+      position: absolute;
+      inset: 0 auto 0 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+    }
+
+    .list-row .value {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+    }
+
+    th {
+      text-align: left;
+      padding: 11px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--line);
+    }
+
+    td {
+      padding: 11px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .winner-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .winner-card {
+      padding: 24px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .winner-card .type {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .winner-card .count {
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .winner-card .text {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .metric-mini {
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .metric-mini .label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 8px;
+    }
+
+    .metric-mini .value {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .metric-mini .desc {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .creative-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .creative-card {
+      min-height: 280px;
+      border-radius: 18px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.18), transparent 24%),
+        linear-gradient(180deg, #18c2c7 0%, #0f8d91 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .creative-card:nth-child(2) { background: linear-gradient(180deg, #f3ba4b 0%, #d78d1e 100%); }
+    .creative-card:nth-child(3) { background: linear-gradient(180deg, #1fc8a8 0%, #13826d 100%); }
+    .creative-card:nth-child(4) { background: linear-gradient(180deg, #ff6277 0%, #d94562 100%); }
+    .creative-card:nth-child(5) { background: linear-gradient(180deg, #8f84ff 0%, #6256de 100%); }
+
+    .creative-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -26px -26px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .creative-top,
+    .creative-bottom {
+      position: relative;
+      z-index: 1;
+    }
+
+    .creative-tag {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(6, 17, 20, 0.8);
+      background: rgba(255, 255, 255, 0.72);
+      margin-bottom: 14px;
+    }
+
+    .creative-copy {
+      font-size: 20px;
+      line-height: 1.08;
+      font-weight: 700;
+      max-width: 220px;
+    }
+
+    .creative-stats {
+      display: grid;
+      gap: 4px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 12px;
+    }
+
+    .funnel-stack {
+      display: grid;
+      gap: 16px;
+      padding-top: 10px;
+    }
+
+    .funnel-row {
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr) 68px;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .funnel-row .step {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .funnel-bar {
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      color: #051416;
+      font-weight: 700;
+      min-width: 0;
+    }
+
+    .funnel-bar small {
+      color: rgba(5, 20, 22, 0.74);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .funnel-row .rate {
+      font-size: 12px;
+      color: var(--warm);
+      text-align: right;
+      font-weight: 700;
+    }
+
+    .geo-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 20px;
+    }
+
+    .city-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .city-item {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .city-item span:first-child {
+      color: var(--muted);
+    }
+
+    .city-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .city-track i {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--warm), #ffd971);
+    }
+
+    .kcs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .kcs-card {
+      padding: 24px;
+      border-radius: 22px;
+      min-height: 280px;
+    }
+
+    .kcs-card.keep {
+      background: linear-gradient(180deg, rgba(244, 180, 77, 0.12), rgba(244, 180, 77, 0.05));
+      border: 1px solid rgba(244, 180, 77, 0.16);
+    }
+
+    .kcs-card.change {
+      background: linear-gradient(180deg, rgba(255, 92, 115, 0.12), rgba(255, 92, 115, 0.05));
+      border: 1px solid rgba(255, 92, 115, 0.16);
+    }
+
+    .kcs-card.start {
+      background: linear-gradient(180deg, rgba(24, 194, 199, 0.12), rgba(24, 194, 199, 0.05));
+      border: 1px solid rgba(24, 194, 199, 0.16);
+    }
+
+    .kcs-card h3 {
+      font-size: 26px;
+      margin-bottom: 16px;
+    }
+
+    .kcs-card ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .kcs-card li {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .footer-note {
+      margin-top: 44px;
+      padding: 22px 26px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 1280px) {
+      .grid-8,
+      .kpi-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .creative-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .hero-top,
+      .grid-2-1,
+      .grid-1-2,
+      .grid-3-2,
+      .geo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .dashboard {
+        padding: 18px 14px 42px;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-2,
+      .winner-grid,
+      .metric-strip,
+      .kcs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-8,
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .creative-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .grid-8,
+      .kpi-grid,
+      .creative-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero,
+      .card,
+      .kcs-card {
+        border-radius: 20px;
+      }
+
+      .hero {
+        padding: 22px;
+      }
+
+      .kpi-card {
+        min-height: 0;
+      }
+
+      .funnel-row {
+        grid-template-columns: 1fr;
+      }
+
+      .list-row,
+      .city-item {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="dashboard">
+    <header class="hero">
+      <div class="hero-top">
+        <div class="hero-copy">
+          <div class="brand-lockup">
+            <div class="brand-dot">m</div>
+            <div class="brand-copy">
+              <small>Dashboard System</small>
+              <strong>mescalina®</strong>
+            </div>
+          </div>
+
+          <div class="eyebrow">Dashboard de promoción | Bob Esponja CO 2025-2026</div>
+          <h1>Bob Esponja Kellanova<br><em>Promoción Colombia</em></h1>
+          <p>
+            Vista consolidada del desempeño de la promoción "Bob Esponja" de Kellanova en Colombia.
+            Integra el avance diario y semanal de sesiones, registros de productos, comportamiento del
+            funnel, performance del sitio web y resultados de pauta digital. Esta vista reemplaza al
+            reporte estático semanal y se actualiza con conectores de GA4, engine de promoción y plataformas de pauta.
+          </p>
+
+          <div class="chip-row">
+            <div class="chip">15 Dic 2025 - 18 May 2026</div>
+            <div class="chip">Promoción activa</div>
+            <div class="chip">Retail + digital</div>
+            <div class="chip">4 minijuegos</div>
+            <div class="chip">Cobertura Colombia</div>
+            <div class="chip">Mobile first 92.6%</div>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="hero-card">
+            <h3>Objetivo de la promoción</h3>
+            <p>
+              Maximizar la <strong>retención</strong> con una experiencia web inmersiva de Bob Esponja
+              que gamifica la compra recurrente, y atraer nuevos usuarios con acceso rápido a
+              <strong>recompensas instantáneas</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="label">Periodo</div>
+          <div class="value">22 semanas</div>
+          <div class="detail">Tracking semanal · vista acumulada</div>
+        </div>
+        <div class="hero-stat">
+          <div class="label">Fuentes de datos</div>
+          <div class="value">3</div>
+          <div class="detail">GA4, engine de promo, Meta Ads</div>
+        </div>
+        <div class="hero-stat">
+          <div class="label">Estado</div>
+          <div class="value">Activa · S12</div>
+          <div class="detail">69.6% del tiempo de promoción transcurrido</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="looker-strip">
+      <div class="looker-pill">📊 Datos en vivo · refresh diario</div>
+      <div class="looker-pill">Conectores: GA4 · Engine Kellanova · Meta Ads</div>
+      <div class="looker-pill">📝 Análisis ejecutivo actualizado al 29 marzo 2026</div>
+    </div>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">01. Resumen ejecutivo</div>
+          <h2>Vista gerencial de la promoción</h2>
+          <p>
+            El primer scroll concentra los números que más suelen revisar cliente, cuenta y operación:
+            volumen, cumplimiento, calidad del tráfico, resultados comerciales y presión publicitaria.
+          </p>
+        </div>
+        <div class="section-meta">Último corte consolidado del periodo</div>
+      </div>
+
+      <div class="kpi-grid">
+        <article class="card kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-label">Sesiones (S12)</div>
+            <div class="kpi-badge badge-accent">71% objetivo</div>
+          </div>
+          <div class="kpi-value">5,946</div>
+          <div class="kpi-note">Acumulado: 101,620 / 158,000 · 64.3% YTD</div>
+        </article>
+
+        <article class="card kpi-card warm">
+          <div class="kpi-top">
+            <div class="kpi-label">Usuarios (S12)</div>
+            <div class="kpi-badge badge-warm">69% objetivo</div>
+          </div>
+          <div class="kpi-value">947</div>
+          <div class="kpi-note">Acumulado: 20,692 / 26,000 · 79.6% YTD</div>
+        </article>
+
+        <article class="card kpi-card green">
+          <div class="kpi-top">
+            <div class="kpi-label">Lotes registrados (S12)</div>
+            <div class="kpi-badge badge-green">89% objetivo</div>
+          </div>
+          <div class="kpi-value">3,505</div>
+          <div class="kpi-note">Acumulado: 72,608 / 74,500 · 97.5% YTD</div>
+        </article>
+
+        <article class="card kpi-card purple">
+          <div class="kpi-top">
+            <div class="kpi-label">Productos por usuario</div>
+            <div class="kpi-badge badge-purple">+27.9 pp ritmo</div>
+          </div>
+          <div class="kpi-value">3.7</div>
+          <div class="kpi-note">Promedio acumulado · indicador clave de fidelidad</div>
+        </article>
+
+        <article class="card kpi-card pink">
+          <div class="kpi-top">
+            <div class="kpi-label">Engagement rate (sitio)</div>
+            <div class="kpi-badge badge-pink">▲ 2.3 pp vs S11</div>
+          </div>
+          <div class="kpi-value">59.33%</div>
+          <div class="kpi-note">El tráfico residual es el más interesado</div>
+        </article>
+
+        <article class="card kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-label">Mobile share</div>
+            <div class="kpi-badge badge-accent">Mobile first</div>
+          </div>
+          <div class="kpi-value">92.6%</div>
+          <div class="kpi-note">Desktop 6.6% · Tablet 0.7%</div>
+        </article>
+
+        <article class="card kpi-card warm">
+          <div class="kpi-top">
+            <div class="kpi-label">Pauta acumulada</div>
+            <div class="kpi-badge badge-warm">Q1 2026</div>
+          </div>
+          <div class="kpi-value">$142.4K</div>
+          <div class="kpi-note">USD · 18.4M impresiones acumuladas</div>
+        </article>
+
+        <article class="card kpi-card green">
+          <div class="kpi-top">
+            <div class="kpi-label">Tiempo transcurrido</div>
+            <div class="kpi-badge badge-green">69.6%</div>
+          </div>
+          <div class="kpi-value">S12 / 22</div>
+          <div class="kpi-note">Lotes va 27.9 pp por encima del ritmo esperado</div>
+        </article>
+      </div>
+
+      <div class="grid-2-1" style="margin-top:20px;">
+        <article class="card module-card reading-card">
+          <div class="card-title">
+            <h3>Cumplimiento acumulado vs meta total</h3>
+            <p>YTD al cierre de S12</p>
+          </div>
+          <div class="progress-stack">
+            <div class="progress-card">
+              <div class="progress-head">
+                <div class="progress-title">Sesiones</div>
+                <div class="progress-detail">101,620 / 158,000</div>
+              </div>
+              <div class="progress-track"><div class="progress-fill fill-accent" style="width:64.3%"></div></div>
+            </div>
+            <div class="progress-card">
+              <div class="progress-head">
+                <div class="progress-title">Usuarios registrados</div>
+                <div class="progress-detail">20,692 / 26,000</div>
+              </div>
+              <div class="progress-track"><div class="progress-fill fill-warm" style="width:79.6%"></div></div>
+            </div>
+            <div class="progress-card">
+              <div class="progress-head">
+                <div class="progress-title">Lotes / códigos</div>
+                <div class="progress-detail">72,608 / 74,500</div>
+              </div>
+              <div class="progress-track"><div class="progress-fill fill-green" style="width:97.5%"></div></div>
+            </div>
+            <div class="progress-card">
+              <div class="progress-head">
+                <div class="progress-title">Tiempo de promoción</div>
+                <div class="progress-detail">S12 / S22 · 69.6%</div>
+              </div>
+              <div class="progress-track"><div class="progress-fill fill-pink" style="width:69.6%"></div></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card module-card">
+          <div class="card-title">
+            <h3>Lectura rápida</h3>
+            <p>Estado por dimensión</p>
+          </div>
+          <div class="split-list">
+            <div class="list-row">
+              <div class="name">Tráfico</div>
+              <div class="bar"><span style="width:64%"></span></div>
+              <div class="value">Estable</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Registro</div>
+              <div class="bar"><span style="width:97%"></span></div>
+              <div class="value">Cumplido</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Retención</div>
+              <div class="bar"><span style="width:88%"></span></div>
+              <div class="value">Alta</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Engagement</div>
+              <div class="bar"><span style="width:59%"></span></div>
+              <div class="value">▲ 2.3pp</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Mobile</div>
+              <div class="bar"><span style="width:92%"></span></div>
+              <div class="value">Dominante</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="insight" style="margin-top:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:10px;flex-wrap:wrap;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.16em;color:var(--warm);font-weight:700;">📝 Lectura ejecutiva del periodo</div>
+          <div style="font-size:11px;color:var(--muted);">Curado por equipo Mescalina · 29 marzo 2026</div>
+        </div>
+        Bob Esponja entra en <strong>fase de estabilización</strong> en S12 tras el pico transaccional de S11. La campaña ya alcanzó <strong>97.5% de la meta de lotes</strong> con 30.4% de tiempo aún por delante — el objetivo comercial está prácticamente asegurado antes del cierre. La base de usuarios fieles sigue cargando producto: el ER subió a 59.33% (+2.3 pp) sin pauta activa, lo que confirma que el tráfico residual es de alta intención. Bob Esponja supera con claridad a Liga de la Justicia y Prima Millonaria 2024 en el comparativo histórico de la misma semana.
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">02. Funnel y evolución</div>
+          <h2>Cómo crece la promo semana a semana</h2>
+          <p>
+            Bloque ideal para revisar si la campaña viene ganando tracción, si las sesiones se convierten
+            en registros y si el cierre está ocurriendo por adquisición nueva o por retención de usuarios fieles.
+          </p>
+        </div>
+        <div class="section-meta">Line + horizontal bar + donut</div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:20px;">
+        <article class="card chart-card">
+          <div class="card-title">
+            <h3>Histórico de indicadores clave</h3>
+            <p>8 semanas</p>
+          </div>
+          <div class="chart-shell tall">
+            <canvas id="weeklyTrendChart"></canvas>
+          </div>
+        </article>
+
+        <article class="card chart-card">
+          <div class="card-title">
+            <h3>Cumplimiento semanal</h3>
+            <p>Resultado vs objetivo</p>
+          </div>
+          <div class="chart-shell tall">
+            <canvas id="weeklyAttainmentChart"></canvas>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid-2-1">
+        <article class="card module-card">
+          <div class="card-title">
+            <h3>Funnel acumulado</h3>
+            <p>Sesión a premio</p>
+          </div>
+          <div class="funnel-stack">
+            <div class="funnel-row">
+              <div class="step">Sesiones</div>
+              <div class="funnel-bar" style="width:100%; background:linear-gradient(90deg, #18c2c7, #5be6ea);">
+                <span>5,946</span><small>Base S12</small>
+              </div>
+              <div class="rate">100%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="step">Juegos</div>
+              <div class="funnel-bar" style="width:83%; background:linear-gradient(90deg, #f4b44d, #ffd46e);">
+                <span>4,954</span><small>de sesiones</small>
+              </div>
+              <div class="rate">83%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="step">Usuarios</div>
+              <div class="funnel-bar" style="width:16%; background:linear-gradient(90deg, #2ec4b6, #64e2d6);">
+                <span>947</span><small>conversión</small>
+              </div>
+              <div class="rate">16%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="step">Lotes</div>
+              <div class="funnel-bar" style="width:59%; background:linear-gradient(90deg, #ff5c73, #ff95a7);">
+                <span>3,505</span><small>productos</small>
+              </div>
+              <div class="rate">3.7 / usuario</div>
+            </div>
+          </div>
+
+          <div class="metric-strip">
+            <div class="metric-mini">
+              <div class="label">Productos por usuario</div>
+              <div class="value">3.70</div>
+              <div class="desc">Hábito alto · cada usuario carga ~4 productos en la semana</div>
+            </div>
+            <div class="metric-mini">
+              <div class="label">Tiempo promedio QR</div>
+              <div class="value">03:22</div>
+              <div class="desc">+6.3% vs S11 · canal físico retiene mejor</div>
+            </div>
+            <div class="metric-mini">
+              <div class="label">ER en Perfil</div>
+              <div class="value">96.4%</div>
+              <div class="desc">Casi cero abandono en usuarios recurrentes</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card chart-card">
+          <div class="card-title">
+            <h3>Mix de origen</h3>
+            <p>Participación del tráfico</p>
+          </div>
+          <div class="chart-shell mix-origin">
+            <canvas id="channelMixChart"></canvas>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">03. Fuentes de tráfico</div>
+          <h2>Qué canal trae volumen y qué canal trae calidad</h2>
+          <p>
+            Este módulo se basa en el patrón de Bob Esponja: mirar fuente, tendencia, engagement y tiempo
+            para separar tráfico de relleno de tráfico que realmente empuja el registro.
+          </p>
+        </div>
+        <div class="section-meta">Tabla + line chart</div>
+      </div>
+
+      <div class="grid-2-1" style="margin-bottom:20px;">
+        <article class="card table-card">
+          <div class="card-title">
+            <h3>Fuentes de tráfico</h3>
+            <p>Sesiones, usuarios y calidad</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fuente</th>
+                  <th>Sesiones</th>
+                  <th>Usuarios</th>
+                  <th>Nuevos</th>
+                  <th>Interacciones</th>
+                  <th>ER</th>
+                  <th>Tiempo prom.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Paid Social</td>
+                  <td>1,358</td>
+                  <td>1,080</td>
+                  <td>733</td>
+                  <td>413</td>
+                  <td>30.4%</td>
+                  <td>02:14</td>
+                </tr>
+                <tr>
+                  <td>Unassigned</td>
+                  <td>1,735</td>
+                  <td>1,032</td>
+                  <td>719</td>
+                  <td>1,109</td>
+                  <td>63.9%</td>
+                  <td>02:08</td>
+                </tr>
+                <tr>
+                  <td>Direct / CRM</td>
+                  <td>1,411</td>
+                  <td>751</td>
+                  <td>527</td>
+                  <td>968</td>
+                  <td>68.6%</td>
+                  <td>02:40</td>
+                </tr>
+                <tr>
+                  <td>Organic Search</td>
+                  <td>1,414</td>
+                  <td>606</td>
+                  <td>320</td>
+                  <td>1,037</td>
+                  <td>73.3%</td>
+                  <td>03:26</td>
+                </tr>
+                <tr>
+                  <td>Organic Social</td>
+                  <td>6</td>
+                  <td>6</td>
+                  <td>6</td>
+                  <td>3</td>
+                  <td>50.0%</td>
+                  <td>00:48</td>
+                </tr>
+                <tr>
+                  <td>Referral</td>
+                  <td>16</td>
+                  <td>3</td>
+                  <td>1</td>
+                  <td>12</td>
+                  <td>75.0%</td>
+                  <td>01:36</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card module-card">
+          <div class="card-title">
+            <h3>Lectura del mix</h3>
+            <p>Lo que importa</p>
+          </div>
+          <div class="split-list" style="margin-bottom:16px;">
+            <div class="list-row">
+              <div class="name">Organic Search</div>
+              <div class="bar"><span style="width:73%; background:linear-gradient(90deg, var(--green), #64e2d6)"></span></div>
+              <div class="value">73% ER</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Direct / CRM</div>
+              <div class="bar"><span style="width:69%; background:linear-gradient(90deg, var(--accent), #5be6ea)"></span></div>
+              <div class="value">69% ER</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Unassigned</div>
+              <div class="bar"><span style="width:64%; background:linear-gradient(90deg, var(--warm), #ffd971)"></span></div>
+              <div class="value">64% ER</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Paid Social</div>
+              <div class="bar"><span style="width:30%; background:linear-gradient(90deg, var(--pink), #ff98aa)"></span></div>
+              <div class="value">30% ER</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="card chart-card">
+        <div class="card-title">
+          <h3>Histórico de sesiones por fuente</h3>
+          <p>Daily source quality</p>
+        </div>
+        <div class="chart-shell tall">
+          <canvas id="sourceHistoryChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">04. Comportamiento y eventos</div>
+          <h2>Dónde se interesan y dónde se frenan los usuarios</h2>
+          <p>
+            En promos con micrositio, este módulo ayuda a revisar intención real de registro:
+            home, perfil, formulario, juegos y pasos finales como lote y fecha.
+          </p>
+        </div>
+        <div class="section-meta">Eventos + paths + juegos</div>
+      </div>
+
+      <div class="grid-3-2" style="margin-bottom:20px;">
+        <article class="card chart-card">
+          <div class="card-title">
+            <h3>Eventos en landing</h3>
+            <p>Participación por evento</p>
+          </div>
+          <div class="chart-shell events-shell">
+            <canvas id="landingEventsChart"></canvas>
+          </div>
+        </article>
+
+        <article class="card module-card reading-card">
+          <div class="card-title">
+            <h3>Microlecturas</h3>
+            <p>Puntos de atención</p>
+          </div>
+          <div class="split-list">
+            <div class="list-row">
+              <div class="name">Inicio registro</div>
+              <div class="bar"><span style="width:53%"></span></div>
+              <div class="value">10.5%</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Carga lote</div>
+              <div class="bar"><span style="width:48%; background:linear-gradient(90deg, var(--warm), #ffd971)"></span></div>
+              <div class="value">9.5%</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Carga fecha</div>
+              <div class="bar"><span style="width:46%; background:linear-gradient(90deg, var(--pink), #ff95a7)"></span></div>
+              <div class="value">9.1%</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Juego activo</div>
+              <div class="bar"><span style="width:50%; background:linear-gradient(90deg, var(--green), #64e2d6)"></span></div>
+              <div class="value">9.9%</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid-2">
+        <article class="card table-card">
+          <div class="card-title">
+            <h3>Conducta de navegación</h3>
+            <p>Primeras rutas / páginas</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Landing / Path</th>
+                  <th>Fuente</th>
+                  <th>Sesiones</th>
+                  <th>ER</th>
+                  <th>Tiempo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>promokelloggs.com/</td>
+                  <td>qr / pdv</td>
+                  <td>791</td>
+                  <td>83.5%</td>
+                  <td>03:22</td>
+                </tr>
+                <tr>
+                  <td>promokelloggs.com/</td>
+                  <td>(direct) / none</td>
+                  <td>737</td>
+                  <td>86.6%</td>
+                  <td>02:40</td>
+                </tr>
+                <tr>
+                  <td>/Perfil</td>
+                  <td>(direct) / none</td>
+                  <td>472</td>
+                  <td>96.4%</td>
+                  <td>01:39</td>
+                </tr>
+                <tr>
+                  <td>/Registro</td>
+                  <td>qr / pdv</td>
+                  <td>448</td>
+                  <td>93.1%</td>
+                  <td>02:36</td>
+                </tr>
+                <tr>
+                  <td>/Minijuegos</td>
+                  <td>(direct) / none</td>
+                  <td>349</td>
+                  <td>95.2%</td>
+                  <td>00:48</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card chart-card">
+          <div class="card-title">
+            <h3>Principales juegos y ganchos</h3>
+            <p>Interés dentro del sitio</p>
+          </div>
+          <div class="chart-shell">
+            <canvas id="gamesChart"></canvas>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">05. Resultados comerciales</div>
+          <h2>Qué productos, marcas y promotores están empujando el cierre</h2>
+          <p>
+            Este bloque identifica los usuarios más activos del ranking, el mix de productos
+            registrados y la concentración del desempeño por SKU.
+          </p>
+        </div>
+        <div class="section-meta">Top tables + mix charts</div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:20px;">
+        <article class="card table-card">
+          <div class="card-title">
+            <h3>Top usuarios por registros</h3>
+            <p>Concentración del desempeño</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nickname</th>
+                  <th>Marca top</th>
+                  <th>Productos</th>
+                  <th>Puntos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>NutriPlanctonK_3504</td><td>Choco Krispis</td><td>3,474</td><td>2,119,932</td></tr>
+                <tr><td>KrustyCrunch_3057</td><td>Zucaritas</td><td>1,399</td><td>2,111,520</td></tr>
+                <tr><td>CerealEnergéticoBob_5004</td><td>Bob Esponja</td><td>1,141</td><td>1,546,923</td></tr>
+                <tr><td>VitalidadAcua_6291</td><td>Froot Loops</td><td>1,115</td><td>1,678,452</td></tr>
+                <tr><td>CerealWaveK_4822</td><td>Choco Krispis</td><td>935</td><td>1,435,592</td></tr>
+                <tr><td>FondoBikiniFit_5890</td><td>Zucaritas</td><td>747</td><td>833,577</td></tr>
+              </tbody>
+            </table>
+            <div style="font-size:11px;color:var(--muted);margin-top:10px;">Top 6 de 19,833 usuarios · campo "Productos" = lotes registrados · "Kilos" = puntos acumulados</div>
+          </div>
+        </article>
+
+        <article class="card chart-card">
+          <div class="card-title">
+            <h3>Mix de productos / marcas</h3>
+            <p>Qué compra y registra la gente</p>
+          </div>
+          <div class="chart-shell">
+            <canvas id="productMixChart"></canvas>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid-2-1">
+        <article class="card table-card">
+          <div class="card-title">
+            <h3>Top productos registrados</h3>
+            <p>Cantidad de lotes en S12</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Marca</th>
+                  <th>Gramaje</th>
+                  <th>Cantidad</th>
+                  <th>% del total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Choco Krispis®</td><td>30 g</td><td>812</td><td>23.2%</td></tr>
+                <tr><td>Zucaritas®</td><td>36 g</td><td>414</td><td>11.8%</td></tr>
+                <tr><td>Zucaritas®</td><td>1600 g</td><td>325</td><td>9.3%</td></tr>
+                <tr><td>Zucaritas®</td><td>39 g</td><td>223</td><td>6.4%</td></tr>
+                <tr><td>Zucaritas®</td><td>610 g</td><td>197</td><td>5.6%</td></tr>
+                <tr><td>Bob Esponja</td><td>30 g</td><td>72</td><td>2.1%</td></tr>
+                <tr><td>Froot Loops®</td><td>33 g</td><td>83</td><td>2.4%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card chart-card">
+          <div class="card-title">
+            <h3>Mix de Paketikos vs total</h3>
+            <p>Composición del registro</p>
+          </div>
+          <div class="chart-shell compact">
+            <canvas id="brandMixChart"></canvas>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">06. Minijuegos y gamificación</div>
+          <h2>Cómo está funcionando el ecosistema lúdico</h2>
+          <p>
+            Bob Esponja es una promo gamificada: el registro se acompaña de minijuegos que premian
+            la permanencia en el sitio. Esta sección muestra la actividad por juego y los líderes del ranking.
+          </p>
+        </div>
+        <div class="section-meta">Scorecards + ranking</div>
+      </div>
+
+      <div class="winner-grid">
+        <article class="card winner-card">
+          <div class="type">Caza Cereales</div>
+          <div class="count">1,588</div>
+          <div class="text">Veces jugado en S12 · -11.5% vs S11. Sigue siendo el juego con más actividad de la semana.</div>
+        </article>
+        <article class="card winner-card">
+          <div class="type">Memorama</div>
+          <div class="count">1,506</div>
+          <div class="text">Veces jugado en S12 · -10.8% vs S11. Segundo gancho de retención del sitio.</div>
+        </article>
+        <article class="card winner-card">
+          <div class="type">Corte Submarino</div>
+          <div class="count">1,499</div>
+          <div class="text">Veces jugado en S12 · -6.9% vs S11. Caída más leve · señal de jugadores leales.</div>
+        </article>
+      </div>
+
+      <div class="grid-2">
+        <article class="card table-card">
+          <div class="card-title">
+            <h3>Top jugadores S12</h3>
+            <p>Cantidad de juegos y puntos acumulados</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nickname</th>
+                  <th>Juegos</th>
+                  <th>Puntos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>CerealAlegreBob_23053</td><td>21</td><td>502</td></tr>
+                <tr><td>BikiniBottomPower_23275</td><td>15</td><td>299</td></tr>
+                <tr><td>DeliPatricioK_23209</td><td>14</td><td>315</td></tr>
+                <tr><td>EnergíaOndasK_23177</td><td>14</td><td>278</td></tr>
+                <tr><td>KrustyNutriK_23064</td><td>12</td><td>228</td></tr>
+                <tr><td>MedusaJelly_23489</td><td>12</td><td>255</td></tr>
+              </tbody>
+            </table>
+            <div style="font-size:11px;color:var(--muted);margin-top:10px;">Top 6 de 552 jugadores activos en S12 · Trivia 361 sesiones (no incluida)</div>
+          </div>
+        </article>
+
+        <article class="card module-card">
+          <div class="card-title">
+            <h3>Lectura del ecosistema lúdico</h3>
+            <p>Estado por dimensión</p>
+          </div>
+          <div class="split-list">
+            <div class="list-row">
+              <div class="name">Volumen total</div>
+              <div class="bar"><span style="width:78%; background:linear-gradient(90deg, var(--warm), #ffd971)"></span></div>
+              <div class="value">▼ -10% vs S11</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Jugadores únicos</div>
+              <div class="bar"><span style="width:55%; background:linear-gradient(90deg, var(--pink), #ff95a7)"></span></div>
+              <div class="value">552 (más bajo)</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Intensidad líder</div>
+              <div class="bar"><span style="width:92%; background:linear-gradient(90deg, var(--green), #64e2d6)"></span></div>
+              <div class="value">▲ 21 juegos</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Vínculo con registro</div>
+              <div class="bar"><span style="width:83%; background:linear-gradient(90deg, var(--accent), #5be6ea)"></span></div>
+              <div class="value">83% paths</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">07. Pauta y piezas</div>
+          <h2>Qué tan bien está respaldando la pauta al ecosistema de la promo</h2>
+          <p>
+            Tabla clara de ad sets, scorecards de inversión, alcance por anuncio y un módulo visual
+            de creativos que el cliente pueda relacionar rápido con resultados.
+          </p>
+        </div>
+        <div class="section-meta">Ad sets + reach + creativos</div>
+      </div>
+
+      <div class="grid-2-1" style="margin-bottom:20px;">
+        <article class="card table-card">
+          <div class="card-title">
+            <h3>Resultados de pautas</h3>
+            <p>Resumen por conjunto</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Conjunto</th>
+                  <th>Spend</th>
+                  <th>Impresiones</th>
+                  <th>Alcance</th>
+                  <th>Costo / resultado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>BobEsponja_Mobile_BOG</td><td>$18,450</td><td>3,245,820</td><td>1,892,415</td><td>$2.18</td></tr>
+                <tr><td>BobEsponja_Retargeting_CO</td><td>$15,890</td><td>2,987,340</td><td>1,456,720</td><td>$1.94</td></tr>
+                <tr><td>Kellanova_Awareness_Nacional</td><td>$14,220</td><td>4,128,650</td><td>2,341,050</td><td>$3.42</td></tr>
+                <tr><td>Minijuegos_Engagement</td><td>$12,750</td><td>2,456,180</td><td>1,128,940</td><td>$2.87</td></tr>
+                <tr><td>BobEsponja_QR_PDV</td><td>$10,340</td><td>1,892,470</td><td>985,630</td><td>$2.05</td></tr>
+                <tr><td>Promo_Lookalike_CO</td><td>$8,920</td><td>1,654,290</td><td>876,540</td><td>$3.12</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card module-card">
+          <div class="card-title">
+            <h3>Scorecards de pauta</h3>
+            <p>Total promo</p>
+          </div>
+          <div class="metric-strip" style="grid-template-columns:1fr;">
+            <div class="metric-mini">
+              <div class="label">Spend acumulado Q1</div>
+              <div class="value">$142.4K</div>
+              <div class="desc">USD · pauta total a lo largo del periodo de promoción</div>
+            </div>
+            <div class="metric-mini">
+              <div class="label">Impresiones acumuladas</div>
+              <div class="value">18.4M</div>
+              <div class="desc">Volumen de exposición Bob Esponja Kellanova CO</div>
+            </div>
+            <div class="metric-mini">
+              <div class="label">Mejor ad set por alcance</div>
+              <div class="value">Awareness Nacional</div>
+              <div class="desc">2.34M de alcance · cobertura más amplia del mix</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <article class="card chart-card" style="margin-bottom:20px;">
+        <div class="card-title">
+          <h3>Alcance por anuncio</h3>
+          <p>Top ad sets</p>
+        </div>
+        <div class="chart-shell">
+          <canvas id="reachChart"></canvas>
+        </div>
+      </article>
+
+      <article class="card module-card">
+        <div class="card-title">
+          <h3>Creativos visibles</h3>
+          <p>Mock estilo dashboard</p>
+        </div>
+        <div class="creative-grid">
+          <div class="creative-card">
+            <div class="creative-top">
+              <div class="creative-tag">Awareness</div>
+              <div class="creative-copy">¡Bob Esponja te invita a Fondo de Bikini!</div>
+            </div>
+            <div class="creative-bottom creative-stats">
+              <span>Reach: 2.34M</span>
+              <span>CTR: 1.9%</span>
+            </div>
+          </div>
+          <div class="creative-card">
+            <div class="creative-top">
+              <div class="creative-tag">Engagement</div>
+              <div class="creative-copy">Caza cereales y gana puntos para el ranking</div>
+            </div>
+            <div class="creative-bottom creative-stats">
+              <span>Reach: 1.89M</span>
+              <span>CTR: 2.1%</span>
+            </div>
+          </div>
+          <div class="creative-card">
+            <div class="creative-top">
+              <div class="creative-tag">Conversión</div>
+              <div class="creative-copy">Registra tu lote y desbloquea el siguiente nivel</div>
+            </div>
+            <div class="creative-bottom creative-stats">
+              <span>Reach: 1.46M</span>
+              <span>CTR: 2.4%</span>
+            </div>
+          </div>
+          <div class="creative-card">
+            <div class="creative-top">
+              <div class="creative-tag">Retargeting</div>
+              <div class="creative-copy">Tu burbuja necesita más Choco Krispis</div>
+            </div>
+            <div class="creative-bottom creative-stats">
+              <span>Reach: 1.13M</span>
+              <span>CTR: 2.6%</span>
+            </div>
+          </div>
+          <div class="creative-card">
+            <div class="creative-top">
+              <div class="creative-tag">QR / PDV</div>
+              <div class="creative-copy">Escanea el código del empaque y juega ya</div>
+            </div>
+            <div class="creative-bottom creative-stats">
+              <span>Reach: 985K</span>
+              <span>CTR: 1.8%</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">08. Audiencia y geografía</div>
+          <h2>Quién sigue activo y desde dónde está llegando el volumen</h2>
+          <p>
+            El cierre de una promo casi siempre termina concentrándose en pocas plazas. Conviene dejar
+            esto a la vista para activar mensajes localizados, soporte en PDV o CRM segmentado.
+          </p>
+        </div>
+        <div class="section-meta">City bars + device / age mix</div>
+      </div>
+
+      <div class="geo-grid" style="margin-bottom:20px;">
+        <article class="card module-card">
+          <div class="card-title">
+            <h3>Top ciudades</h3>
+            <p>Participación orgánica</p>
+          </div>
+          <div class="city-list">
+            <div class="city-item"><span>Bogotá</span><div class="city-track"><i style="width:100%"></i></div><strong>1,278</strong></div>
+            <div class="city-item"><span>Cali</span><div class="city-track"><i style="width:27%"></i></div><strong>342</strong></div>
+            <div class="city-item"><span>Medellín</span><div class="city-track"><i style="width:24%"></i></div><strong>313</strong></div>
+            <div class="city-item"><span>Barranquilla</span><div class="city-track"><i style="width:17%"></i></div><strong>216</strong></div>
+            <div class="city-item"><span>Bucaramanga</span><div class="city-track"><i style="width:8%"></i></div><strong>103</strong></div>
+            <div class="city-item"><span>Villavicencio</span><div class="city-track"><i style="width:8%"></i></div><strong>100</strong></div>
+            <div class="city-item"><span>Manizales</span><div class="city-track"><i style="width:7%"></i></div><strong>89</strong></div>
+          </div>
+        </article>
+
+        <article class="card chart-card">
+          <div class="card-title">
+            <h3>Dispositivo y edad</h3>
+            <p>Audiencia activa</p>
+          </div>
+          <div class="grid-2" style="gap:20px;">
+            <div class="chart-shell compact">
+              <canvas id="deviceChart"></canvas>
+            </div>
+            <div class="chart-shell compact">
+              <canvas id="ageChart"></canvas>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">09. Plan de acción</div>
+          <h2>Keep it, Change it, Start it</h2>
+          <p>
+            Cierre semanal listo para presentar al equipo de Kellanova. Mantiene la lógica que ya
+            usamos en Social Media y Listening, aterrizada a las decisiones que hay que tomar para
+            las últimas 10 semanas de promoción.
+          </p>
+        </div>
+        <div class="section-meta">Curado · 29 marzo 2026</div>
+      </div>
+
+      <div class="kcs-grid">
+        <article class="kcs-card keep">
+          <h3>Keep It</h3>
+          <ul>
+            <li>Mantener el enfoque mobile first — el 92.6% del tráfico sigue siendo móvil.</li>
+            <li>Sostener la mecánica de minijuegos: Caza Cereales, Memorama y Corte Submarino concentran la actividad y vinculan al registro (83% de paths).</li>
+            <li>Conservar la inversión en QR/PDV — es el canal con mayor tiempo en sitio (3:22) y mejor conversión a registro.</li>
+            <li>Priorizar Bogotá, Cali y Medellín — concentran el 45.9% del tráfico orgánico.</li>
+          </ul>
+        </article>
+
+        <article class="kcs-card change">
+          <h3>Change It</h3>
+          <ul>
+            <li>Migrar el mensaje de lúdico a transaccional: el 10.5% de inicio de registro sugiere que la audiencia está lista para la "última carga".</li>
+            <li>Reducir fricción en los pasos finales del formulario (lote 9.5%, fecha 9.1%) con ayudas visuales más claras.</li>
+            <li>Optimizar Paid Social: tiene el ER más bajo (30.4%) pero el mayor volumen de usuarios nuevos. Hay espacio para mejorar la calidad de tráfico.</li>
+          </ul>
+        </article>
+
+        <article class="kcs-card start">
+          <h3>Start It</h3>
+          <ul>
+            <li>Activar exit-intent pop-ups en QR/PDV a los 3 minutos de navegación para asegurar la carga de lotes finales.</li>
+            <li>Lanzar comunicación localizada de "última llamada" en Bogotá, Cali y Medellín por CRM/Push.</li>
+            <li>Crear campaña de remarketing a los 19,833 usuarios del ranking que llevan productos cargados pero no han llegado a 100 puntos.</li>
+            <li>Test A/B en el formulario: simplificar lote y fecha vs. agregar tutorial visual.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      Dashboard generado por el equipo de <strong>Strategy & Data Intelligence — Mescalina®</strong>.
+      Los datos se actualizan automáticamente con conectores nativos de Looker Studio: <strong>GA4, engine de
+      promoción Kellanova y Meta Ads</strong>. Última sincronización al cierre del 29 de marzo 2026 (Semana 12 de 22).
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script>
+    const gridColor = "rgba(146, 166, 183, 0.12)";
+    const textColor = "#ebf2f8";
+    const mutedColor = "#92a6b7";
+    const accent = "#18c2c7";
+    const warm = "#f4b44d";
+    const green = "#2ec4b6";
+    const pink = "#ff5c73";
+    const purple = "#9f8cff";
+
+    Chart.defaults.font.family = "Poppins, sans-serif";
+    Chart.defaults.color = mutedColor;
+    Chart.defaults.borderColor = gridColor;
+
+    const baseOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: mutedColor,
+            usePointStyle: true,
+            boxWidth: 8,
+            padding: 14
+          }
+        },
+        tooltip: {
+          backgroundColor: "#10161d",
+          borderColor: "rgba(255,255,255,0.08)",
+          borderWidth: 1,
+          titleColor: textColor,
+          bodyColor: mutedColor,
+          padding: 12,
+          displayColors: true
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: mutedColor },
+          grid: { color: gridColor, drawBorder: false }
+        },
+        y: {
+          ticks: { color: mutedColor },
+          grid: { color: gridColor, drawBorder: false }
+        }
+      }
+    };
+
+    new Chart(document.getElementById("weeklyTrendChart"), {
+      type: "line",
+      data: {
+        labels: ["S1","S2","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12"],
+        datasets: [
+          {
+            label: "Sesiones",
+            data: [4731, 5706, 6435, 6627, 7481, 6934, 14354, 11493, 9177, 8530, 7386, 5946],
+            borderColor: accent,
+            backgroundColor: "rgba(24,194,199,0.16)",
+            fill: false,
+            tension: 0.36,
+            pointRadius: 3
+          },
+          {
+            label: "Usuarios registrados",
+            data: [1466, 1566, 1757, 1754, 1838, 1657, 2702, 2416, 1884, 1560, 1145, 947],
+            borderColor: warm,
+            backgroundColor: "rgba(244,180,77,0.12)",
+            fill: false,
+            tension: 0.36,
+            pointRadius: 3
+          },
+          {
+            label: "Lotes / códigos",
+            data: [2633, 5480, 8282, 5964, 7062, 7089, 6107, 7537, 6135, 4821, 5738, 3505],
+            borderColor: green,
+            backgroundColor: "rgba(46,196,182,0.12)",
+            fill: false,
+            tension: 0.36,
+            pointRadius: 3
+          }
+        ]
+      },
+      options: baseOptions
+    });
+
+    new Chart(document.getElementById("weeklyAttainmentChart"), {
+      type: "bar",
+      data: {
+        labels: ["S1","S2","S3","S4","S5","S6","S7","S8","S9","S10","S11","S12"],
+        datasets: [
+          {
+            label: "% acumulado lotes",
+            data: [3.5, 10.9, 22.0, 30.0, 39.5, 49.0, 57.2, 67.4, 75.6, 82.1, 89.8, 97.5],
+            backgroundColor: green,
+            borderRadius: 10
+          },
+          {
+            label: "% esperado tiempo",
+            data: [5.8, 11.7, 17.5, 23.3, 29.2, 35.0, 40.8, 46.7, 52.5, 58.3, 64.2, 69.6],
+            backgroundColor: "rgba(255,255,255,0.10)",
+            borderRadius: 10
+          }
+        ]
+      },
+      options: {
+        ...baseOptions,
+        scales: {
+          x: baseOptions.scales.x,
+          y: {
+            ...baseOptions.scales.y,
+            suggestedMax: 110,
+            ticks: {
+              color: mutedColor,
+              callback: (value) => value + "%"
+            }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("channelMixChart"), {
+      type: "doughnut",
+      data: {
+        labels: ["Paid Social", "Unassigned", "Direct / CRM", "Organic Search", "Otros"],
+        datasets: [{
+          data: [22.8, 29.2, 23.7, 23.8, 0.5],
+          backgroundColor: [pink, warm, accent, green, purple],
+          borderWidth: 0,
+          radius: "88%"
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        cutout: "68%",
+        plugins: baseOptions.plugins
+      }
+    });
+
+    new Chart(document.getElementById("sourceHistoryChart"), {
+      type: "line",
+      data: {
+        labels: ["23 Mar", "24 Mar", "25 Mar", "26 Mar", "27 Mar", "28 Mar", "29 Mar"],
+        datasets: [
+          {
+            label: "QR / PDV",
+            data: [296, 215, 175, 191, 177, 231, 232],
+            borderColor: warm,
+            tension: 0.34,
+            pointRadius: 2
+          },
+          {
+            label: "Direct",
+            data: [148, 158, 162, 156, 152, 150, 154],
+            borderColor: accent,
+            tension: 0.34,
+            pointRadius: 2
+          },
+          {
+            label: "Google",
+            data: [225, 218, 220, 215, 218, 220, 218],
+            borderColor: green,
+            tension: 0.34,
+            pointRadius: 2
+          },
+          {
+            label: "TikTok",
+            data: [311, 280, 232, 175, 152, 130, 120],
+            borderColor: pink,
+            tension: 0.34,
+            pointRadius: 2
+          }
+        ]
+      },
+      options: baseOptions
+    });
+
+    new Chart(document.getElementById("landingEventsChart"), {
+      type: "bar",
+      data: {
+        labels: [
+          "Escribe Producto",
+          "Iniciar Sesion",
+          "Ver Más Juegos",
+          "Lote / Fecha Fab.",
+          "Star Juegos",
+          "Fecha Vencim."
+        ],
+        datasets: [{
+          label: "Participación",
+          data: [10.5, 10.4, 9.9, 9.5, 9.1, 9.2],
+          backgroundColor: [accent, warm, pink, green, purple, "#5ba8ff"],
+          borderRadius: 12,
+          maxBarThickness: 54
+        }]
+      },
+      options: {
+        ...baseOptions,
+        plugins: {
+          ...baseOptions.plugins,
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            ...baseOptions.scales.x,
+            ticks: {
+              color: mutedColor,
+              maxRotation: 0,
+              minRotation: 0
+            },
+            grid: { display: false, drawBorder: false }
+          },
+          y: {
+            ...baseOptions.scales.y,
+            suggestedMax: 12,
+            ticks: {
+              color: mutedColor,
+              callback: (value) => value + "%"
+            }
+          },
+        }
+      }
+    });
+
+    new Chart(document.getElementById("gamesChart"), {
+      type: "bar",
+      data: {
+        labels: ["Caza Cereales", "Memorama", "Corte Submarino", "Trivia"],
+        datasets: [{
+          label: "Total de veces jugado",
+          data: [1588, 1506, 1499, 361],
+          backgroundColor: [accent, warm, green, pink],
+          borderRadius: 12
+        }]
+      },
+      options: {
+        ...baseOptions,
+        plugins: {
+          ...baseOptions.plugins,
+          legend: { display: false }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("productMixChart"), {
+      type: "bar",
+      data: {
+        labels: ["ChocoKrispis 30g", "Zucaritas 36g", "Zucaritas 1600g", "Zucaritas 39g", "Zucaritas 610g", "FrootLoops 33g", "BobEsponja 30g"],
+        datasets: [{
+          label: "Lotes registrados",
+          data: [812, 414, 325, 223, 197, 83, 72],
+          backgroundColor: [accent, warm, green, pink, purple, "#5ba8ff", "#ffd46e"],
+          borderRadius: 12
+        }]
+      },
+      options: {
+        ...baseOptions,
+        plugins: {
+          ...baseOptions.plugins,
+          legend: { display: false }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("brandMixChart"), {
+      type: "doughnut",
+      data: {
+        labels: ["Paketikos", "Resto productos"],
+        datasets: [{
+          data: [53.9, 46.1],
+          backgroundColor: [warm, accent],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        cutout: "68%",
+        plugins: baseOptions.plugins
+      }
+    });
+
+    new Chart(document.getElementById("reachChart"), {
+      type: "bar",
+      data: {
+        labels: ["Awareness Nacional", "Mobile BOG", "Retargeting CO", "Minijuegos", "QR / PDV", "Lookalike CO"],
+        datasets: [{
+          label: "Alcance",
+          data: [2341050, 1892415, 1456720, 1128940, 985630, 876540],
+          backgroundColor: warm,
+          borderRadius: 10
+        }]
+      },
+      options: {
+        ...baseOptions,
+        plugins: {
+          ...baseOptions.plugins,
+          legend: { display: false }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("deviceChart"), {
+      type: "doughnut",
+      data: {
+        labels: ["Mobile", "Desktop", "Tablet"],
+        datasets: [{
+          data: [92.6, 6.6, 0.7],
+          backgroundColor: [accent, warm, pink],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        cutout: "64%",
+        plugins: baseOptions.plugins
+      }
+    });
+
+    new Chart(document.getElementById("ageChart"), {
+      type: "bar",
+      data: {
+        labels: ["18", "17", "19", "20", "21+"],
+        datasets: [{
+          label: "Usuarios",
+          data: [62, 18, 9, 6, 5],
+          backgroundColor: [accent, warm, green, pink, purple],
+          borderRadius: 10
+        }]
+      },
+      options: {
+        ...baseOptions,
+        plugins: {
+          ...baseOptions.plugins,
+          legend: { display: false }
+        },
+        scales: {
+          x: baseOptions.scales.x,
+          y: {
+            ...baseOptions.scales.y,
+            ticks: {
+              color: mutedColor,
+              callback: (value) => value + "%"
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

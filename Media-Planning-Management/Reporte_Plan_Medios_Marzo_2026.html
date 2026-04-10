@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte de Plan de Medios</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f13;
+  --slide-bg:#0f1419;
+  --card:#161d26;
+  --card-alt:#1c2530;
+  --accent:#18c2c7;
+  --warm:#f4b44d;
+  --green:#2ec4b6;
+  --pink:#ff5c73;
+  --purple:#9f8cff;
+  --text:#ebf2f8;
+  --muted:#92a6b7;
+  --dim:#5c7082;
+  --border:#1e2a38;
+  --line:rgba(146,166,183,0.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);
+  font-family:'Poppins',sans-serif;
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+  padding:20px 0;
+}
+.slide{
+  width:1280px;
+  height:720px;
+  background:var(--slide-bg);
+  border-radius:12px;
+  border:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  padding:56px 64px;
+}
+.slide::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(11,15,19,0.72) 0%, rgba(11,15,19,0.62) 100%),
+    url('../assets/background.png') center/cover no-repeat;
+  opacity:.34;
+  pointer-events:none;
+}
+.slide>*{position:relative;z-index:1}
+.slide-number{position:absolute;bottom:20px;right:32px;font-size:11px;color:var(--dim)}
+.slide-brand{position:absolute;bottom:20px;left:32px;display:flex;align-items:center;height:12px}
+.slide-brand img{display:block;height:12px;width:auto;opacity:.42}
+.slide.cover{
+  background:linear-gradient(155deg,#0a0e13 0%,#0f1922 40%,#152a3a 100%);
+  justify-content:center;
+}
+.slide.cover::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 88% 24%, rgba(24,194,199,0.15) 0%, transparent 20%),
+    radial-gradient(circle at 12% 82%, rgba(244,180,77,0.08) 0%, transparent 18%),
+    linear-gradient(155deg, rgba(10,14,19,0.82) 0%, rgba(15,25,34,0.74) 40%, rgba(21,42,58,0.68) 100%),
+    url('../assets/background.png') center/cover no-repeat;
+  opacity:.95;
+}
+.slide.divider{
+  justify-content:center;
+  background:linear-gradient(180deg,var(--slide-bg) 0%,var(--card) 100%);
+}
+.slide.divider::before{opacity:.42}
+.cover-label{font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:30px}
+.cover h1{font-size:62px;line-height:1.02;font-weight:700;max-width:780px}
+.cover h1 em{font-style:italic;color:var(--warm);font-weight:500}
+.cover-meta{display:flex;gap:34px;margin-top:42px}
+.cover-meta-item{border-left:2px solid var(--accent);padding-left:14px}
+.cover-meta-item .lbl{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:2px}
+.cover-meta-item .val{font-size:16px;font-weight:600}
+.sec-num{font-size:12px;color:var(--accent);letter-spacing:3px;margin-bottom:14px}
+.divider h2{font-size:50px;line-height:1.08;font-weight:700;max-width:780px}
+.divider h2 em{font-style:italic;color:var(--warm);font-weight:500}
+h3{font-size:26px;font-weight:700;margin-bottom:16px}
+.subtitle{font-size:13px;color:var(--muted);line-height:1.65;max-width:650px;margin-bottom:18px}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;margin:2px}
+.tag-a{background:rgba(24,194,199,0.14);color:var(--accent)}
+.tag-w{background:rgba(244,180,77,0.14);color:var(--warm)}
+.tag-g{background:rgba(46,196,182,0.14);color:var(--green)}
+.fw-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;flex:1}
+.fw-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.fw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.fw-card:nth-child(1)::before{background:var(--accent)}
+.fw-card:nth-child(2)::before{background:var(--warm)}
+.fw-card:nth-child(3)::before{background:var(--green)}
+.fw-card .q{font-size:18px;font-weight:600;line-height:1.35;margin-bottom:16px;flex:1}
+.method-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:20px}
+.method-item h4{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:6px;letter-spacing:1px;text-transform:uppercase}
+.method-item p{font-size:13px;color:var(--muted);line-height:1.5}
+.m-row{display:grid;gap:14px;margin-bottom:18px}
+.m-row-4{grid-template-columns:repeat(4,1fr)}
+.m-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.m-card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.m-card .val{font-size:30px;font-weight:700;line-height:1}
+.m-card .sub{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.45}
+.m-card.compact{padding:16px 18px}
+.m-card.compact .lbl{margin-bottom:7px}
+.m-card.compact .val{font-size:26px}
+.m-card.compact .sub{font-size:10.5px;margin-top:5px}
+.chart-wrap,.list-box,.table-wrap{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+.chart-wrap{padding:20px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.chart-wrap.compact{padding:16px 18px}
+.chart-wrap h4,.list-box h4{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+.chart-wrap.compact h4,.list-box.compact h4{margin-bottom:10px}
+.chart-area{position:relative;flex:1;min-height:0}
+.chart-wrap canvas{width:100%!important;height:100%!important;display:block}
+.list-box{padding:20px}
+.list-box.compact{padding:16px 18px}
+.progress-stack{display:grid;gap:12px}
+.progress-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:16px 18px}
+.progress-head{display:flex;justify-content:space-between;gap:14px;margin-bottom:10px}
+.progress-title{font-size:13px;font-weight:600}
+.progress-detail{font-size:12px;color:var(--muted)}
+.progress-track{width:100%;height:10px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;border-radius:999px}
+.progress-stack.tight{gap:10px}
+.progress-card.tight{padding:12px 14px}
+.progress-card.tight .progress-head{margin-bottom:8px}
+.progress-card.tight .progress-title{font-size:12px}
+.progress-card.tight .progress-detail{font-size:11px}
+.progress-card.tight .progress-track{height:8px}
+.fill-accent{background:linear-gradient(90deg,var(--accent),#66eff2)}
+.fill-warm{background:linear-gradient(90deg,var(--warm),#ffd46e)}
+.fill-green{background:linear-gradient(90deg,var(--green),#64e2d6)}
+.fill-pink{background:linear-gradient(90deg,var(--pink),#ff9aaa)}
+.fill-purple{background:linear-gradient(90deg,var(--purple),#c4b5fd)}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{
+  text-align:left;
+  padding:10px 12px;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--muted);
+  background:rgba(255,255,255,0.03);
+  border-bottom:1px solid var(--line);
+}
+.data-table td{
+  padding:10px 12px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.data-table tr:last-child td{border-bottom:none}
+.insight{
+  border-left:3px solid var(--warm);
+  padding:14px 18px;
+  background:rgba(244,180,77,0.05);
+  border-radius:0 10px 10px 0;
+  font-size:13px;
+  line-height:1.68;
+}
+.insight.compact{padding:10px 14px;font-size:11.5px;line-height:1.48}
+.insight strong{color:var(--warm)}
+.list-row{display:grid;grid-template-columns:130px 1fr auto;gap:14px;align-items:center;margin-bottom:14px}
+.list-row:last-child{margin-bottom:0}
+.list-row .name{font-size:12px;color:var(--muted)}
+.list-row .bar{height:10px;border-radius:999px;background:rgba(255,255,255,0.06);overflow:hidden;position:relative}
+.list-row .bar span{position:absolute;inset:0 auto 0 0;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--green))}
+.list-row .value{font-size:12px;font-weight:700}
+.alloc-stack{display:grid;gap:12px}
+.alloc-row{display:grid;grid-template-columns:140px 1fr 54px 92px;gap:14px;align-items:center}
+.alloc-name{font-size:12px;color:var(--text);font-weight:500}
+.alloc-track{height:12px;border-radius:999px;background:rgba(255,255,255,0.06);overflow:hidden;position:relative}
+.alloc-fill{position:absolute;inset:0 auto 0 0;border-radius:999px}
+.alloc-pct{font-size:11.5px;color:var(--muted);text-align:right;font-weight:600}
+.alloc-amt{font-size:12px;color:var(--text);text-align:right;font-weight:700}
+.pill{
+  display:inline-flex;align-items:center;padding:3px 8px;border-radius:6px;
+  font-size:11px;font-weight:700
+}
+.p-aaa{background:rgba(255,92,115,0.14);color:var(--pink)}
+.p-aa{background:rgba(244,180,77,0.14);color:var(--warm)}
+.p-a{background:rgba(146,166,183,0.14);color:var(--muted)}
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.scenario-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px}
+.scenario-card.rec{border-color:rgba(244,180,77,0.3);background:linear-gradient(180deg, rgba(244,180,77,0.08), rgba(244,180,77,0.02))}
+.scenario-card .top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:10px}
+.scenario-card .tagline{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.scenario-card.rec .tagline{color:var(--warm)}
+.scenario-card .budget{font-size:30px;font-weight:700;line-height:1;margin-bottom:6px}
+.scenario-card .daily{font-size:11px;color:var(--muted);margin-bottom:12px}
+.scenario-card .metric{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px}
+.scenario-card .metric:last-child{border-bottom:none}
+.scenario-card.compact{padding:18px}
+.scenario-card.compact .budget{font-size:26px}
+.scenario-card.compact .daily{margin-bottom:10px}
+.scenario-card.compact .metric{font-size:11.5px;padding:6px 0}
+.funnel-wrap{display:grid;gap:12px}
+.funnel-step{display:grid;grid-template-columns:110px 1fr 82px;gap:14px;align-items:center}
+.funnel-label{font-size:12px;color:var(--muted)}
+.funnel-bar{height:40px;border-radius:10px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:13px;font-weight:700;color:#081416}
+.funnel-bar small{font-size:11px;color:rgba(8,20,22,.72)}
+.funnel-rate{font-size:12px;color:var(--warm);text-align:right;font-weight:700}
+.funnel-step.clean{grid-template-columns:120px 1fr 72px}
+.funnel-step.clean .funnel-bar{justify-content:flex-start}
+.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.mini-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
+  padding:16px 18px;
+}
+.mini-grid.tight{gap:10px}
+.mini-grid.tight .mini-card{padding:14px 16px}
+.mini-card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+.mini-card .val{font-size:22px;font-weight:700;line-height:1}
+.mini-card .sub{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.45}
+.mini-grid.tight .mini-card .val{font-size:18px}
+.mini-grid.tight .mini-card .sub{font-size:10.5px;line-height:1.35}
+.metric-quad{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.metric-quad .mini-card{padding:14px 16px}
+.metric-quad .mini-card .val{font-size:21px}
+.metric-quad .mini-card .sub{font-size:10.5px;line-height:1.35}
+.table-wrap.compact-table .data-table th{padding:8px 10px;font-size:9.5px}
+.table-wrap.compact-table .data-table td{padding:8px 10px;font-size:12px}
+.funnel-wrap.tight{gap:10px}
+.funnel-wrap.tight .funnel-step.clean{grid-template-columns:100px 1fr 58px;gap:10px}
+.funnel-wrap.tight .funnel-label{font-size:11.5px}
+.funnel-wrap.tight .funnel-bar{height:32px;padding:0 12px;font-size:11.5px}
+.funnel-wrap.tight .funnel-rate{font-size:11px}
+.scenario-grid.tight{gap:12px}
+.scenario-grid.tight .scenario-card.compact{padding:16px}
+.scenario-grid.tight .scenario-card.compact .budget{font-size:24px}
+.scenario-grid.tight .scenario-card.compact .daily{font-size:10.5px;margin-bottom:8px}
+.scenario-grid.tight .scenario-card.compact .metric{font-size:11px;padding:5px 0}
+.kcs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;flex:1}
+.kcs-card{border-radius:14px;padding:22px;display:flex;flex-direction:column}
+.kcs-card h4{font-size:22px;font-weight:700;margin-bottom:12px}
+.kcs-card ul{list-style:none;padding:0}
+.kcs-card li{padding:6px 0;font-size:12.5px;line-height:1.55;border-bottom:1px solid rgba(255,255,255,0.04)}
+.kcs-card li:last-child{border-bottom:none}
+.kcs-card.keep{background:rgba(244,180,77,0.08);border:1px solid rgba(244,180,77,0.18)}
+.kcs-card.keep h4{color:var(--warm)}
+.kcs-card.change{background:rgba(255,92,115,0.08);border:1px solid rgba(255,92,115,0.18)}
+.kcs-card.change h4{color:var(--pink)}
+.kcs-card.start{background:rgba(24,194,199,0.08);border:1px solid rgba(24,194,199,0.18)}
+.kcs-card.start h4{color:var(--accent)}
+.compact{font-size:12px}
+@page{size:13.333in 7.5in;margin:0}
+@media print{
+  html,body{width:13.333in;margin:0;padding:0;background:#000}
+  body{gap:0}
+  .slide{
+    width:13.333in;height:7.5in;margin:0;border:none;border-radius:0;
+    page-break-after:always;break-after:page;
+  }
+  .slide:last-of-type{page-break-after:auto;break-after:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="slide cover">
+  <div class="cover-label">mescalina ® — strategy & data intelligence</div>
+  <h1>Reporte de Plan de Medios<br><em>Versión Ejecutiva</em></h1>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="lbl">Periodo</div><div class="val">Marzo 2026</div></div>
+    <div class="cover-meta-item"><div class="lbl">Enfoque</div><div class="val">Planeación mensual</div></div>
+    <div class="cover-meta-item"><div class="lbl">Canales</div><div class="val">Meta · TikTok</div></div>
+    <div class="cover-meta-item"><div class="lbl">Estado</div><div class="val">Aprobado para ejecución</div></div>
+  </div>
+  <div class="slide-number">01 / 10</div>
+</div>
+
+<div class="slide">
+  <h3>¿Qué debe responder este plan?</h3>
+  <p class="subtitle">Este reporte convierte el draft operativo de media planning en una lectura ejecutiva: cómo se conecta el periodo analizado con el marco anual, dónde está el peso presupuestal de la planeación y qué riesgos deben vigilarse antes y durante ejecución.</p>
+  <div class="fw-grid">
+    <div class="fw-card">
+      <div class="q">¿Cómo aterriza el forecast anual en el presupuesto y objetivos del periodo?</div>
+      <div><span class="tag tag-a">KPIs</span><span class="tag tag-a">Budget</span><span class="tag tag-a">Quarters</span></div>
+    </div>
+    <div class="fw-card">
+      <div class="q">¿Qué campañas y prioridades concentran el peso del periodo, y con qué lógica de mix entre plataformas?</div>
+      <div><span class="tag tag-w">AAA / AA / A</span><span class="tag tag-w">Meta</span><span class="tag tag-w">TikTok</span></div>
+    </div>
+    <div class="fw-card">
+      <div class="q">¿Qué escenarios, supuestos y riesgos pueden mover el resultado esperado de la planeación?</div>
+      <div><span class="tag tag-g">Escenarios</span><span class="tag tag-g">Benchmarks</span><span class="tag tag-g">Checkpoints</span></div>
+    </div>
+  </div>
+  <div class="method-row">
+    <div class="method-item"><h4>Fuente</h4><p>Draft operativo de <em>Plan de Medios Mensual</em> con datos ya aprobados para marzo 2026.</p></div>
+    <div class="method-item"><h4>Objetivo</h4><p>Pasar de tablero operativo a una lectura apta para cliente, dirección y seguimiento ejecutivo.</p></div>
+    <div class="method-item"><h4>Resultado</h4><p>Deck ejecutivo para presentación, validación y seguimiento de ejecución del periodo.</p></div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">02 / 10</div>
+</div>
+
+<div class="slide divider">
+  <div class="sec-num">01 — MARCO DEL PLAN</div>
+  <h2>La planeación táctica no nace aislada:<br>es una bajada del <em>forecast anual</em>.</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">03 / 10</div>
+</div>
+
+<div class="slide" style="padding:40px 48px;">
+  <div style="display:grid;grid-template-rows:auto auto 1fr auto;gap:12px;flex:1;min-height:0;">
+    <h3 style="margin-bottom:0;">Marco anual y presupuesto del año</h3>
+    <div class="m-row m-row-4" style="margin-bottom:0;gap:14px;">
+      <div class="m-card compact"><div class="lbl">Alcance anual</div><div class="val" style="color:var(--accent)">123M</div><div class="sub">Personas únicas alcanzadas en 2026</div></div>
+      <div class="m-card compact"><div class="lbl">Engagement anual</div><div class="val" style="color:var(--green)">10.9M</div><div class="sub">ER promedio esperado 8.87%</div></div>
+      <div class="m-card compact"><div class="lbl">Fans anuales</div><div class="val" style="color:var(--warm)">181,840</div><div class="sub">Seguidores netos del año</div></div>
+      <div class="m-card compact"><div class="lbl">Conversiones anuales</div><div class="val" style="color:var(--pink)">99,326</div><div class="sub">Compras, leads o transacciones</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.08fr 0.92fr;gap:14px;min-height:0;">
+      <div class="list-box compact">
+        <h4>Presupuesto anual por trimestre</h4>
+        <div class="progress-stack tight">
+          <div class="progress-card tight"><div class="progress-head"><div class="progress-title">Q1</div><div class="progress-detail">$82,400 · 20%</div></div><div class="progress-track"><div class="progress-fill fill-accent" style="width:20%"></div></div></div>
+          <div class="progress-card tight"><div class="progress-head"><div class="progress-title">Q2</div><div class="progress-detail">$119,533 · 29%</div></div><div class="progress-track"><div class="progress-fill fill-green" style="width:29%"></div></div></div>
+          <div class="progress-card tight"><div class="progress-head"><div class="progress-title">Q3</div><div class="progress-detail">$104,533 · 25%</div></div><div class="progress-track"><div class="progress-fill fill-warm" style="width:25%"></div></div></div>
+          <div class="progress-card tight"><div class="progress-head"><div class="progress-title">Q4</div><div class="progress-detail">$105,533 · 26%</div></div><div class="progress-track"><div class="progress-fill fill-pink" style="width:26%"></div></div></div>
+        </div>
+      </div>
+      <div class="chart-wrap compact">
+        <h4>Distribución anual por objetivo</h4>
+        <div class="chart-area" style="height:250px;flex:0 0 250px;"><canvas id="c1"></canvas></div>
+      </div>
+    </div>
+    <div class="insight compact"><strong>Lectura ejecutiva:</strong> El periodo no redefine la estrategia: la ejecuta. El presupuesto hereda una arquitectura ya aprobada, donde <strong>conversión y engagement concentran 65% del esfuerzo</strong>, mientras fans y alcance sostienen volumen y construcción de audiencia sin romper el marco anual.</div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">04 / 10</div>
+</div>
+
+<div class="slide" style="padding:40px 48px;">
+  <div style="display:grid;grid-template-rows:auto auto auto 1fr auto;gap:12px;flex:1;min-height:0;">
+    <h3 style="margin-bottom:0;">Estructura presupuestal del periodo</h3>
+    <div class="m-row m-row-4" style="margin-bottom:0;gap:14px;">
+      <div class="m-card compact"><div class="lbl">Presupuesto del periodo</div><div class="val" style="color:var(--accent)">$49,440</div><div class="sub">12% del total anual</div></div>
+      <div class="m-card compact"><div class="lbl">Meta</div><div class="val" style="color:var(--green)">$39,552</div><div class="sub">80% de la inversión</div></div>
+      <div class="m-card compact"><div class="lbl">TikTok</div><div class="val" style="color:var(--warm)">$9,888</div><div class="sub">20% de la inversión</div></div>
+      <div class="m-card compact"><div class="lbl">Campañas activas</div><div class="val" style="color:var(--purple)">10</div><div class="sub">3 AAA · 4 AA · 3 A</div></div>
+    </div>
+    <div class="m-row m-row-4" style="margin-bottom:0;gap:14px;">
+      <div class="m-card compact"><div class="lbl">Alcance</div><div class="val" style="color:var(--accent)">14.76M</div><div class="sub">Volumen esperado del periodo</div></div>
+      <div class="m-card compact"><div class="lbl">Interacciones</div><div class="val" style="color:var(--green)">1.31M</div><div class="sub">Respuesta esperada</div></div>
+      <div class="m-card compact"><div class="lbl">Fans nuevos</div><div class="val" style="color:var(--warm)">21,821</div><div class="sub">Crecimiento proyectado</div></div>
+      <div class="m-card compact"><div class="lbl">Compras</div><div class="val" style="color:var(--pink)">11,919</div><div class="sub">Meta de resultado</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.05fr 0.95fr;gap:14px;min-height:0;">
+      <div class="list-box compact" style="display:grid;grid-template-rows:auto auto;align-content:start;">
+        <h4>Desglose por objetivo</h4>
+        <div>
+          <div class="list-row"><div class="name">Conversión</div><div class="bar"><span style="width:100%"></span></div><div class="value">$17,304</div></div>
+          <div class="list-row"><div class="name">Engagement</div><div class="bar"><span style="width:86%;background:linear-gradient(90deg,var(--warm),#ffd46e)"></span></div><div class="value">$14,832</div></div>
+          <div class="list-row"><div class="name">Fans</div><div class="bar"><span style="width:71%;background:linear-gradient(90deg,var(--green),#64e2d6)"></span></div><div class="value">$12,360</div></div>
+          <div class="list-row"><div class="name">Alcance</div><div class="bar"><span style="width:29%;background:linear-gradient(90deg,var(--pink),#ff95a7)"></span></div><div class="value">$4,944</div></div>
+          <div style="font-size:10.8px;color:var(--muted);line-height:1.55;margin-top:12px;">La distribución del periodo replica el mix anual. Solo debería moverse si el rendimiento real de plataforma se desvía con fuerza de benchmark.</div>
+        </div>
+      </div>
+      <div class="chart-wrap compact">
+        <h4>Split plataforma</h4>
+        <div class="chart-area" style="height:255px;flex:0 0 255px;"><canvas id="c2"></canvas></div>
+      </div>
+    </div>
+    <div class="insight compact"><strong>Lectura:</strong> La planeación está diseñada como un periodo de <strong>eficiencia balanceada</strong>: Meta carga el músculo principal del volumen y TikTok agrega cobertura y video. La combinación solo tiene sentido si el benchmark de conversión se sostiene; si no, el 80/20 debería revisarse en la segunda mitad de ejecución.</div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">05 / 10</div>
+</div>
+
+<div class="slide divider">
+  <div class="sec-num">02 — ACTIVACIÓN Y ESCALA</div>
+  <h2>El plan no es solo budget:<br>es una arquitectura priorizada de <em>campañas activas</em>.</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">06 / 10</div>
+</div>
+
+<div class="slide" style="padding:40px 48px;">
+  <div style="display:grid;grid-template-rows:auto auto auto;gap:12px;flex:1;min-height:0;">
+    <h3 style="margin-bottom:0;">Arquitectura de inversión y prioridades</h3>
+    <div class="list-box compact">
+      <h4>Lectura de la arquitectura y peso presupuestal</h4>
+      <div class="alloc-stack">
+        <div class="alloc-row">
+          <div class="alloc-name">Siempre activas</div>
+          <div class="alloc-track"><div class="alloc-fill" style="width:44.2%;background:linear-gradient(90deg,var(--green),#64e2d6)"></div></div>
+          <div class="alloc-pct">44.2%</div>
+          <div class="alloc-amt">$21,832</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-name">Bloque AAA</div>
+          <div class="alloc-track"><div class="alloc-fill" style="width:43.3%;background:linear-gradient(90deg,var(--accent),#66eff2)"></div></div>
+          <div class="alloc-pct">43.3%</div>
+          <div class="alloc-amt">$21,400</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-name">Bloque AA</div>
+          <div class="alloc-track"><div class="alloc-fill" style="width:9.4%;background:linear-gradient(90deg,var(--warm),#ffd46e)"></div></div>
+          <div class="alloc-pct">9.4%</div>
+          <div class="alloc-amt">$4,654</div>
+        </div>
+        <div class="alloc-row">
+          <div class="alloc-name">Bloque A</div>
+          <div class="alloc-track"><div class="alloc-fill" style="width:3.1%;background:linear-gradient(90deg,var(--pink),#ff95a7)"></div></div>
+          <div class="alloc-pct">3.1%</div>
+          <div class="alloc-amt">$1,554</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.05);">
+        <div style="font-size:10.8px;color:var(--muted);line-height:1.55;">
+          La inversión no está repartida de forma plana. El plan combina una base siempre activa con un grupo reducido de campañas de mayor prioridad que concentran la mayor presión de resultado.
+        </div>
+        <div style="font-size:10.8px;color:var(--muted);line-height:1.55;">
+          En la práctica, el plan funciona como una estructura de dos motores: <strong style="color:var(--text)">always-on</strong> para sostener presencia y <strong style="color:var(--text)">bloque AAA</strong> para empujar negocio.
+        </div>
+      </div>
+    </div>
+    <div class="table-wrap compact-table">
+      <table class="data-table">
+        <thead><tr><th>Campaña</th><th>Prioridad</th><th>Objetivo</th><th>Total</th><th>Ventana</th></tr></thead>
+        <tbody>
+          <tr><td>Campaña I</td><td><span class="pill p-aaa">AAA</span></td><td>Mix completo</td><td>$8,000</td><td>Todo el mes</td></tr>
+          <tr><td>Campaña D</td><td><span class="pill p-aaa">AAA</span></td><td>Mix completo</td><td>$4,500</td><td>1–25 mar</td></tr>
+          <tr><td>Campaña G</td><td><span class="pill p-aaa">AAA</span></td><td>Mix completo</td><td>$4,000</td><td>12–31 mar</td></tr>
+          <tr><td>Campaña F</td><td><span class="pill p-aaa">AAA</span></td><td>Eng + Conv</td><td>$3,900</td><td>5–18 mar</td></tr>
+          <tr><td>Campaña J</td><td><span class="pill p-aa">AA</span></td><td>Eng + Conv</td><td>$2,300</td><td>Todo el mes</td></tr>
+          <tr><td>Campaña E</td><td><span class="pill p-aa">AA</span></td><td>Eng + Conv</td><td>$1,754</td><td>9–31 mar</td></tr>
+          <tr><td>Siempre activas</td><td><span class="pill p-aa">BASE</span></td><td>Seguidores + engagement + alcance</td><td>$21,832</td><td>1–31 mar</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight compact"><strong>Lectura clave:</strong> La planeación descansa en dos cosas: <strong>siempre-on fuerte</strong> para sostener base y campañas de alta prioridad para empujar negocio. No es una cartera plana; pocas piezas explican una parte desproporcionada del resultado esperado.</div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">07 / 10</div>
+</div>
+
+<div class="slide" style="padding:38px 48px;">
+  <div style="display:grid;grid-template-rows:auto auto 1fr;gap:12px;flex:1;min-height:0;">
+    <h3 style="margin-bottom:0;">Escenarios de inversión y embudo de referencia</h3>
+    <div class="scenario-grid tight">
+        <div class="scenario-card compact">
+          <div class="top"><div class="tagline">Conservador</div></div>
+          <div class="budget">$22,500</div>
+          <div class="daily">~$500/día · 45 días</div>
+          <div class="metric"><span>Impresiones</span><strong>263,508</strong></div>
+          <div class="metric"><span>Alcance</span><strong>138,688</strong></div>
+          <div class="metric"><span>Clics</span><strong>5,797</strong></div>
+          <div class="metric"><span>Leads</span><strong>812</strong></div>
+          <div class="metric"><span>CPL</span><strong>$28</strong></div>
+        </div>
+        <div class="scenario-card rec compact">
+          <div class="top"><div class="tagline">Moderado</div><span class="pill p-aa" style="background:rgba(244,180,77,0.18)">Recomendado</span></div>
+          <div class="budget">$45,000</div>
+          <div class="daily">~$1,000/día · 45 días</div>
+          <div class="metric"><span>Impresiones</span><strong>557,746</strong></div>
+          <div class="metric"><span>Alcance</span><strong>293,551</strong></div>
+          <div class="metric"><span>Clics</span><strong>12,270</strong></div>
+          <div class="metric"><span>Leads</span><strong>1,718</strong></div>
+          <div class="metric"><span>CPL</span><strong>$26</strong></div>
+        </div>
+        <div class="scenario-card compact">
+          <div class="top"><div class="tagline">Agresivo</div></div>
+          <div class="budget">$90,000</div>
+          <div class="daily">~$2,000/día · 45 días</div>
+          <div class="metric"><span>Impresiones</span><strong>1,262,755</strong></div>
+          <div class="metric"><span>Alcance</span><strong>664,608</strong></div>
+          <div class="metric"><span>Clics</span><strong>27,781</strong></div>
+          <div class="metric"><span>Leads</span><strong>3,889</strong></div>
+          <div class="metric"><span>CPL</span><strong>$23</strong></div>
+        </div>
+    </div>
+    <div style="display:grid;grid-template-columns:0.58fr 0.42fr;gap:14px;min-height:0;">
+      <div class="list-box compact" style="display:grid;grid-template-rows:auto 1fr auto;min-height:0;">
+        <h4>Embudo de referencia del escenario recomendado</h4>
+        <div class="funnel-wrap tight">
+          <div class="funnel-step clean"><div class="funnel-label">Impresiones</div><div class="funnel-bar" style="background:linear-gradient(90deg,var(--accent),#5be6ea)"><span>557,746</span></div><div class="funnel-rate">100%</div></div>
+          <div class="funnel-step clean"><div class="funnel-label">Alcance</div><div class="funnel-bar" style="width:53%;background:linear-gradient(90deg,var(--warm),#ffd46e)"><span>293,551</span></div><div class="funnel-rate">53%</div></div>
+          <div class="funnel-step clean"><div class="funnel-label">Clics</div><div class="funnel-bar" style="width:18%;background:linear-gradient(90deg,var(--green),#64e2d6)"><span>12,270</span></div><div class="funnel-rate">4.2%</div></div>
+          <div class="funnel-step clean"><div class="funnel-label">Leads</div><div class="funnel-bar" style="width:6%;background:linear-gradient(90deg,var(--pink),#ff95a7)"><span>1,718</span></div><div class="funnel-rate">0.6%</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;font-size:10.5px;color:var(--muted);line-height:1.45;">
+          <div><strong style="color:var(--text)">Frecuencia:</strong> 1.9x</div>
+          <div><strong style="color:var(--text)">CTR:</strong> 2.2%</div>
+          <div><strong style="color:var(--text)">CVR:</strong> 14%</div>
+          <div><strong style="color:var(--text)">Base:</strong> benchmark Meta México</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-rows:auto auto;gap:12px;min-height:0;">
+        <div class="mini-grid tight">
+          <div class="mini-card"><div class="lbl">CPM</div><div class="val" style="color:var(--accent)">$65–$88</div><div class="sub">Benchmark de categoría</div></div>
+          <div class="mini-card"><div class="lbl">Frecuencia</div><div class="val" style="color:var(--warm)">1.9x</div><div class="sub">Impresiones por persona</div></div>
+          <div class="mini-card"><div class="lbl">CPL</div><div class="val" style="color:var(--green)">$26</div><div class="sub">Lead esperado</div></div>
+          <div class="mini-card"><div class="lbl">Uso sugerido</div><div class="val" style="color:var(--purple)">Base</div><div class="sub">Escenario de referencia para presentación y control</div></div>
+        </div>
+        <div class="insight compact"><strong>Lectura:</strong> El escenario moderado no es el más grande, pero sí el más sano para presentación y operación: mantiene volumen suficiente para aprender, proteger rentabilidad y no depender de benchmarks demasiado optimistas.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">08 / 10</div>
+</div>
+
+<div class="slide">
+  <h3>Qué hay que cuidar en ejecución</h3>
+  <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:16px;flex:1;">
+    <div style="display:grid;grid-template-rows:auto 1fr;gap:16px;">
+      <div class="insight" style="border-left-color:var(--accent);background:rgba(24,194,199,0.05);">
+        <strong style="color:var(--accent)">Lectura ejecutiva del plan:</strong> La arquitectura tiene <strong>campañas AAA visibles en operación y un bloque de siempre activas muy pesado</strong> que en conjunto concentran la mayor parte del presupuesto. La campaña I sostiene presencia base entre Meta y TikTok, mientras D, F y G son las piezas que deben empujar el resultado real. Si el CPL se separa de benchmark, el primer ajuste debe ser de mix y no de volumen.
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+        <div class="list-box">
+          <h4>Supuestos clave</h4>
+          <div style="font-size:13px;line-height:1.75;">
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">CPM: $65–$88 MXN</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">CTR: 2.2%</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">CVR: 14%</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">Frecuencia: 1.9x</div>
+            <div style="padding:6px 0;">ER objetivo: 8.87%</div>
+          </div>
+        </div>
+        <div class="list-box">
+          <h4>Riesgos identificados</h4>
+          <div style="font-size:13px;line-height:1.75;">
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">CPL arriba de benchmark</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">Saturación de frecuencia</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">Creatividades sin aprobación</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">Cambios editoriales tardíos</div>
+            <div style="padding:6px 0;">TikTok sin histórico robusto</div>
+          </div>
+        </div>
+        <div class="list-box">
+          <h4>Checkpoints</h4>
+          <div style="font-size:13px;line-height:1.75;">
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">Plan firmado · 28 feb</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">Creatividades listas · 1 mar</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">UTMs generados · 1 mar</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">Monitoreo · 15 mar</div>
+            <div style="padding:6px 0;">Conciliación · 31 mar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <h4>Top campañas por inversión</h4>
+      <div class="chart-area"><canvas id="c4"></canvas></div>
+    </div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">09 / 10</div>
+</div>
+
+<div class="slide">
+  <h3>Qué mantener, qué ajustar, qué validar</h3>
+  <div class="kcs-grid">
+    <div class="kcs-card keep">
+      <h4>Keep</h4>
+      <ul>
+        <li>Mantener la disciplina del marco anual y la lectura de objetivos por porcentaje.</li>
+        <li>Sostener Meta como plataforma principal mientras el CPL siga en benchmark.</li>
+        <li>Proteger el bloque de campañas AAA y el always-on como columna vertebral de la planeación.</li>
+        <li>Usar el escenario moderado como base narrativa para cliente y seguimiento.</li>
+      </ul>
+    </div>
+    <div class="kcs-card change">
+      <h4>Change</h4>
+      <ul>
+        <li>No presentar el plan como dashboard operativo: convertirlo en lectura ejecutiva por decisiones.</li>
+        <li>Evitar que TikTok cargue presión de performance sin data histórica suficiente.</li>
+        <li>Reducir dependencia de benchmarks si en la quincena inicial aparecen desviaciones reales.</li>
+        <li>Separar mejor campañas de empuje y campañas de soporte en la conversación con cliente.</li>
+      </ul>
+    </div>
+    <div class="kcs-card start">
+      <h4>Validate</h4>
+      <ul>
+        <li>Validar CPL y CTR reales durante la primera quincena para confirmar el 80/20.</li>
+        <li>Confirmar disponibilidad de creatividades y ventanas antes del arranque.</li>
+        <li>Revisar si el peso de conversión sigue siendo óptimo con data real del periodo.</li>
+        <li>Convertir el cierre en aprendizaje para alimentar el siguiente plan.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="insight" style="margin-top:18px;"><strong>Cierre:</strong> Este plan ya tiene lo más difícil resuelto: presupuesto, prioridades, mix y escenario recomendado. Lo que sigue no es volver a planear, sino <strong>ejecutar con disciplina y corregir con criterio</strong> cuando la data real del mes empiece a hablar.</div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">10 / 10</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const C={a:'#18c2c7',w:'#f4b44d',g:'#2ec4b6',p:'#ff5c73',pr:'#9f8cff',muted:'#92a6b7',grid:'rgba(146,166,183,0.12)'};
+Chart.defaults.color=C.muted;
+Chart.defaults.font.family="'Poppins',sans-serif";
+Chart.defaults.font.size=11;
+Chart.defaults.animation=false;
+Chart.defaults.responsive=true;
+Chart.defaults.maintainAspectRatio=false;
+Chart.defaults.plugins.legend.labels.boxWidth=10;
+Chart.defaults.plugins.legend.labels.padding=12;
+window.addEventListener('load',()=>{
+  const c1=document.getElementById('c1');
+  const c2=document.getElementById('c2');
+  const c3=document.getElementById('c3');
+  const c4=document.getElementById('c4');
+  if(c1){
+    new Chart(c1,{
+      type:'doughnut',
+      data:{labels:['Conversión 35%','Engagement 30%','Fans 25%','Alcance 10%'],datasets:[{data:[35,30,25,10],backgroundColor:[C.p,C.w,C.g,C.a],borderWidth:0}]},
+      options:{cutout:'62%',plugins:{legend:{position:'bottom'}}}
+    });
+  }
+  if(c2){
+    new Chart(c2,{
+      type:'doughnut',
+      data:{labels:['Meta 80%','TikTok 20%'],datasets:[{data:[39552,9888],backgroundColor:[C.a,C.w],borderWidth:0}]},
+      options:{cutout:'64%',plugins:{legend:{position:'bottom'}}}
+    });
+  }
+  if(c3){
+    new Chart(c3,{
+      type:'doughnut',
+      data:{labels:['Siempre activas','AAA','AA','A'],datasets:[{data:[21832,21400,4654,1554],backgroundColor:[C.g,C.a,C.w,C.p],borderWidth:0}]},
+      options:{cutout:'62%',plugins:{legend:{position:'bottom'}}}
+    });
+  }
+  if(c4){
+    new Chart(c4,{
+      type:'bar',
+      data:{labels:['Campaña I','Campaña D','Campaña G','Campaña F','Campaña J','Campaña E'],datasets:[{data:[8000,4500,4000,3900,2300,1754],backgroundColor:[C.a,C.w,C.g,C.p,C.pr,'#5ba8ff'],borderRadius:8}]},
+      options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:C.grid}}}}
+    });
+  }
+});
+</script>
+</body>
+</html>
