@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan de Medios Mensual | Mescalina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f13;
+      --surface: rgba(15, 20, 25, 0.94);
+      --surface-2: rgba(22, 29, 38, 0.96);
+      --surface-3: #1c2530;
+      --surface-4: #243243;
+      --accent: #18c2c7;
+      --accent-soft: rgba(24, 194, 199, 0.12);
+      --warm: #f4b44d;
+      --warm-soft: rgba(244, 180, 77, 0.12);
+      --green: #2ec4b6;
+      --green-soft: rgba(46, 196, 182, 0.12);
+      --pink: #ff5c73;
+      --pink-soft: rgba(255, 92, 115, 0.12);
+      --purple: #9f8cff;
+      --purple-soft: rgba(159, 140, 255, 0.12);
+      --text: #ebf2f8;
+      --muted: #92a6b7;
+      --dim: #5c7082;
+      --line: rgba(146, 166, 183, 0.14);
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --content: 1460px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(24, 194, 199, 0.18), transparent 26%),
+        radial-gradient(circle at 12% 16%, rgba(244, 180, 77, 0.10), transparent 18%),
+        linear-gradient(180deg, #0b0f13 0%, #0f1419 42%, #0d1318 100%);
+      color: var(--text);
+      font-family: "Poppins", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.45;
+    }
+    .dashboard { max-width: var(--content); margin: 0 auto; padding: 28px 22px 60px; }
+
+    /* HERO */
+    .hero {
+      position: relative; overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(15, 20, 25, 0.94), rgba(22, 29, 38, 0.88)),
+        linear-gradient(160deg, rgba(24, 194, 199, 0.08), transparent 50%);
+      border: 1px solid var(--line); border-radius: 30px;
+      padding: 30px; box-shadow: var(--shadow); margin-bottom: 18px;
+    }
+    .hero::before, .hero::after {
+      content: ""; position: absolute; border-radius: 999px; filter: blur(10px); pointer-events: none;
+    }
+    .hero::before { width: 280px; height: 280px; right: -120px; top: -120px; background: rgba(24, 194, 199, 0.18); }
+    .hero::after { width: 220px; height: 220px; left: -110px; bottom: -140px; background: rgba(244, 180, 77, 0.10); }
+    .hero-top, .hero-bottom { position: relative; z-index: 1; }
+    .hero-top {
+      display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 30px; align-items: start;
+    }
+    .brand-lockup { display: inline-flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+    .brand-dot {
+      width: 42px; height: 42px; display: grid; place-items: center;
+      border-radius: 14px; background: linear-gradient(135deg, var(--accent), #5be6ea);
+      color: #08272b; font-weight: 800; font-size: 18px; letter-spacing: 0.04em;
+    }
+    .brand-copy small { display: block; font-size: 11px; color: var(--muted); letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 3px; }
+    .brand-copy strong { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: lowercase; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    h1 { font-size: clamp(32px, 5vw, 56px); line-height: 1.02; font-weight: 700; max-width: 720px; margin-bottom: 16px; }
+    h1 em { color: var(--warm); font-style: italic; font-weight: 500; }
+    .hero-copy p { max-width: 760px; color: var(--muted); font-size: 15px; line-height: 1.7; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px;
+      border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); color: var(--muted);
+      font-size: 12px; font-weight: 500;
+    }
+    .hero-panel { display: grid; gap: 16px; }
+    .hero-card {
+      background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 20px; padding: 22px; backdrop-filter: blur(10px);
+    }
+    .hero-card h3 { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .hero-card p { color: var(--text); font-size: 14px; line-height: 1.7; }
+    .hero-card strong { color: var(--warm); font-weight: 700; }
+    .hero-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
+    .hero-stat {
+      background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 18px; padding: 18px;
+    }
+    .hero-stat .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
+    .hero-stat .value { font-size: 28px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+    .hero-stat .detail { font-size: 12px; color: var(--muted); }
+
+    .looker-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 34px; }
+    .looker-pill {
+      padding: 9px 13px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line);
+      color: var(--muted); font-size: 12px; font-weight: 600; box-shadow: var(--shadow);
+    }
+
+    section { margin-top: 54px; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 24px; }
+    .section-head-left { min-width: 0; }
+    .section-label { color: var(--accent); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 8px; }
+    .section-head h2 { font-size: clamp(24px, 3vw, 34px); line-height: 1.05; margin-bottom: 8px; }
+    .section-head p { max-width: 760px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .section-meta {
+      color: var(--muted); font-size: 12px; padding: 10px 14px; border-radius: 999px;
+      border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); white-space: nowrap;
+    }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+    .grid-4, .grid-3, .grid-2, .grid-2-1, .grid-1-2, .grid-3-2 { display: grid; gap: 20px; }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-2-1 { grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr); }
+    .grid-1-2 { grid-template-columns: minmax(300px, 1fr) minmax(0, 2fr); }
+    .grid-3-2 { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+    .align-start { align-items: start; }
+
+    .card {
+      min-width: 0;
+      background: linear-gradient(180deg, rgba(22, 29, 38, 0.96), rgba(18, 24, 31, 0.96));
+      border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow);
+    }
+    .card-inner { padding: 24px; }
+
+    .kpi-card { position: relative; overflow: hidden; min-height: 182px; padding: 22px; }
+    .kpi-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--accent); }
+    .kpi-card.warm::before { background: var(--warm); }
+    .kpi-card.green::before { background: var(--green); }
+    .kpi-card.pink::before { background: var(--pink); }
+    .kpi-card.purple::before { background: var(--purple); }
+    .kpi-top { display: flex; justify-content: space-between; align-items: start; gap: 16px; margin-bottom: 26px; }
+    .kpi-label { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; }
+    .kpi-badge { display: inline-flex; align-items: center; padding: 5px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .badge-accent { background: var(--accent-soft); color: var(--accent); }
+    .badge-green { background: var(--green-soft); color: var(--green); }
+    .badge-warm { background: var(--warm-soft); color: var(--warm); }
+    .badge-pink { background: var(--pink-soft); color: var(--pink); }
+    .badge-purple { background: var(--purple-soft); color: var(--purple); }
+    .kpi-value { font-size: 34px; font-weight: 700; line-height: 1; margin-bottom: 8px; }
+    .kpi-note { color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+    .progress-stack { display: grid; gap: 12px; }
+    .progress-card { padding: 18px 20px; border-radius: 18px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.02); }
+    .progress-head { display: flex; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
+    .progress-title { font-size: 13px; font-weight: 600; }
+    .progress-detail { font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .progress-track { width: 100%; height: 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 999px; }
+    .fill-accent { background: linear-gradient(90deg, var(--accent), #66eff2); }
+    .fill-green { background: linear-gradient(90deg, var(--green), #5ed9ce); }
+    .fill-warm { background: linear-gradient(90deg, var(--warm), #ffd46e); }
+    .fill-pink { background: linear-gradient(90deg, var(--pink), #ff8da1); }
+    .fill-purple { background: linear-gradient(90deg, var(--purple), #c1b3ff); }
+
+    .insight {
+      padding: 22px 24px; border-radius: 20px;
+      border: 1px solid rgba(244, 180, 77, 0.18);
+      background: linear-gradient(180deg, rgba(244, 180, 77, 0.08), rgba(244, 180, 77, 0.03));
+      color: var(--text); font-size: 14px; line-height: 1.75;
+    }
+    .insight strong { color: var(--warm); }
+
+    .chart-card, .table-card, .module-card { padding: 24px; }
+    .card-title { display: flex; justify-content: space-between; align-items: start; gap: 10px; margin-bottom: 18px; }
+    .card-title h3 { font-size: 12px; color: var(--muted); letter-spacing: 0.16em; text-transform: uppercase; }
+    .card-title p { color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .chart-shell { position: relative; height: 320px; }
+    .chart-shell.tall { height: 380px; }
+    .chart-shell.short { height: 240px; }
+    .chart-shell.compact { height: 260px; }
+    .chart-shell canvas { width: 100% !important; height: 100% !important; display: block; }
+
+    .table-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.04); }
+    table { width: 100%; border-collapse: collapse; min-width: 620px; }
+    th { text-align: left; padding: 11px 12px; background: rgba(255, 255, 255, 0.04); color: var(--muted); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; border-bottom: 1px solid var(--line); }
+    td { padding: 11px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); color: var(--text); font-size: 13px; vertical-align: middle; }
+    tr:last-child td { border-bottom: 0; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .muted { color: var(--muted); }
+
+    /* Priority pills */
+    .prio { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.05em; }
+    .prio-AAA { background: rgba(255,92,115,0.15); color: var(--pink); }
+    .prio-AA { background: rgba(244,180,77,0.15); color: var(--warm); }
+    .prio-A { background: rgba(146,166,183,0.15); color: var(--muted); }
+
+    /* Objective dots */
+    .obj-row { display: inline-flex; gap: 4px; }
+    .obj-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.1); }
+    .obj-dot.on.aw { background: var(--accent); }
+    .obj-dot.on.eg { background: var(--warm); }
+    .obj-dot.on.cv { background: var(--green); }
+
+    /* Split list */
+    .split-list { display: grid; gap: 16px; }
+    .list-row { display: grid; grid-template-columns: 110px 1fr auto; gap: 16px; align-items: center; }
+    .list-row .name { color: var(--muted); font-size: 12px; }
+    .list-row .bar { position: relative; height: 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+    .list-row .bar span { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--green)); }
+    .list-row .value { font-size: 12px; font-weight: 600; }
+
+    /* Metric mini */
+    .metric-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+    .metric-mini { padding: 18px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.04); }
+    .metric-mini .label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 8px; }
+    .metric-mini .value { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+    .metric-mini .desc { color: var(--muted); font-size: 12px; line-height: 1.55; }
+
+    /* Calendar strip */
+    .cal-card { padding: 22px 24px; }
+    .cal-track { display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .cal-track:last-child { border-bottom: none; }
+    .cal-title { font-size: 13px; font-weight: 600; }
+    .cal-title .prio { margin-left: 6px; font-size: 9px; padding: 2px 6px; }
+    .cal-bar {
+      position: relative; height: 26px; border-radius: 6px; background: rgba(255,255,255,0.04);
+      display: grid; grid-template-columns: repeat(31, 1fr);
+    }
+    .cal-bar .active {
+      grid-column: var(--s) / span var(--d);
+      background: linear-gradient(90deg, var(--accent), #66eff2);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; color: #08272b;
+    }
+    .cal-bar .active.w { background: linear-gradient(90deg, var(--warm), #ffd46e); color: #3d2a00; }
+    .cal-bar .active.g { background: linear-gradient(90deg, var(--green), #5ed9ce); color: #003a30; }
+    .cal-bar .active.p { background: linear-gradient(90deg, var(--pink), #ff8da1); color: #3a0012; }
+    .cal-days { display: grid; grid-template-columns: repeat(31, 1fr); font-size: 8px; color: var(--dim); margin-bottom: 6px; margin-left: 158px; margin-top: 6px; }
+    .cal-days span { text-align: center; }
+
+    /* Funnel steps */
+    .funnel-stack { display: grid; gap: 16px; padding-top: 10px; }
+    .funnel-row { display: grid; grid-template-columns: 140px minmax(0, 1fr) 90px; gap: 16px; align-items: center; }
+    .funnel-row .step { color: var(--muted); font-size: 12px; }
+    .funnel-bar {
+      height: 44px; border-radius: 12px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 16px; color: #051416; font-weight: 700; min-width: 0;
+    }
+    .funnel-bar small { color: rgba(5, 20, 22, 0.74); font-size: 11px; font-weight: 700; }
+    .funnel-row .rate { font-size: 12px; color: var(--warm); text-align: right; font-weight: 700; }
+
+    /* Scenario cards */
+    .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .scenario-card { padding: 24px; border-radius: 20px; border: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+    .scenario-card.rec { border: 1px solid rgba(244,180,77,0.35); background: linear-gradient(180deg, rgba(244,180,77,0.08), rgba(244,180,77,0.02)); }
+    .scenario-card .tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .scenario-card.rec .tag { color: var(--warm); }
+    .scenario-card .budget { font-size: 30px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+    .scenario-card .daily { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+    .scenario-card .metric { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 12px; }
+    .scenario-card .metric:last-child { border: none; }
+    .scenario-card .metric .l { color: var(--muted); }
+    .scenario-card .metric .v { font-weight: 700; color: var(--text); }
+    .rec-badge { background: var(--warm); color: #3d2a00; padding: 3px 8px; border-radius: 6px; font-size: 9px; font-weight: 800; }
+
+    .footer-note {
+      margin-top: 44px; padding: 22px 26px; border-radius: 18px;
+      border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03);
+      color: var(--muted); font-size: 13px; line-height: 1.7;
+    }
+
+    @media (max-width: 1280px) {
+      .kpi-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .hero-top, .grid-2-1, .grid-1-2, .grid-3-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 980px) {
+      .dashboard { padding: 18px 14px 42px; }
+      .grid-4, .grid-3, .grid-2, .scenario-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-stats { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: start; }
+      .cal-track { grid-template-columns: 1fr; }
+      .cal-days { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="dashboard">
+
+    <!-- ============ HERO ============ -->
+    <header class="hero">
+      <div class="hero-top">
+        <div class="hero-copy">
+          <div class="brand-lockup">
+            <div class="brand-dot">m</div>
+            <div class="brand-copy">
+              <small>Media Planning System</small>
+              <strong>mescalina®</strong>
+            </div>
+          </div>
+          <div class="eyebrow">Plan de medios mensual | marzo 2026</div>
+          <h1>Plan de Medios<br><em>Marzo 2026</em></h1>
+          <p>
+            Plan ejecutivo de inversión en medios digitales del mes. Integra el marco anual de KPIs,
+            el presupuesto mensual aprobado, la distribución por plataforma y objetivo, el calendario
+            de campañas con prioridades y el detalle de inversión por contenido. Vista operativa para
+            ejecución, validación y presentación al cliente.
+          </p>
+          <div class="chip-row">
+            <div class="chip">Marzo 2026</div>
+            <div class="chip">Meta · TikTok</div>
+            <div class="chip">10 campañas</div>
+            <div class="chip">4 objetivos</div>
+            <div class="chip">Vista operativa</div>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="hero-card">
+            <h3>Objetivo del mes</h3>
+            <p>
+              Activar las campañas con <strong>prioridad AAA</strong> del calendario editorial y distribuir la
+              inversión para cubrir los 4 objetivos del marco anual (awareness, engagement, fans, conversión)
+              manteniendo el mix <strong>80% Meta / 20% TikTok</strong>.
+            </p>
+          </div>
+          <div class="hero-card">
+            <h3>Marco de distribución</h3>
+            <p>
+              Engagement <strong>30%</strong> · Conversión <strong>35%</strong> · Fans <strong>25%</strong> · Alcance <strong>10%</strong>.
+              Distribución derivada del forecast anual y validada con el cliente antes de arranque de año.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="label">Presupuesto mes</div>
+          <div class="value">$49,440</div>
+          <div class="detail">MXN · 12% del total anual</div>
+        </div>
+        <div class="hero-stat">
+          <div class="label">Campañas activas</div>
+          <div class="value">10</div>
+          <div class="detail">3 AAA · 4 AA · 3 A</div>
+        </div>
+        <div class="hero-stat">
+          <div class="label">Estado</div>
+          <div class="value">Aprobado</div>
+          <div class="detail">Listo para ejecución y tracking</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="looker-strip">
+      <div class="looker-pill">📅 Corte · 28 febrero 2026</div>
+      <div class="looker-pill">Firmado por cuenta · cliente · media</div>
+      <div class="looker-pill">📝 Plan operativo del mes</div>
+    </div>
+
+    <!-- ============ SECTION 01: MARCO ANUAL ============ -->
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">01. Marco anual</div>
+          <h2>Metas KPIs y presupuesto del año</h2>
+          <p>
+            El plan mensual se deriva del marco anual aprobado con el cliente. Estas son las metas
+            que el mes debe empujar y el presupuesto total del año distribuido por trimestre.
+          </p>
+        </div>
+        <div class="section-meta">Marco del forecast 2026</div>
+      </div>
+
+      <div class="kpi-grid">
+        <article class="card kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-label">Alcance anual</div>
+            <div class="kpi-badge badge-accent">Meta</div>
+          </div>
+          <div class="kpi-value">123M</div>
+          <div class="kpi-note">Personas únicas alcanzadas en el año</div>
+        </article>
+        <article class="card kpi-card green">
+          <div class="kpi-top">
+            <div class="kpi-label">Engagement anual</div>
+            <div class="kpi-badge badge-green">Meta</div>
+          </div>
+          <div class="kpi-value">10.9M</div>
+          <div class="kpi-note">Interacciones totales · ER promedio 8.87%</div>
+        </article>
+        <article class="card kpi-card warm">
+          <div class="kpi-top">
+            <div class="kpi-label">Fans anual</div>
+            <div class="kpi-badge badge-warm">Meta</div>
+          </div>
+          <div class="kpi-value">181,840</div>
+          <div class="kpi-note">Nuevos seguidores netos en el año</div>
+        </article>
+        <article class="card kpi-card pink">
+          <div class="kpi-top">
+            <div class="kpi-label">Conversiones anual</div>
+            <div class="kpi-badge badge-pink">Meta</div>
+          </div>
+          <div class="kpi-value">99,326</div>
+          <div class="kpi-note">Compras, leads o transacciones</div>
+        </article>
+      </div>
+
+      <div class="grid-2-1" style="margin-top:20px;">
+        <div class="card card-inner">
+          <div class="card-title">
+            <h3>Presupuesto anual por trimestre</h3>
+            <p>Total $412,000 MXN</p>
+          </div>
+          <div class="progress-stack">
+            <div class="progress-card">
+              <div class="progress-head"><div class="progress-title">Q1 (ene–mar)</div><div class="progress-detail"><strong style="color:var(--text)">$82,400</strong> · 20%</div></div>
+              <div class="progress-track"><div class="progress-fill fill-accent" style="width:20%;"></div></div>
+            </div>
+            <div class="progress-card">
+              <div class="progress-head"><div class="progress-title">Q2 (abr–jun)</div><div class="progress-detail"><strong style="color:var(--text)">$119,533</strong> · 29%</div></div>
+              <div class="progress-track"><div class="progress-fill fill-green" style="width:29%;"></div></div>
+            </div>
+            <div class="progress-card">
+              <div class="progress-head"><div class="progress-title">Q3 (jul–sep)</div><div class="progress-detail"><strong style="color:var(--text)">$104,533</strong> · 25%</div></div>
+              <div class="progress-track"><div class="progress-fill fill-warm" style="width:25%;"></div></div>
+            </div>
+            <div class="progress-card">
+              <div class="progress-head"><div class="progress-title">Q4 (oct–dic)</div><div class="progress-detail"><strong style="color:var(--text)">$105,533</strong> · 26%</div></div>
+              <div class="progress-track"><div class="progress-fill fill-pink" style="width:26%;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card card-inner">
+          <div class="card-title">
+            <h3>Distribución por objetivo</h3>
+            <p>Aplicada a cada mes</p>
+          </div>
+          <div class="chart-shell compact"><canvas id="c1"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 02: PRESUPUESTO DEL MES ============ -->
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">02. Presupuesto del mes</div>
+          <h2>Cómo se desglosa marzo</h2>
+          <p>
+            El presupuesto mensual se divide primero por plataforma (Meta / TikTok) y luego por objetivo
+            aplicando la distribución del marco anual. Estos son los montos y los KPIs esperados del mes.
+          </p>
+        </div>
+        <div class="section-meta">$49,440 MXN</div>
+      </div>
+
+      <div class="kpi-grid">
+        <article class="card kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-label">Meta (80%)</div>
+          </div>
+          <div class="kpi-value">$39,552</div>
+          <div class="kpi-note">Plataforma principal · feeds, reels, stories</div>
+        </article>
+        <article class="card kpi-card warm">
+          <div class="kpi-top">
+            <div class="kpi-label">TikTok (20%)</div>
+          </div>
+          <div class="kpi-value">$9,888</div>
+          <div class="kpi-note">Canal secundario · video corto y tendencias</div>
+        </article>
+        <article class="card kpi-card green">
+          <div class="kpi-top">
+            <div class="kpi-label">Alcance esperado</div>
+          </div>
+          <div class="kpi-value">14.76M</div>
+          <div class="kpi-note">Personas únicas · derivado de benchmarks</div>
+        </article>
+        <article class="card kpi-card pink">
+          <div class="kpi-top">
+            <div class="kpi-label">Conversiones esperadas</div>
+          </div>
+          <div class="kpi-value">11,919</div>
+          <div class="kpi-note">Transacciones atribuibles del mes</div>
+        </article>
+      </div>
+
+      <div class="grid-2" style="margin-top:20px;">
+        <div class="card card-inner">
+          <div class="card-title">
+            <h3>Desglose por objetivo</h3>
+            <p>Marzo 2026</p>
+          </div>
+          <div class="split-list" style="margin-top:8px;">
+            <div class="list-row">
+              <div class="name">Conversión · 35%</div>
+              <div class="bar"><span style="width:100%;"></span></div>
+              <div class="value">$17,304</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Engagement · 30%</div>
+              <div class="bar"><span style="width:85%; background:linear-gradient(90deg,var(--warm),#ffd46e)"></span></div>
+              <div class="value">$14,832</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Fans · 25%</div>
+              <div class="bar"><span style="width:71%; background:linear-gradient(90deg,var(--green),#5ed9ce)"></span></div>
+              <div class="value">$12,360</div>
+            </div>
+            <div class="list-row">
+              <div class="name">Alcance · 10%</div>
+              <div class="bar"><span style="width:28%; background:linear-gradient(90deg,var(--pink),#ff8da1)"></span></div>
+              <div class="value">$4,944</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:18px;line-height:1.6;">
+            Distribución constante heredada del marco anual. Se conserva estable en todos los meses salvo
+            ajustes excepcionales aprobados por cliente.
+          </div>
+        </div>
+        <div class="card card-inner">
+          <div class="card-title">
+            <h3>KPIs esperados del mes</h3>
+            <p>Derivados de benchmarks</p>
+          </div>
+          <div class="metric-strip" style="grid-template-columns:1fr 1fr;">
+            <div class="metric-mini">
+              <div class="label">Alcance</div>
+              <div class="value">14.76M</div>
+              <div class="desc">personas únicas</div>
+            </div>
+            <div class="metric-mini">
+              <div class="label">Interacciones</div>
+              <div class="value">1.31M</div>
+              <div class="desc">ER ~8.87%</div>
+            </div>
+            <div class="metric-mini">
+              <div class="label">Fans nuevos</div>
+              <div class="value">21,821</div>
+              <div class="desc">seguidores netos</div>
+            </div>
+            <div class="metric-mini">
+              <div class="label">Compras</div>
+              <div class="value">11,919</div>
+              <div class="desc">transacciones</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 03: CALENDARIO Y PRIORIDADES ============ -->
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">03. Calendario editorial</div>
+          <h2>Campañas del mes con prioridad y ventanas</h2>
+          <p>
+            Cada campaña tiene una prioridad (AAA · AA · A) que determina el peso en la distribución de
+            presupuesto. La ventana muestra preventa, estreno y cierre. Los colores indican objetivo dominante.
+          </p>
+        </div>
+        <div class="section-meta">10 campañas</div>
+      </div>
+
+      <div class="card cal-card">
+        <div class="cal-days">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+          <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+          <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+          <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
+          <span>29</span><span>30</span><span>31</span>
+        </div>
+        <div class="cal-track">
+          <div class="cal-title">Campaña A <span class="prio prio-AAA">AAA</span></div>
+          <div class="cal-bar"><div class="active" style="--s:1; --d:11;">Conversión · $1,000</div></div>
+        </div>
+        <div class="cal-track">
+          <div class="cal-title">Campaña B <span class="prio prio-A">A</span></div>
+          <div class="cal-bar"><div class="active w" style="--s:1; --d:17;">Conversión · $600</div></div>
+        </div>
+        <div class="cal-track">
+          <div class="cal-title">Campaña C <span class="prio prio-AA">AA</span></div>
+          <div class="cal-bar"><div class="active g" style="--s:1; --d:7;">Conversión · $600</div></div>
+        </div>
+        <div class="cal-track">
+          <div class="cal-title">Campaña D <span class="prio prio-AAA">AAA</span></div>
+          <div class="cal-bar"><div class="active p" style="--s:1; --d:25;">Awareness + Eng + Conv · $4,500</div></div>
+        </div>
+        <div class="cal-track">
+          <div class="cal-title">Campaña E <span class="prio prio-AA">AA</span></div>
+          <div class="cal-bar"><div class="active w" style="--s:9; --d:23;">Engagement + Conversión · $1,754</div></div>
+        </div>
+        <div class="cal-track">
+          <div class="cal-title">Campaña F <span class="prio prio-AAA">AAA</span></div>
+          <div class="cal-bar"><div class="active" style="--s:5; --d:14;">Engagement + Conversión · $3,900</div></div>
+        </div>
+        <div class="cal-track">
+          <div class="cal-title">Campaña G <span class="prio prio-AAA">AAA</span></div>
+          <div class="cal-bar"><div class="active g" style="--s:12; --d:20;">Awareness + Eng + Conv · $4,000</div></div>
+        </div>
+        <div class="cal-track">
+          <div class="cal-title">Campaña H <span class="prio prio-A">A</span></div>
+          <div class="cal-bar"><div class="active p" style="--s:11; --d:18;">Conversión · $954</div></div>
+        </div>
+        <div class="cal-track">
+          <div class="cal-title">Campaña I <span class="prio prio-AAA">AAA</span></div>
+          <div class="cal-bar"><div class="active" style="--s:1; --d:31;">Awareness + Eng + Conv · $8,000</div></div>
+        </div>
+        <div class="cal-track">
+          <div class="cal-title">Campaña J <span class="prio prio-AA">AA</span></div>
+          <div class="cal-bar"><div class="active w" style="--s:1; --d:31;">Engagement + Conversión · $2,300</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 04: DESGLOSE POR CAMPAÑA ============ -->
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">04. Desglose por campaña</div>
+          <h2>Inversión detallada por contenido y objetivo</h2>
+          <p>
+            Cada campaña con su objetivo (awareness · engagement · conversión), inversión en Meta y TikTok
+            y ventana de pauta. Esta es la tabla operativa que media activa en las plataformas.
+          </p>
+        </div>
+        <div class="section-meta">$49,440 total</div>
+      </div>
+
+      <div class="card card-inner">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Campaña</th>
+                <th>Prioridad</th>
+                <th>Objetivos</th>
+                <th>Meta ($)</th>
+                <th>TikTok ($)</th>
+                <th>Total ($)</th>
+                <th>Ventana</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Campaña A</strong></td>
+                <td><span class="prio prio-AAA">AAA</span></td>
+                <td><span class="obj-row"><span class="obj-dot on cv"></span></span> Conversión</td>
+                <td>$1,000</td>
+                <td>—</td>
+                <td><strong>$1,000</strong></td>
+                <td class="muted">1–11 mar</td>
+              </tr>
+              <tr>
+                <td><strong>Campaña B</strong></td>
+                <td><span class="prio prio-A">A</span></td>
+                <td><span class="obj-row"><span class="obj-dot on cv"></span></span> Conversión</td>
+                <td>$600</td>
+                <td>—</td>
+                <td><strong>$600</strong></td>
+                <td class="muted">1–17 mar</td>
+              </tr>
+              <tr>
+                <td><strong>Campaña C</strong></td>
+                <td><span class="prio prio-AA">AA</span></td>
+                <td><span class="obj-row"><span class="obj-dot on cv"></span></span> Conversión</td>
+                <td>$600</td>
+                <td>—</td>
+                <td><strong>$600</strong></td>
+                <td class="muted">1–7 mar</td>
+              </tr>
+              <tr>
+                <td><strong>Campaña D</strong></td>
+                <td><span class="prio prio-AAA">AAA</span></td>
+                <td><span class="obj-row"><span class="obj-dot on aw"></span><span class="obj-dot on eg"></span><span class="obj-dot on cv"></span></span> Mix completo</td>
+                <td>$4,500</td>
+                <td>—</td>
+                <td><strong>$4,500</strong></td>
+                <td class="muted">1–25 mar</td>
+              </tr>
+              <tr>
+                <td><strong>Campaña E</strong></td>
+                <td><span class="prio prio-AA">AA</span></td>
+                <td><span class="obj-row"><span class="obj-dot on eg"></span><span class="obj-dot on cv"></span></span> Eng + Conv</td>
+                <td>$1,754</td>
+                <td>—</td>
+                <td><strong>$1,754</strong></td>
+                <td class="muted">9–31 mar</td>
+              </tr>
+              <tr>
+                <td><strong>Campaña F</strong></td>
+                <td><span class="prio prio-AAA">AAA</span></td>
+                <td><span class="obj-row"><span class="obj-dot on eg"></span><span class="obj-dot on cv"></span></span> Eng + Conv</td>
+                <td>$2,372</td>
+                <td>$1,528</td>
+                <td><strong>$3,900</strong></td>
+                <td class="muted">5–18 mar</td>
+              </tr>
+              <tr>
+                <td><strong>Campaña G</strong></td>
+                <td><span class="prio prio-AAA">AAA</span></td>
+                <td><span class="obj-row"><span class="obj-dot on aw"></span><span class="obj-dot on eg"></span><span class="obj-dot on cv"></span></span> Mix completo</td>
+                <td>$4,000</td>
+                <td>—</td>
+                <td><strong>$4,000</strong></td>
+                <td class="muted">12–31 mar</td>
+              </tr>
+              <tr>
+                <td><strong>Campaña H</strong></td>
+                <td><span class="prio prio-A">A</span></td>
+                <td><span class="obj-row"><span class="obj-dot on cv"></span></span> Conversión</td>
+                <td>$954</td>
+                <td>—</td>
+                <td><strong>$954</strong></td>
+                <td class="muted">11–28 mar</td>
+              </tr>
+              <tr>
+                <td><strong>Campaña I</strong></td>
+                <td><span class="prio prio-AAA">AAA</span></td>
+                <td><span class="obj-row"><span class="obj-dot on aw"></span><span class="obj-dot on eg"></span><span class="obj-dot on cv"></span></span> Mix completo</td>
+                <td>$6,000</td>
+                <td>$2,000</td>
+                <td><strong>$8,000</strong></td>
+                <td class="muted">Todo el mes</td>
+              </tr>
+              <tr>
+                <td><strong>Campaña J</strong></td>
+                <td><span class="prio prio-AA">AA</span></td>
+                <td><span class="obj-row"><span class="obj-dot on eg"></span><span class="obj-dot on cv"></span></span> Eng + Conv</td>
+                <td>$2,300</td>
+                <td>—</td>
+                <td><strong>$2,300</strong></td>
+                <td class="muted">Todo el mes</td>
+              </tr>
+              <tr style="background:rgba(24,194,199,0.04);">
+                <td colspan="3"><strong>Siempre activas</strong> (seguidores · engagement · alcance general)</td>
+                <td>$15,472</td>
+                <td>$6,360</td>
+                <td><strong>$21,832</strong></td>
+                <td class="muted">1–31 mar</td>
+              </tr>
+              <tr style="background:rgba(255,255,255,0.04); border-top:2px solid var(--accent);">
+                <td colspan="3"><strong>TOTAL</strong></td>
+                <td><strong>$39,552</strong></td>
+                <td><strong>$9,888</strong></td>
+                <td><strong>$49,440</strong></td>
+                <td class="muted">Marzo 2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;margin-top:14px;font-size:11px;color:var(--muted);">
+        <div><span class="obj-dot on aw" style="display:inline-block;margin-right:6px;"></span>Awareness</div>
+        <div><span class="obj-dot on eg" style="display:inline-block;margin-right:6px;"></span>Engagement</div>
+        <div><span class="obj-dot on cv" style="display:inline-block;margin-right:6px;"></span>Conversión</div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 05: ESCENARIOS (para planes con flexibilidad) ============ -->
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">05. Escenarios de inversión</div>
+          <h2>Qué esperar con distintos niveles de gasto</h2>
+          <p>
+            Para activaciones o clientes con presupuesto flexible, el plan incluye 3 escenarios con proyecciones
+            derivadas de benchmarks de la categoría. Cada escenario muestra embudo estimado y CPL proyectado.
+          </p>
+        </div>
+        <div class="section-meta">Benchmarks Meta México</div>
+      </div>
+
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="tag"><span>Conservador</span></div>
+          <div class="budget">$22,500</div>
+          <div class="daily">MXN · ~$500/día · 45 días</div>
+          <div class="metric"><span class="l">Impresiones</span><span class="v">263,508</span></div>
+          <div class="metric"><span class="l">Alcance</span><span class="v">138,688</span></div>
+          <div class="metric"><span class="l">Clics</span><span class="v">5,797</span></div>
+          <div class="metric"><span class="l">Leads</span><span class="v">812</span></div>
+          <div class="metric"><span class="l">CPL</span><span class="v">$28</span></div>
+        </div>
+        <div class="scenario-card rec">
+          <div class="tag"><span>Moderado</span><span class="rec-badge">Recomendado</span></div>
+          <div class="budget">$45,000</div>
+          <div class="daily">MXN · ~$1,000/día · 45 días</div>
+          <div class="metric"><span class="l">Impresiones</span><span class="v">557,746</span></div>
+          <div class="metric"><span class="l">Alcance</span><span class="v">293,551</span></div>
+          <div class="metric"><span class="l">Clics</span><span class="v">12,270</span></div>
+          <div class="metric"><span class="l">Leads</span><span class="v">1,718</span></div>
+          <div class="metric"><span class="l">CPL</span><span class="v">$26</span></div>
+        </div>
+        <div class="scenario-card">
+          <div class="tag"><span>Agresivo</span></div>
+          <div class="budget">$90,000</div>
+          <div class="daily">MXN · ~$2,000/día · 45 días</div>
+          <div class="metric"><span class="l">Impresiones</span><span class="v">1,262,755</span></div>
+          <div class="metric"><span class="l">Alcance</span><span class="v">664,608</span></div>
+          <div class="metric"><span class="l">Clics</span><span class="v">27,781</span></div>
+          <div class="metric"><span class="l">Leads</span><span class="v">3,889</span></div>
+          <div class="metric"><span class="l">CPL</span><span class="v">$23</span></div>
+        </div>
+      </div>
+
+      <div class="card card-inner" style="margin-top:20px;">
+        <div class="card-title">
+          <h3>Embudo estimado — Escenario recomendado</h3>
+          <p>$45,000 MXN · 45 días</p>
+        </div>
+        <div class="funnel-stack">
+          <div class="funnel-row">
+            <div class="step">Impresiones</div>
+            <div class="funnel-bar" style="width:100%; background:linear-gradient(90deg, var(--accent), #5be6ea);">
+              <span>557,746</span><small>frec. ~1.9x</small>
+            </div>
+            <div class="rate">100%</div>
+          </div>
+          <div class="funnel-row">
+            <div class="step">Alcance</div>
+            <div class="funnel-bar" style="width:53%; background:linear-gradient(90deg, var(--warm), #ffd46e);">
+              <span>293,551</span><small>personas únicas</small>
+            </div>
+            <div class="rate">53%</div>
+          </div>
+          <div class="funnel-row">
+            <div class="step">Clics</div>
+            <div class="funnel-bar" style="width:18%; background:linear-gradient(90deg, var(--green), #5ed9ce);">
+              <span>12,270</span><small>CTR 2.2%</small>
+            </div>
+            <div class="rate">4.2%</div>
+          </div>
+          <div class="funnel-row">
+            <div class="step">Leads</div>
+            <div class="funnel-bar" style="width:6%; background:linear-gradient(90deg, var(--pink), #ff8da1);">
+              <span>1,718</span><small>CVR 14%</small>
+            </div>
+            <div class="rate">0.6%</div>
+          </div>
+        </div>
+        <div class="metric-strip">
+          <div class="metric-mini">
+            <div class="label">CPM estimado</div>
+            <div class="value">$65–$88</div>
+            <div class="desc">benchmark Meta México · categoría</div>
+          </div>
+          <div class="metric-mini">
+            <div class="label">Frecuencia</div>
+            <div class="value">1.9x</div>
+            <div class="desc">impresiones por persona alcanzada</div>
+          </div>
+          <div class="metric-mini">
+            <div class="label">CPL esperado</div>
+            <div class="value">$26</div>
+            <div class="desc">costo promedio por lead/conversión</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--dim);margin-top:16px;line-height:1.6;">
+          ! Estimaciones orientativas. Los resultados reales variarán según creatividad, copy, segmentación
+          y ventana. Los escenarios se revisan quincenalmente durante la ejecución.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 06: LECTURA DE PLAN ============ -->
+    <section>
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-label">06. Lectura del plan</div>
+          <h2>Qué hay que cuidar este mes</h2>
+          <p>
+            Lectura ejecutiva del plan: las 3 campañas AAA que concentran el peso del mes, los riesgos
+            conocidos y los supuestos que pueden mover los números proyectados.
+          </p>
+        </div>
+        <div class="section-meta">Curado · 28 febrero 2026</div>
+      </div>
+
+      <div class="insight">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:10px;flex-wrap:wrap;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.16em;color:var(--warm);font-weight:700;">📝 Lectura ejecutiva del plan</div>
+          <div style="font-size:11px;color:var(--muted);">Curado por equipo Mescalina · 28 febrero 2026</div>
+        </div>
+        El mes tiene <strong>3 campañas AAA</strong> (D, F, I) que concentran el 34% del presupuesto total ($16,400 MXN)
+        y son las que más empujan los KPIs de conversión del marco anual. La campaña I es la única siempre activa
+        en los dos canales (Meta + TikTok) porque es la que sostiene awareness de base. <strong>Riesgo conocido:</strong>
+        la distribución de Conversión (35%) asume que Meta absorbe la mayoría del presupuesto de compras — si el
+        CPL real se aleja del benchmark ($26), hay que rebalancear hacia TikTok en la segunda quincena. Los 4 KPIs
+        esperados del mes son derivados del ER histórico 8.87% y del CVR de formulario 14% — ambos validados con
+        data histórica del cliente.
+      </div>
+
+      <div class="grid-3" style="margin-top:20px;">
+        <div class="card card-inner">
+          <div class="card-title"><h3>Supuestos clave</h3><p>Benchmarks</p></div>
+          <div style="font-size:13px;line-height:1.75;color:var(--text);">
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><strong style="color:var(--accent)">CPM:</strong> $65–$88 MXN</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><strong style="color:var(--accent)">CTR:</strong> 2.2%</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><strong style="color:var(--accent)">CVR formulario:</strong> 14% de clics</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><strong style="color:var(--accent)">Frecuencia:</strong> 1.9x</div>
+            <div style="padding:6px 0;"><strong style="color:var(--accent)">ER objetivo:</strong> 8.87%</div>
+          </div>
+        </div>
+        <div class="card card-inner">
+          <div class="card-title"><h3>Riesgos identificados</h3><p>Para monitorear</p></div>
+          <div style="font-size:13px;line-height:1.75;color:var(--text);">
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">CPL real &gt; benchmark → rebalanceo quincenal</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">Saturación de frecuencia en audiencias pequeñas</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">Creatividades sin aprobación al arranque</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">Cambios de última hora del calendario editorial</div>
+            <div style="padding:6px 0;">TikTok Ads Manager sin data histórica suficiente</div>
+          </div>
+        </div>
+        <div class="card card-inner">
+          <div class="card-title"><h3>Checkpoints del mes</h3><p>Validaciones</p></div>
+          <div style="font-size:13px;line-height:1.75;color:var(--text);">
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">✓ Plan firmado por cliente (28 feb)</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">○ Creatividades listas (1 mar)</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">○ UTMs generados (1 mar)</div>
+            <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">○ Monitoreo quincenal (15 mar)</div>
+            <div style="padding:6px 0;">○ Conciliación y cierre (31 mar)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      Plan de medios generado por el equipo de <strong>Strategy & Data Intelligence — Mescalina®</strong>.
+      Los escenarios se basan en benchmarks de la categoría y en data histórica del cliente. El plan se
+      firma antes del arranque del mes y se monitorea quincenalmente durante la ejecución. Conciliación
+      final al cierre del periodo.
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script>
+  const C = {a:'#18c2c7',w:'#f4b44d',g:'#2ec4b6',r:'#ff5c73',p:'#9f8cff',grid:'rgba(255,255,255,0.05)',muted:'#92a6b7'};
+  Chart.defaults.color = C.muted;
+  Chart.defaults.font.family = "'Poppins',sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.animation = false;
+  Chart.defaults.responsive = true;
+  Chart.defaults.maintainAspectRatio = false;
+
+  window.addEventListener('load', () => {
+    new Chart(document.getElementById('c1'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Conversión 35%','Engagement 30%','Fans 25%','Alcance 10%'],
+        datasets: [{data:[35,30,25,10],backgroundColor:[C.r,C.w,C.g,C.a],borderWidth:0}]
+      },
+      options: {cutout:'62%',plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:10}}}}
+    });
+  });
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mescalina Reports</title>
+<title>Mescalina Data Products</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -60,8 +60,28 @@ body{
 }
 .grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:18px;
+}
+.section{
+  margin-top:28px;
+}
+.section:first-of-type{
+  margin-top:0;
+}
+.section-head{
+  margin-bottom:16px;
+}
+.section-head h2{
+  font-size:20px;
+  line-height:1.1;
+  margin-bottom:6px;
+}
+.section-head p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.65;
+  max-width:760px;
 }
 .card{
   background:rgba(22,29,38,0.84);
@@ -71,7 +91,7 @@ body{
   display:flex;
   flex-direction:column;
   gap:16px;
-  min-height:320px;
+  min-height:280px;
 }
 .eyebrow{
   font-size:11px;
@@ -138,46 +158,115 @@ body{
   <div class="shell">
     <section class="hero">
       <img src="./assets/Logo_Mescalina_White.png" alt="Mescalina">
-      <h1>Reports & Dashboards</h1>
-      <p>Hub listo para GitHub Pages con los tres entregables organizados en rutas separadas, assets compartidos y archivos de descarga para PDF y PowerPoint.</p>
+      <h1>Mescalina Data Products</h1>
+      <p>Biblioteca general de productos de datos de Mescalina: reportes ejecutivos, dashboards operativos y frameworks estratégicos diseñados para traducir datos en lectura accionable. Este hub concentra los entregables publicados y su acceso web desde una sola capa editorial.</p>
     </section>
 
-    <section class="grid">
-      <article class="card">
-        <div class="eyebrow">Social Media</div>
-        <h2>Grand Pet 2026</h2>
-        <p>Reporte de social media y pauta digital en formato deck web, con exportables para revisión y entrega.</p>
-        <div class="links">
-          <a class="btn primary" href="./social-media/">Abrir Web</a>
-          <a class="btn" href="./downloads/social-media/report.pdf">PDF</a>
-          <a class="btn" href="./downloads/social-media/report.pptx">PPTX</a>
-        </div>
-      </article>
+    <section class="section">
+      <div class="section-head">
+        <h2>Reportes</h2>
+        <p>Productos editoriales en formato presentación para lectura ejecutiva, análisis y storytelling de negocio.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="eyebrow">Grand Pet 2026</div>
+          <h2>Reporte Social Media</h2>
+          <p>Reporte ejecutivo de social media y pauta digital en formato deck web, diseñado para lectura gerencial y conversación de negocio.</p>
+          <div class="links">
+            <a class="btn primary" href="./social-media/">Abrir HTML</a>
+            <a class="btn warm" href="https://drive.google.com/open?id=1m1OfYq8BC5Uo7cMnZnKy2Foyi9uDUcQ19IlJTRQ2LLo" target="_blank" rel="noreferrer">Guía de uso</a>
+            <a class="btn green" href="https://drive.google.com/open?id=15LrIHrSmoOnFZm7StTVpSsva08bQ9DiHgJHYVLb5o-w" target="_blank" rel="noreferrer">Manual</a>
+          </div>
+        </article>
 
-      <article class="card">
-        <div class="eyebrow">Social Listening</div>
-        <h2>Kokuho</h2>
-        <p>Listening report organizado como deck navegable con su versión PDF y PowerPoint publicables.</p>
-        <div class="links">
-          <a class="btn warm" href="./social-listening/">Abrir Web</a>
-          <a class="btn" href="./downloads/social-listening/report.pdf">PDF</a>
-          <a class="btn" href="./downloads/social-listening/report.pptx">PPTX</a>
-        </div>
-      </article>
+        <article class="card">
+          <div class="eyebrow">Kokuho</div>
+          <h2>Social Listening Report</h2>
+          <p>Reporte de conversación y percepción de marca en formato deck, estructurado para lectura narrativa y recomendaciones accionables.</p>
+          <div class="links">
+            <a class="btn primary" href="./social-listening/">Abrir HTML</a>
+            <a class="btn warm" href="https://drive.google.com/open?id=1WaZ8KaHbTWsmKAB8aaHW3kMYaRbLbqRRDSeqxxSsieE" target="_blank" rel="noreferrer">Guía de uso</a>
+            <a class="btn green" href="https://drive.google.com/open?id=18VMEYTAKZzVddzWRt_gmUB17aVsAp2zq7qJL4eXaNZE" target="_blank" rel="noreferrer">Manual</a>
+          </div>
+        </article>
 
-      <article class="card">
-        <div class="eyebrow">Dashboard</div>
-        <h2>Promo & Campaign Dashboards</h2>
-        <p>Versión web del dashboard y accesos directos a los PDFs de referencia incluidos en la carpeta original.</p>
-        <div class="links">
-          <a class="btn green" href="./dashboard/">Abrir Web</a>
-          <a class="btn" href="./downloads/dashboard/dashboard-grand-pet.pdf">Grand Pet PDF</a>
-          <a class="btn" href="./downloads/dashboard/dashboard-bob-esponja.pdf">Bob Esponja PDF</a>
-        </div>
-      </article>
+        <article class="card">
+          <div class="eyebrow">Bob Esponja</div>
+          <h2>Reporte Final de Promoción</h2>
+          <p>Versión ejecutiva construida a partir del dashboard promocional, con funnel, lectura comercial y cierre tipo keep / change / start.</p>
+          <div class="links">
+            <a class="btn primary" href="./Promociones/Reporte_Final_Promocion_BobEsponja.html">Abrir HTML</a>
+            <a class="btn warm" href="https://drive.google.com/open?id=1zaVhu6eRN2QQfVxH5mI92XomqQQj9iflzMXNUuzq4mY" target="_blank" rel="noreferrer">Guía de uso</a>
+            <a class="btn green" href="https://drive.google.com/open?id=1-xFqfOEZRW7jhdQ4FZL7twBRDQQPynkkvdmolzzOGk0" target="_blank" rel="noreferrer">Manual</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="eyebrow">Planning</div>
+          <h2>Media Planning Report</h2>
+          <p>Reporte de planeación de medios traducido de draft operativo a una lectura ejecutiva de estructura, escenarios y prioridades.</p>
+          <div class="links">
+            <a class="btn primary" href="./Media-Planning-Management/Reporte_Plan_Medios_Marzo_2026.html">Abrir HTML</a>
+            <a class="btn warm" href="https://drive.google.com/open?id=1w8QNCqvbm3pfISOaaGv_RpfG0tJ6dFFbwRHcLG6U2LQ" target="_blank" rel="noreferrer">Guía de uso</a>
+            <a class="btn green" href="https://drive.google.com/open?id=1sDv7WvrxaeExP6rYwQbJk5i3pQlN8NYOrJf76_3J1eU" target="_blank" rel="noreferrer">Manual</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="eyebrow">Framework Estratégico</div>
+          <h2>Measurement Strategy</h2>
+          <p>Documento metodológico para estimar escenarios, fases de participación y perfiles de consumidor antes de la ejecución.</p>
+          <div class="links">
+            <a class="btn primary" href="./measurement-strategy/Reporte_Estrategia_Medicion_BobEsponja.html">Abrir HTML</a>
+            <a class="btn warm" href="https://drive.google.com/open?id=1OXGrGztLWealJk4xhbe7UUReEFdMHZVy-77XbNb_uSE" target="_blank" rel="noreferrer">Guía de uso</a>
+            <a class="btn green" href="https://drive.google.com/open?id=15FgiGyujBGS3h4kxQ2FUmIs6YKPducoV5034dGbmDPA" target="_blank" rel="noreferrer">Manual</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="eyebrow">CRM / Newsletter</div>
+          <h2>Email Marketing Analytics</h2>
+          <p>Producto editorial de análisis semanal del canal email con funnel, tendencias, performance por envío, test &amp; learn y recomendaciones.</p>
+          <div class="links">
+            <a class="btn primary" href="./email-marketing/Email_Marketing_Analytics.html">Abrir HTML</a>
+            <a class="btn warm" href="https://drive.google.com/open?id=1qfWRp2UyZw1dZl9vndiv5qreg90Sl1w7vZXuKco6bNY" target="_blank" rel="noreferrer">Guía de uso</a>
+            <a class="btn green" href="https://drive.google.com/open?id=1z522cY6acNC9DA-A6sd7_Hb3a5W_5TAEkYxtqTuWhhM" target="_blank" rel="noreferrer">Manual</a>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <p class="note">Repositorio de reportes de data work in progress</p>
+    <section class="section">
+      <div class="section-head">
+        <h2>Dashboards</h2>
+        <p>Productos vivos de monitoreo continuo para seguimiento operativo entre reportes.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="eyebrow">Grand Pet</div>
+          <h2>Dashboard Social Media</h2>
+          <p>Vista web consolidada para seguimiento continuo de social media y pauta digital con lectura operativa always-on.</p>
+          <div class="links">
+            <a class="btn primary" href="./dashboard/Social Media/Dashboard_SocialMedia_GrandPet.html">Abrir HTML</a>
+            <a class="btn warm" href="https://drive.google.com/open?id=1d8NGMY24yY7dhItUxuEIV_wpoCACyK10RWgtPA_sMnI" target="_blank" rel="noreferrer">Guía de uso</a>
+            <a class="btn green" href="https://drive.google.com/open?id=1OQUEgC4vj0Gm5JUv3E0dYmwxEB-osvMuWFjx7m6GO0s" target="_blank" rel="noreferrer">Manual</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="eyebrow">Bob Esponja</div>
+          <h2>Dashboard Promociones</h2>
+          <p>Dashboard operativo de promoción para monitoreo de tráfico, funnel, comportamiento, juegos y performance comercial.</p>
+          <div class="links">
+            <a class="btn primary" href="./dashboard/Promociones/Dashboard_Promociones_BobEsponja.html">Abrir HTML</a>
+            <a class="btn warm" href="https://drive.google.com/open?id=1d8NGMY24yY7dhItUxuEIV_wpoCACyK10RWgtPA_sMnI" target="_blank" rel="noreferrer">Guía de uso</a>
+            <a class="btn green" href="https://drive.google.com/open?id=1OQUEgC4vj0Gm5JUv3E0dYmwxEB-osvMuWFjx7m6GO0s" target="_blank" rel="noreferrer">Manual</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <p class="note"><strong>ChangeLog:</strong> Home reorganizado por tipo de producto y acceso directo a HTML, guía de uso y manual.</p>
   </div>
 </body>
 </html>

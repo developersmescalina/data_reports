@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Marketing Analytics | Mescalina</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f13;
+  --slide-bg:#0f1419;
+  --card:#161d26;
+  --card-alt:#1c2530;
+  --border:#1e2a38;
+  --line:rgba(146,166,183,0.14);
+  --text:#ebf2f8;
+  --muted:#92a6b7;
+  --dim:#5c7082;
+  --accent:#18c2c7;
+  --warm:#f4b44d;
+  --green:#2ec4b6;
+  --pink:#ff5c73;
+  --purple:#9f8cff;
+  --cyan-soft:#66eff2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);
+  font-family:'Poppins',sans-serif;
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+  padding:20px 0;
+}
+.slide{
+  width:1280px;
+  height:720px;
+  background:var(--slide-bg);
+  border-radius:12px;
+  border:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  padding:56px 64px;
+}
+.slide::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(11,15,19,0.72) 0%, rgba(11,15,19,0.62) 100%),
+    url('../assets/background.png') center/cover no-repeat;
+  opacity:.34;
+  pointer-events:none;
+}
+.slide>*{position:relative;z-index:1}
+.slide.cover{
+  justify-content:center;
+  background:linear-gradient(155deg,#0a0e13 0%,#0f1922 40%,#152a3a 100%);
+}
+.slide.cover::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 88% 24%, rgba(24,194,199,0.15) 0%, transparent 20%),
+    radial-gradient(circle at 12% 82%, rgba(244,180,77,0.08) 0%, transparent 18%),
+    linear-gradient(155deg, rgba(10,14,19,0.82) 0%, rgba(15,25,34,0.74) 40%, rgba(21,42,58,0.68) 100%),
+    url('../assets/background.png') center/cover no-repeat;
+  opacity:.95;
+}
+.slide.divider{
+  justify-content:center;
+  background:linear-gradient(180deg,var(--slide-bg) 0%,var(--card) 100%);
+}
+.slide.divider::before{opacity:.42}
+.slide-number{
+  position:absolute;
+  right:32px;
+  bottom:20px;
+  font-size:11px;
+  color:var(--dim);
+}
+.slide-brand{
+  position:absolute;
+  left:32px;
+  bottom:20px;
+  display:flex;
+  align-items:center;
+  height:12px;
+}
+.slide-brand img{
+  display:block;
+  height:12px;
+  width:auto;
+  opacity:.42;
+}
+.cover-label{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:30px;
+}
+.cover h1{
+  font-size:60px;
+  line-height:1.02;
+  font-weight:700;
+  max-width:820px;
+}
+.cover h1 em{
+  font-style:italic;
+  color:var(--warm);
+  font-weight:500;
+}
+.cover-meta{
+  display:flex;
+  gap:34px;
+  margin-top:42px;
+  flex-wrap:wrap;
+}
+.cover-meta-item{
+  border-left:2px solid var(--accent);
+  padding-left:14px;
+}
+.cover-meta-item .lbl{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:var(--muted);
+  margin-bottom:2px;
+}
+.cover-meta-item .val{
+  font-size:16px;
+  font-weight:600;
+}
+.sec-num{
+  font-size:12px;
+  color:var(--accent);
+  letter-spacing:3px;
+  margin-bottom:14px;
+  font-weight:700;
+}
+.divider h2{
+  font-size:48px;
+  line-height:1.08;
+  font-weight:700;
+  max-width:860px;
+}
+.divider h2 em{
+  font-style:italic;
+  color:var(--warm);
+  font-weight:500;
+}
+h3{
+  font-size:26px;
+  font-weight:700;
+  margin-bottom:16px;
+}
+.subtitle{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.65;
+  max-width:760px;
+  margin-bottom:18px;
+}
+.highlight{
+  color:var(--warm);
+  font-weight:700;
+}
+.fw-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  flex:1;
+}
+.fw-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+}
+.fw-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:3px;
+}
+.fw-card:nth-child(1)::before{background:var(--accent)}
+.fw-card:nth-child(2)::before{background:var(--warm)}
+.fw-card:nth-child(3)::before{background:var(--green)}
+.fw-card .q{
+  font-size:18px;
+  font-weight:600;
+  line-height:1.35;
+  margin-bottom:16px;
+  flex:1;
+}
+.tag{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:600;
+  margin:2px;
+}
+.tag-a{background:rgba(24,194,199,0.14);color:var(--accent)}
+.tag-w{background:rgba(244,180,77,0.14);color:var(--warm)}
+.tag-g{background:rgba(46,196,182,0.14);color:var(--green)}
+.tag-p{background:rgba(159,140,255,0.14);color:var(--purple)}
+.method-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:18px;
+}
+.method-item h4{
+  font-size:12px;
+  font-weight:600;
+  color:var(--accent);
+  margin-bottom:6px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.method-item p{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.55;
+}
+.m-row{
+  display:grid;
+  gap:14px;
+  margin-bottom:18px;
+}
+.m-row-4{grid-template-columns:repeat(4,1fr)}
+.m-row-7{grid-template-columns:repeat(7,1fr)}
+.m-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px 20px;
+}
+.m-card .lbl{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.m-card .val{
+  font-size:30px;
+  font-weight:700;
+  line-height:1;
+}
+.m-card .sub{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:6px;
+  line-height:1.45;
+}
+.m-card.compact{padding:16px 14px}
+.m-card.compact .val{font-size:24px}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.4px;
+  margin-top:8px;
+  text-transform:uppercase;
+}
+.badge.up{background:rgba(46,196,182,0.14);color:var(--green)}
+.badge.down{background:rgba(255,92,115,0.14);color:var(--pink)}
+.badge.flat{background:rgba(159,140,255,0.14);color:var(--purple)}
+.chart-wrap,.list-box,.table-wrap{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+.chart-wrap{
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  overflow:hidden;
+}
+.chart-wrap h4,.list-box h4{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+.chart-area{
+  position:relative;
+  flex:1;
+  min-height:0;
+}
+.chart-wrap canvas{
+  width:100%!important;
+  height:100%!important;
+  display:block;
+}
+.list-box{
+  padding:20px;
+}
+.list-row{
+  display:grid;
+  grid-template-columns:140px 1fr auto;
+  gap:14px;
+  align-items:center;
+  margin-bottom:14px;
+}
+.list-row:last-child{margin-bottom:0}
+.list-row .name{
+  font-size:12px;
+  color:var(--muted);
+}
+.list-row .bar{
+  height:10px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.06);
+  overflow:hidden;
+  position:relative;
+}
+.list-row .bar span{
+  position:absolute;
+  inset:0 auto 0 0;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--accent),var(--green));
+}
+.list-row .value{
+  font-size:12px;
+  font-weight:700;
+}
+.insight{
+  border-left:3px solid var(--warm);
+  padding:14px 18px;
+  background:rgba(244,180,77,0.05);
+  border-radius:0 10px 10px 0;
+  font-size:13px;
+  line-height:1.68;
+}
+.insight strong{color:var(--warm)}
+.table-wrap{overflow:hidden}
+.data-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+.data-table th{
+  text-align:left;
+  padding:10px 12px;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--muted);
+  background:rgba(255,255,255,0.03);
+  border-bottom:1px solid var(--line);
+}
+.data-table td{
+  padding:10px 12px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.data-table tr:last-child td{border-bottom:none}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  padding:3px 8px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:700;
+}
+.pill.top{background:rgba(46,196,182,0.14);color:var(--green)}
+.pill.mid{background:rgba(244,180,77,0.14);color:var(--warm)}
+.pill.low{background:rgba(255,92,115,0.14);color:var(--pink)}
+.pill.editorial{background:rgba(159,140,255,0.14);color:var(--purple)}
+.status-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.status-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
+  padding:16px 18px;
+}
+.status-card h5{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+.status-track{
+  height:10px;
+  background:rgba(255,255,255,0.06);
+  border-radius:999px;
+  overflow:hidden;
+  margin-bottom:8px;
+}
+.status-fill{
+  height:100%;
+  border-radius:999px;
+}
+.status-note{
+  font-size:12px;
+  color:var(--text);
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+.funnel-wrap{
+  display:grid;
+  gap:14px;
+}
+.funnel-step{
+  display:grid;
+  grid-template-columns:120px 1fr 74px;
+  gap:14px;
+  align-items:center;
+}
+.funnel-label{
+  font-size:12px;
+  color:var(--muted);
+}
+.funnel-bar{
+  height:42px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 14px;
+  font-size:13px;
+  font-weight:700;
+  color:#071214;
+}
+.funnel-rate{
+  font-size:12px;
+  color:var(--warm);
+  text-align:right;
+  font-weight:700;
+}
+.mail-grid{
+  display:grid;
+  grid-template-columns:0.56fr 0.44fr;
+  gap:16px;
+  flex:1;
+  min-height:0;
+}
+.mail-mock{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+  display:grid;
+  grid-template-rows:auto auto auto 1fr auto;
+  gap:12px;
+}
+.mail-topline{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  color:var(--muted);
+}
+.mail-subject{
+  font-size:17px;
+  font-weight:700;
+  line-height:1.35;
+}
+.mail-preheader{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.55;
+}
+.mail-hero{
+  border-radius:14px;
+  background:
+    radial-gradient(circle at 22% 28%, rgba(24,194,199,0.28) 0%, transparent 24%),
+    radial-gradient(circle at 78% 72%, rgba(244,180,77,0.24) 0%, transparent 18%),
+    linear-gradient(145deg, #112030 0%, #182838 44%, #222833 100%);
+  border:1px solid rgba(255,255,255,0.05);
+  position:relative;
+  min-height:210px;
+  padding:20px;
+  overflow:hidden;
+}
+.hero-kicker{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.8px;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+.hero-title{
+  font-size:28px;
+  font-weight:700;
+  line-height:1.05;
+  max-width:260px;
+}
+.hero-title em{
+  color:var(--warm);
+  font-style:italic;
+  font-weight:500;
+}
+.cta-chip{
+  position:absolute;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:10px;
+  font-weight:700;
+  color:#071214;
+}
+.cta-chip.primary{left:22px;bottom:22px;background:var(--accent)}
+.cta-chip.secondary{left:140px;bottom:22px;background:var(--warm)}
+.cta-chip.heat{right:18px;top:18px;background:rgba(255,255,255,0.14);color:var(--text)}
+.heat-note{
+  display:grid;
+  gap:10px;
+}
+.heat-item{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
+  padding:14px 16px;
+}
+.heat-item h5{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.heat-item p{
+  font-size:12px;
+  color:var(--text);
+  line-height:1.5;
+}
+.test-table td:last-child{color:var(--text)}
+.kcs-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  flex:1;
+}
+.kcs-card{
+  border-radius:14px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+}
+.kcs-card h4{
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:12px;
+}
+.kcs-card ul{
+  list-style:none;
+  padding:0;
+}
+.kcs-card li{
+  padding:6px 0;
+  font-size:12.5px;
+  line-height:1.55;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.kcs-card li:last-child{border-bottom:none}
+.kcs-card.keep{background:rgba(46,196,182,0.08);border:1px solid rgba(46,196,182,0.18)}
+.kcs-card.keep h4{color:var(--green)}
+.kcs-card.change{background:rgba(255,92,115,0.08);border:1px solid rgba(255,92,115,0.18)}
+.kcs-card.change h4{color:var(--pink)}
+.kcs-card.start{background:rgba(244,180,77,0.08);border:1px solid rgba(244,180,77,0.18)}
+.kcs-card.start h4{color:var(--warm)}
+.closing-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  flex:1;
+}
+.closing-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:26px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.closing-card h4{
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:14px;
+}
+.closing-card p{
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.closing-card .big{
+  font-size:42px;
+  font-weight:800;
+  line-height:1;
+  margin-bottom:12px;
+}
+.closing-card .big.cyan{color:var(--accent)}
+.closing-card .big.warm{color:var(--warm)}
+.closing-card .mini{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+@page{size:13.333in 7.5in;margin:0}
+@media print{
+  html,body{width:13.333in;margin:0;padding:0;background:#000}
+  body{gap:0}
+  .slide{
+    width:13.333in;
+    height:7.5in;
+    margin:0;
+    border:none;
+    border-radius:0;
+    page-break-after:always;
+    break-after:page;
+  }
+  .slide:last-of-type{page-break-after:auto;break-after:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="slide cover">
+  <div class="cover-label">mescalina ® — strategy & data intelligence</div>
+  <h1>Email Marketing Analytics<br><em>Weekly Performance & Optimization Report</em></h1>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="lbl">Periodo</div><div class="val">Semana 14 · 6–12 abril 2026</div></div>
+    <div class="cover-meta-item"><div class="lbl">Núm. de envíos</div><div class="val">6 envíos</div></div>
+    <div class="cover-meta-item"><div class="lbl">Canal / programa</div><div class="val">CRM · Loyalty · Newsletter</div></div>
+    <div class="cover-meta-item"><div class="lbl">Fuente de datos</div><div class="val">ESP + GA4 + click logs</div></div>
+  </div>
+  <div class="slide-number">01 / 13</div>
+</div>
+
+<div class="slide">
+  <h3>¿Qué queremos responder?</h3>
+  <p class="subtitle">Este documento traduce la operación semanal del canal email en una lectura ejecutiva: si el canal realmente capturó atención, qué tipo de envío convirtió apertura en clic y qué aprendizajes deben mover la siguiente semana.</p>
+  <div class="fw-grid">
+    <div class="fw-card">
+      <div class="q">¿El canal está generando atención real o solo entregabilidad saludable?</div>
+      <div><span class="tag tag-a">Sent</span><span class="tag tag-a">Delivered</span><span class="tag tag-a">Open Rate</span></div>
+    </div>
+    <div class="fw-card">
+      <div class="q">¿Qué tipo de envío logró convertir apertura en clic y no solo sostener volumen?</div>
+      <div><span class="tag tag-w">Click Rate</span><span class="tag tag-w">CTOR</span><span class="tag tag-w">Campaign mix</span></div>
+    </div>
+    <div class="fw-card">
+      <div class="q">¿Qué aprendizajes creativos, de segmentación y estructura deben capitalizarse la próxima semana?</div>
+      <div><span class="tag tag-g">Creative</span><span class="tag tag-g">Segmentation</span><span class="tag tag-g">Test & Learn</span></div>
+    </div>
+  </div>
+  <div class="method-row">
+    <div class="method-item"><h4>Fuente primaria</h4><p>ESP, entregabilidad, eventos de apertura/clic y trazabilidad de sesiones post-click en sitio.</p></div>
+    <div class="method-item"><h4>Periodo analizado</h4><p>6 envíos ejecutados en una ventana de 7 días, comparados contra las 3 semanas previas del canal.</p></div>
+    <div class="method-item"><h4>Objetivo del reporte</h4><p>Pasar de lectura táctica por envío a una lectura ejecutiva del canal: atención, intención, fatiga y optimización.</p></div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">02 / 13</div>
+</div>
+
+<div class="slide divider">
+  <div class="sec-num">01 — RESUMEN EJECUTIVO</div>
+  <h2>¿Qué tan sano estuvo el canal esta semana<br>y dónde estuvo realmente <em>el resultado</em>?</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">03 / 13</div>
+</div>
+
+<div class="slide" style="padding:42px 48px;">
+  <div style="display:grid;grid-template-rows:auto auto 1fr auto;gap:12px;flex:1;min-height:0;">
+    <h3 style="margin-bottom:0;">Vista gerencial del canal</h3>
+    <div class="m-row m-row-7" style="margin-bottom:0;">
+      <div class="m-card compact"><div class="lbl">Total sent</div><div class="val" style="color:var(--accent)">1.25M</div><div class="sub">6 envíos de la semana</div><div class="badge up">+8% vs W13</div></div>
+      <div class="m-card compact"><div class="lbl">Delivered</div><div class="val" style="color:var(--green)">1.23M</div><div class="sub">98.3% deliverability</div><div class="badge up">+7% volumen útil</div></div>
+      <div class="m-card compact"><div class="lbl">Open Rate</div><div class="val" style="color:var(--cyan-soft)">41.7%</div><div class="sub">511.6k aperturas</div><div class="badge flat">-0.3 pp</div></div>
+      <div class="m-card compact"><div class="lbl">Click Rate</div><div class="val" style="color:var(--warm)">3.5%</div><div class="sub">43.2k clics</div><div class="badge down">-0.1 pp</div></div>
+      <div class="m-card compact"><div class="lbl">CTOR</div><div class="val" style="color:var(--purple)">8.4%</div><div class="sub">Calidad post-open</div><div class="badge down">-0.2 pp</div></div>
+      <div class="m-card compact"><div class="lbl">Bounce Rate</div><div class="val" style="color:var(--pink)">1.7%</div><div class="sub">21.2k rebotes</div><div class="badge down">+0.1 pp</div></div>
+      <div class="m-card compact"><div class="lbl">Unsub Rate</div><div class="val" style="color:var(--pink)">0.12%</div><div class="sub">1,487 bajas</div><div class="badge down">+0.02 pp</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:0.58fr 0.42fr;gap:16px;min-height:0;">
+      <div class="insight" style="align-self:start;">
+        <strong>Lectura ejecutiva:</strong> El canal llegó sano a la bandeja y sostuvo un nivel de apertura robusto, así que el problema no estuvo en la entregabilidad ni en el subject line. La erosión aparece después del open: <strong>el clic se concentró en pocos envíos</strong> y el volumen broad comercial sostuvo alcance, pero no intención. La semana deja un canal estable en atención, <strong>frágil en post-open</strong> y con señales tempranas de fatiga en audiencias menos calificadas.
+      </div>
+      <div class="status-grid">
+        <div class="status-card">
+          <h5>Deliverability</h5>
+          <div class="status-track"><div class="status-fill" style="width:93%;background:linear-gradient(90deg,var(--green),#64e2d6)"></div></div>
+          <div class="status-note"><span>Salud técnica</span><strong>Fuerte</strong></div>
+        </div>
+        <div class="status-card">
+          <h5>Attention</h5>
+          <div class="status-track"><div class="status-fill" style="width:84%;background:linear-gradient(90deg,var(--accent),#66eff2)"></div></div>
+          <div class="status-note"><span>Apertura</span><strong>Estable</strong></div>
+        </div>
+        <div class="status-card">
+          <h5>Intent</h5>
+          <div class="status-track"><div class="status-fill" style="width:58%;background:linear-gradient(90deg,var(--warm),#ffd46e)"></div></div>
+          <div class="status-note"><span>Click / CTOR</span><strong>Irregular</strong></div>
+        </div>
+        <div class="status-card">
+          <h5>Fatigue Watch</h5>
+          <div class="status-track"><div class="status-fill" style="width:34%;background:linear-gradient(90deg,var(--pink),#ff9aaa)"></div></div>
+          <div class="status-note"><span>Unsub / broad list</span><strong>En observación</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="insight" style="padding:10px 14px;font-size:11.5px;line-height:1.5;"><strong>Traducción de negocio:</strong> esta semana el canal <strong>sí capturó atención</strong>, pero no todas las piezas la transformaron en acción. El resultado real vino de envíos con utilidad clara o propuesta concreta, no del volumen por sí solo.</div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">04 / 13</div>
+</div>
+
+<div class="slide">
+  <h3>Funnel de performance del canal</h3>
+  <div style="display:grid;grid-template-columns:0.56fr 0.44fr;gap:16px;flex:1;min-height:0;">
+    <div class="list-box" style="display:grid;grid-template-rows:auto 1fr auto;min-height:0;">
+      <h4>Embudo semanal del canal</h4>
+      <div class="funnel-wrap">
+        <div class="funnel-step"><div class="funnel-label">Sent</div><div class="funnel-bar" style="background:linear-gradient(90deg,var(--accent),#5be6ea)"><span>1,248,000</span></div><div class="funnel-rate">100%</div></div>
+        <div class="funnel-step"><div class="funnel-label">Delivered</div><div class="funnel-bar" style="width:98.3%;background:linear-gradient(90deg,var(--green),#64e2d6)"><span>1,226,784</span></div><div class="funnel-rate">98.3%</div></div>
+        <div class="funnel-step"><div class="funnel-label">Opens</div><div class="funnel-bar" style="width:41.7%;background:linear-gradient(90deg,var(--warm),#ffd46e)"><span>511,580</span></div><div class="funnel-rate">41.7%</div></div>
+        <div class="funnel-step"><div class="funnel-label">Clicks</div><div class="funnel-bar" style="width:16.6%;background:linear-gradient(90deg,var(--purple),#c4b5fd)"><span>43,184</span></div><div class="funnel-rate">3.5%</div></div>
+        <div class="funnel-step"><div class="funnel-label">Unsubscribes</div><div class="funnel-bar" style="width:6%;background:linear-gradient(90deg,var(--pink),#ff95a7)"><span>1,487</span></div><div class="funnel-rate">0.12%</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:11px;color:var(--muted);line-height:1.5;margin-top:16px;">
+        <div><strong style="color:var(--text)">Bounce:</strong> 21,216</div>
+        <div><strong style="color:var(--text)">CTOR:</strong> 8.4%</div>
+        <div><strong style="color:var(--text)">Hard bounce share:</strong> 63%</div>
+        <div><strong style="color:var(--text)">Top click driver:</strong> Loyalty reminder</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-rows:auto auto auto;gap:16px;">
+      <div class="insight"><strong>Lectura del funnel:</strong> El principal cuello de botella no está arriba. Sent y delivered se comportaron bien, y open sigue sano. El deterioro aparece <strong>entre open y click</strong>, por lo que el canal hoy necesita optimizar contenido, CTA y relevancia post-open más que deliverability.</div>
+      <div class="list-box">
+        <h4>Qué significa cada fricción</h4>
+        <div style="display:grid;gap:10px;font-size:12px;color:var(--text);line-height:1.55;">
+          <div><strong style="color:var(--accent)">Arriba del funnel:</strong> asunto, remitente, entregabilidad y timing.</div>
+          <div><strong style="color:var(--warm)">En clic:</strong> creatividad, framing del beneficio y jerarquía de CTA.</div>
+          <div><strong style="color:var(--pink)">En unsub:</strong> fatiga, desalineación del contenido o presión comercial.</div>
+        </div>
+      </div>
+      <div class="list-box">
+        <h4>Señal de la semana</h4>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65;">El canal no está perdiendo bandeja: está perdiendo continuidad narrativa después de abrir. Donde hubo utilidad o invitación clara, el clic respondió; donde hubo volumen genérico, se abrió pero no se accionó.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">05 / 13</div>
+</div>
+
+<div class="slide">
+  <h3>Tendencia de 4 semanas</h3>
+  <p class="subtitle">La lectura semanal solo tiene sentido si la comparamos contra el comportamiento reciente del canal. Aquí se ve con claridad qué métricas siguen sanas, cuáles ya muestran erosión y dónde cambió el patrón.</p>
+  <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:16px;flex:1;min-height:0;">
+    <div class="chart-wrap">
+      <h4>Evolución comparada del canal</h4>
+      <div class="chart-area"><canvas id="trendChart"></canvas></div>
+    </div>
+    <div style="display:grid;grid-template-rows:auto auto;gap:16px;">
+      <div class="list-box">
+        <h4>4-week snapshot</h4>
+        <div class="list-row"><div class="name">Open Rate</div><div class="bar"><span style="width:83%;background:linear-gradient(90deg,var(--accent),#66eff2)"></span></div><div class="value">41.7%</div></div>
+        <div class="list-row"><div class="name">Click Rate</div><div class="bar"><span style="width:54%;background:linear-gradient(90deg,var(--warm),#ffd46e)"></span></div><div class="value">3.5%</div></div>
+        <div class="list-row"><div class="name">CTOR</div><div class="bar"><span style="width:48%;background:linear-gradient(90deg,var(--purple),#c4b5fd)"></span></div><div class="value">8.4%</div></div>
+        <div class="list-row"><div class="name">Bounce</div><div class="bar"><span style="width:29%;background:linear-gradient(90deg,var(--green),#64e2d6)"></span></div><div class="value">1.7%</div></div>
+        <div class="list-row"><div class="name">Unsub</div><div class="bar"><span style="width:22%;background:linear-gradient(90deg,var(--pink),#ff95a7)"></span></div><div class="value">0.12%</div></div>
+      </div>
+      <div class="insight"><strong>Lectura ejecutiva:</strong> la apertura se mantiene estable, pero el clic sigue erosionándose, lo que indica que el cuello de botella ya no está en el subject line sino en el contenido post-open. Bounce sigue bajo control; la señal débil está en <strong>fatiga broad + menor intención</strong>.</div>
+    </div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">06 / 13</div>
+</div>
+
+<div class="slide divider">
+  <div class="sec-num">02 — PERFORMANCE POR ENVÍO</div>
+  <h2>¿Qué correos realmente empujaron la semana<br>y cuáles solo sostuvieron <em>volumen</em>?</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">07 / 13</div>
+</div>
+
+<div class="slide" style="padding:42px 48px;">
+  <div style="display:grid;grid-template-rows:auto 1fr auto;gap:14px;flex:1;min-height:0;">
+    <h3 style="margin-bottom:0;">Performance por envío / campaña</h3>
+    <div class="table-wrap" style="min-height:0;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Mail</th>
+            <th>Tipo</th>
+            <th>Segmento</th>
+            <th>Open</th>
+            <th>Click</th>
+            <th>CTOR</th>
+            <th>Bounce</th>
+            <th>Unsub</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Loyalty Points Reminder</strong></td><td>Loyalty / puntos</td><td>Miembros activos</td><td>46.5%</td><td>5.2%</td><td>11.2%</td><td>1.6%</td><td>0.10%</td><td><span class="pill top">Top</span></td></tr>
+          <tr><td><strong>Weekend Sale</strong></td><td>Comercial</td><td>Broad engaged</td><td>38.0%</td><td>3.8%</td><td>10.0%</td><td>1.6%</td><td>0.19%</td><td><span class="pill mid">Mid</span></td></tr>
+          <tr><td><strong>Spring Living Edit</strong></td><td>Editorial</td><td>Decor enthusiasts</td><td>46.0%</td><td>3.2%</td><td>7.0%</td><td>1.5%</td><td>0.08%</td><td><span class="pill mid">Mid</span></td></tr>
+          <tr><td><strong>Workshop Invitation</strong></td><td>Evento</td><td>Store radius</td><td>38.0%</td><td>6.0%</td><td>15.8%</td><td>1.7%</td><td>0.05%</td><td><span class="pill top">Top</span></td></tr>
+          <tr><td><strong>Back in Stock Alert</strong></td><td>Triggered / utility</td><td>Browse abandoners</td><td>45.0%</td><td>3.1%</td><td>6.9%</td><td>1.1%</td><td>0.04%</td><td><span class="pill mid">Mid</span></td></tr>
+          <tr><td><strong>Kitchen Refresh Picks</strong></td><td>Seasonal / catalog</td><td>General audience</td><td>36.4%</td><td>0.7%</td><td>1.8%</td><td>2.4%</td><td>0.20%</td><td><span class="pill low">Low</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight"><strong>Engine de la semana:</strong> <strong>Loyalty Points Reminder</strong> y <strong>Workshop Invitation</strong> explicaron la calidad del canal, no solo por open sino por capacidad de convertir interés en clic. El envío más débil no fue invisible: <strong>Kitchen Refresh Picks</strong> generó suficiente apertura para entrar a la conversación, pero no construyó intención y sí elevó fatiga.</div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">08 / 13</div>
+</div>
+
+<div class="slide">
+  <h3>Qué tipo de contenido funcionó</h3>
+  <div style="display:grid;grid-template-columns:1.02fr 0.98fr;gap:16px;flex:1;min-height:0;">
+    <div class="chart-wrap">
+      <h4>Performance por bucket de contenido</h4>
+      <div class="chart-area"><canvas id="contentChart"></canvas></div>
+    </div>
+    <div style="display:grid;grid-template-rows:auto auto;gap:16px;">
+      <div class="list-box">
+        <h4>Lectura del mix</h4>
+        <div style="display:grid;gap:12px;font-size:12px;color:var(--text);line-height:1.55;">
+          <div><strong style="color:var(--accent)">Abren mejor:</strong> Loyalty, editorial y triggered, porque la promesa está clara antes del clic.</div>
+          <div><strong style="color:var(--warm)">Cliquean mejor:</strong> eventos y loyalty, donde el usuario entiende qué hacer y por qué ahora.</div>
+          <div><strong style="color:var(--purple)">Curiosidad sin intención:</strong> editorial e inspirational atraen mirada, pero el salto a clic necesita propuesta más concreta.</div>
+          <div><strong style="color:var(--pink)">Mayor riesgo de fatiga:</strong> comercial broad y seasonal cuando la pieza se parece demasiado a un catálogo.</div>
+        </div>
+      </div>
+      <div class="insight"><strong>Traducción:</strong> No todo correo debe perseguir la misma métrica. El bucket editorial puede abrir bien sin ser el mejor en clic; el bucket de utilidad puede no ser el más aspiracional, pero sí el que más moviliza acción. El error es medirlos todos con la misma vara.</div>
+    </div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">09 / 13</div>
+</div>
+
+<div class="slide">
+  <h3>Creative & Click Behavior</h3>
+  <div class="mail-grid">
+    <div class="mail-mock">
+      <div class="mail-topline"><span>from: IKEA Family</span><span>previewed on mobile</span></div>
+      <div class="mail-subject">Tus puntos están listos para activarse esta semana</div>
+      <div class="mail-preheader">Una promesa útil, concreta y accionable. El usuario entiende el beneficio antes de entrar al cuerpo del mail.</div>
+      <div class="mail-hero">
+        <div class="hero-kicker">loyalty action</div>
+        <div class="hero-title">Usa tus puntos donde el beneficio se siente <em>hoy</em></div>
+        <div class="cta-chip heat">54% clicks above fold</div>
+        <div class="cta-chip primary">CTA principal</div>
+        <div class="cta-chip secondary">CTA secundario</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+        <div class="status-card" style="padding:12px 14px;">
+          <h5>Hero image</h5>
+          <div class="status-note"><span>CTR share</span><strong>7%</strong></div>
+        </div>
+        <div class="status-card" style="padding:12px 14px;">
+          <h5>CTA principal</h5>
+          <div class="status-note"><span>CTR share</span><strong>54%</strong></div>
+        </div>
+        <div class="status-card" style="padding:12px 14px;">
+          <h5>Mosaico / grid</h5>
+          <div class="status-note"><span>CTR share</span><strong>21%</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="heat-note">
+      <div class="heat-item">
+        <h5>Principal aprendizaje</h5>
+        <p>La <strong>utilidad explícita</strong> sigue ganando al hero emocional puro. Cuando el beneficio se entiende antes del scroll, el canal sostiene clic incluso con open estable.</p>
+      </div>
+      <div class="heat-item">
+        <h5>CTA principal vs CTA secundario</h5>
+        <p>La jerarquía sí importó: el CTA principal concentró 54% del clic y el secundario 13%. Dos caminos funcionan solo cuando cada uno comunica una acción distinta y no una versión débil del mismo mensaje.</p>
+      </div>
+      <div class="heat-item">
+        <h5>Visual novelty vs fatigue</h5>
+        <p>Las piezas con layout demasiado parecido a semanas anteriores siguieron abriendo, pero con menor intención. La fatiga no se expresó primero en open: <strong>se expresó en un clic más tímido</strong>.</p>
+      </div>
+      <div class="heat-item">
+        <h5>Qué bloque concentró clics</h5>
+        <p>Los bloques con beneficio, urgencia y claridad transaccional ganaron sobre el mosaico amplio de producto. El mail más débil de la semana tuvo demasiada oferta visual y poco motivo para actuar.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">10 / 13</div>
+</div>
+
+<div class="slide divider">
+  <div class="sec-num">03 — APRENDIZAJES Y OPTIMIZACIÓN</div>
+  <h2>¿Qué estamos aprendiendo del canal<br>y qué debería cambiar <em>la próxima semana</em>?</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">11 / 13</div>
+</div>
+
+<div class="slide">
+  <h3>Test & Learn</h3>
+  <p class="subtitle">La lectura valiosa del canal no es solo qué envío ganó, sino qué aprendizaje acumulativo deja para la siguiente iteración. Este módulo traduce experimento en decisión.</p>
+  <div class="table-wrap" style="flex:1;min-height:0;">
+    <table class="data-table test-table">
+      <thead>
+        <tr>
+          <th>Variable analizada</th>
+          <th>Hipótesis</th>
+          <th>Cambio implementado</th>
+          <th>Resultado</th>
+          <th>Aprendizaje</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Subject line</td>
+          <td>Beneficio directo gana a frase editorial</td>
+          <td>Asunto corto con promesa de puntos</td>
+          <td>+1.8 pp en open vs promedio weekly</td>
+          <td>La apertura responde mejor cuando el beneficio se entiende en una sola lectura.</td>
+        </tr>
+        <tr>
+          <td>Preheader</td>
+          <td>Preheader con urgencia mejora post-open</td>
+          <td>Se agregó cierre temporal al preheader</td>
+          <td>+0.4 pp click, +0.01 pp unsub</td>
+          <td>La urgencia ayuda, pero debe ir a segmentos calificados para no elevar fatiga broad.</td>
+        </tr>
+        <tr>
+          <td>Jerarquía de CTA</td>
+          <td>Un CTA dominante mejora CTOR</td>
+          <td>Se redujo el ruido visual de CTAs secundarios</td>
+          <td>+2.1 pp CTOR en el envío loyalty</td>
+          <td>La claridad de acción vale más que multiplicar rutas de salida.</td>
+        </tr>
+        <tr>
+          <td>Composición visual</td>
+          <td>Hero emocional solo no empuja intención</td>
+          <td>Se probó hero aspiracional vs hero útil</td>
+          <td>Open estable, click menor en pieza aspiracional</td>
+          <td>La emoción puede abrir la historia, pero la utilidad debe cerrar la acción.</td>
+        </tr>
+        <tr>
+          <td>Segmentación de audiencia</td>
+          <td>Recency alta clickea mejor que broad</td>
+          <td>Triggered y active members priorizados</td>
+          <td>+1.6 pp click y menor unsub</td>
+          <td>La calidad de la audiencia explica más que el volumen cuando el canal entra en madurez.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">12 / 13</div>
+</div>
+
+<div class="slide">
+  <h3>Keep It, Fix It, Test It</h3>
+  <div class="kcs-grid">
+    <div class="kcs-card keep">
+      <h4>Keep Doing</h4>
+      <ul>
+        <li>Seguir usando subjects directos con beneficio legible en una sola línea.</li>
+        <li>Priorizar segmentos de recency alta para envíos con presión de clic.</li>
+        <li>Mantener una jerarquía clara de CTA, con una acción dominante above the fold.</li>
+        <li>Usar envíos de loyalty y utilidad como anclas de calidad semanal.</li>
+      </ul>
+    </div>
+    <div class="kcs-card change">
+      <h4>Fix Now</h4>
+      <ul>
+        <li>Reducir catálogos demasiado amplios cuando no hay incentivo o narrativa de compra.</li>
+        <li>Ajustar la cadencia broad para contener unsub y fatiga en audiencias menos calificadas.</li>
+        <li>Reescribir preheaders descriptivos que no agregan urgencia ni contexto útil.</li>
+        <li>Separar creatividad editorial de creatividad comercial para no medirlas igual.</li>
+      </ul>
+    </div>
+    <div class="kcs-card start">
+      <h4>Test Next</h4>
+      <ul>
+        <li>Probar hero product-first vs hero emotional por segmento, no a nivel global.</li>
+        <li>Testear incentivo blando en broad list para subir clic sin castigar unsub.</li>
+        <li>Experimentar con bloques de producto más cortos y CTA contextual por categoría.</li>
+        <li>Introducir una regla de fatigue control cuando un usuario recibe 3 impactos comerciales en la misma semana.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="insight" style="margin-top:18px;"><strong>Cierre:</strong> Esta semana el email no necesitó rescate técnico; necesitó mejor conversión de atención en acción. El siguiente salto del canal no pasa por entregabilidad, sino por <strong>arquitectura creativa, segmentación y control de fatiga</strong>. La lectura correcta del canal no es solo open o click: es <strong>atención, intención, fatiga y optimización</strong> trabajando juntas.</div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">13 / 13</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const C={a:'#18c2c7',w:'#f4b44d',g:'#2ec4b6',p:'#ff5c73',pr:'#9f8cff',muted:'#92a6b7',grid:'rgba(146,166,183,0.12)'};
+Chart.defaults.color=C.muted;
+Chart.defaults.font.family="'Poppins',sans-serif";
+Chart.defaults.font.size=11;
+Chart.defaults.animation=false;
+Chart.defaults.responsive=true;
+Chart.defaults.maintainAspectRatio=false;
+Chart.defaults.plugins.legend.labels.boxWidth=10;
+Chart.defaults.plugins.legend.labels.padding=12;
+window.addEventListener('load',()=>{
+  const trend=document.getElementById('trendChart');
+  const content=document.getElementById('contentChart');
+  if(trend){
+    new Chart(trend,{
+      type:'line',
+      data:{
+        labels:['W11','W12','W13','W14'],
+        datasets:[
+          {label:'Open Rate',data:[39.8,41.2,42.0,41.7],borderColor:C.a,backgroundColor:'rgba(24,194,199,0.12)',tension:.35,borderWidth:2.5,pointRadius:3},
+          {label:'Click Rate',data:[3.9,3.7,3.6,3.5],borderColor:C.w,backgroundColor:'rgba(244,180,77,0.12)',tension:.35,borderWidth:2.5,pointRadius:3},
+          {label:'CTOR',data:[9.8,9.0,8.6,8.4],borderColor:C.pr,backgroundColor:'rgba(159,140,255,0.12)',tension:.35,borderWidth:2.5,pointRadius:3},
+          {label:'Bounce',data:[1.9,1.8,1.6,1.7],borderColor:C.g,backgroundColor:'rgba(46,196,182,0.10)',tension:.35,borderWidth:2.5,pointRadius:3},
+          {label:'Unsub',data:[0.09,0.11,0.10,0.12],borderColor:C.p,backgroundColor:'rgba(255,92,115,0.10)',tension:.35,borderWidth:2.5,pointRadius:3}
+        ]
+      },
+      options:{
+        interaction:{mode:'index',intersect:false},
+        plugins:{legend:{position:'bottom'}},
+        scales:{
+          x:{grid:{display:false}},
+          y:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}}
+        }
+      }
+    });
+  }
+  if(content){
+    new Chart(content,{
+      type:'bar',
+      data:{
+        labels:['Loyalty','Comercial','Editorial','Eventos','Triggered','Seasonal'],
+        datasets:[
+          {label:'Open Rate',data:[46.5,37.2,46.0,38.0,45.0,36.4],backgroundColor:C.a,borderRadius:8},
+          {label:'Click Rate',data:[5.2,2.5,3.2,6.0,3.1,0.7],backgroundColor:C.w,borderRadius:8},
+          {label:'CTOR',data:[11.2,6.7,7.0,15.8,6.9,1.8],backgroundColor:C.pr,borderRadius:8}
+        ]
+      },
+      options:{
+        plugins:{legend:{position:'bottom'}},
+        scales:{
+          x:{grid:{display:false}},
+          y:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}}
+        }
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>

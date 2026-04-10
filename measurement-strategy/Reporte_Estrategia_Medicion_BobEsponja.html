@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estrategia de Medición | Mescalina</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f13; --slide-bg:#0f1419; --card:#161d26; --card-alt:#1c2530;
+  --accent:#18c2c7; --warm:#f4b44d; --green:#2ec4b6; --red:#e76f51;
+  --pink:#ff5c73; --purple:#9f8cff; --text:#ebf2f8; --muted:#92a6b7;
+  --dim:#5c7082; --border:#1e2a38; --line:rgba(146,166,183,0.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Poppins',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;align-items:center;gap:20px;padding:20px 0;}
+.slide{width:1280px;height:720px;background:var(--slide-bg);border-radius:12px;border:1px solid var(--border);position:relative;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;padding:56px 64px;}
+.slide::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(11,15,19,0.72) 0%, rgba(11,15,19,0.62) 100%),url('../assets/background.png') center/cover no-repeat;opacity:.34;pointer-events:none;}
+.slide>*{position:relative;z-index:1}
+.slide-number{position:absolute;bottom:20px;right:32px;font-size:11px;color:var(--dim);}
+.slide-brand{position:absolute;bottom:20px;left:32px;display:flex;align-items:center;height:12px}
+.slide-brand img{display:block;height:12px;width:auto;opacity:.42}
+.slide.cover{background:linear-gradient(155deg,#0a0e13 0%,#0f1922 40%,#152a3a 100%);justify-content:center;}
+.slide.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 88% 24%, rgba(24,194,199,0.16) 0%, transparent 20%),radial-gradient(circle at 12% 82%, rgba(244,180,77,0.10) 0%, transparent 18%),linear-gradient(155deg, rgba(10,14,19,0.82) 0%, rgba(15,25,34,0.74) 40%, rgba(21,42,58,0.68) 100%),url('../assets/background.png') center/cover no-repeat;opacity:.95;}
+.slide.cover::after{content:'';position:absolute;bottom:-120px;left:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(244,180,77,0.06) 0%,transparent 70%);}
+.slide.divider{justify-content:center;background:linear-gradient(180deg,var(--slide-bg) 0%,var(--card) 100%);}
+.slide.divider::before{opacity:.42}
+.cover-label{font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:30px;}
+.cover h1{font-size:58px;line-height:1.02;font-weight:700;max-width:900px;}
+.cover h1 em{font-style:italic;color:var(--warm);font-weight:500;}
+.cover-meta{display:flex;gap:34px;margin-top:42px;}
+.cover-meta-item{border-left:2px solid var(--accent);padding-left:14px;}
+.cover-meta-item .lbl{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:2px;}
+.cover-meta-item .val{font-size:16px;font-weight:600;}
+.sec-num{font-size:12px;color:var(--accent);letter-spacing:3px;margin-bottom:14px;font-weight:700;}
+.divider h2{font-size:46px;line-height:1.08;font-weight:700;max-width:880px;}
+.divider h2 em{font-style:italic;color:var(--warm);font-weight:500;}
+h3{font-size:26px;font-weight:700;margin-bottom:16px;}
+.subtitle{font-size:13px;color:var(--muted);line-height:1.65;max-width:720px;margin-bottom:18px;}
+.highlight{background:linear-gradient(135deg,var(--warm),#e9a53d);color:#091114;padding:1px 8px;font-weight:700;}
+
+/* Framework grid (pregunta cards) */
+.fw-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;flex:1}
+.fw-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;position:relative;overflow:hidden;display:flex;flex-direction:column;}
+.fw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.fw-card:nth-child(1)::before{background:var(--accent)}
+.fw-card:nth-child(2)::before{background:var(--warm)}
+.fw-card:nth-child(3)::before{background:var(--green)}
+.fw-card:nth-child(4)::before{background:var(--purple)}
+.fw-card .q{font-size:15px;font-weight:600;line-height:1.4;margin-bottom:14px;flex:1;}
+.tag{display:inline-block;padding:3px 9px;border-radius:999px;font-size:10px;font-weight:600;margin:2px;}
+.tag-a{background:rgba(24,194,199,0.14);color:var(--accent)}
+.tag-w{background:rgba(244,180,77,0.14);color:var(--warm)}
+.tag-g{background:rgba(46,196,182,0.14);color:var(--green)}
+.tag-p{background:rgba(159,140,255,0.14);color:var(--purple)}
+
+.method-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:18px}
+.method-item h4{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:6px;letter-spacing:1px;text-transform:uppercase;}
+.method-item p{font-size:12px;color:var(--muted);line-height:1.55}
+
+/* Mini KPI cards */
+.m-row{display:grid;gap:14px;margin-bottom:18px}
+.m-row-3{grid-template-columns:repeat(3,1fr)}
+.m-row-4{grid-template-columns:repeat(4,1fr)}
+.m-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.m-card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px;}
+.m-card .val{font-size:30px;font-weight:700;line-height:1;}
+.m-card .sub{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.45;}
+
+/* Tables */
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{text-align:left;padding:10px 12px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);background:rgba(255,255,255,0.03);border-bottom:1px solid var(--line);}
+.data-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.data-table tr:last-child td{border-bottom:none}
+.data-table .promo-name{font-weight:700;color:var(--text);}
+.data-table .pill{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;}
+.pill-a{background:rgba(24,194,199,0.15);color:var(--accent);}
+.pill-w{background:rgba(244,180,77,0.15);color:var(--warm);}
+.pill-g{background:rgba(46,196,182,0.15);color:var(--green);}
+.pill-p{background:rgba(159,140,255,0.15);color:var(--purple);}
+
+/* Insight box */
+.insight{border-left:3px solid var(--warm);padding:14px 18px;background:rgba(244,180,77,0.05);border-radius:0 10px 10px 0;font-size:13px;line-height:1.7;}
+.insight strong{color:var(--warm)}
+
+/* Chart wrap */
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;overflow:hidden;min-width:0;min-height:0;}
+.chart-wrap h4{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;}
+.chart-area{position:relative;flex:1;min-width:0;min-height:0}
+.chart-wrap canvas{width:100%!important;height:100%!important;display:block}
+
+/* List boxes */
+.list-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.list-box h4{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:14px;}
+.list-row{display:grid;grid-template-columns:140px 1fr auto;gap:14px;align-items:center;margin-bottom:14px;}
+.list-row:last-child{margin-bottom:0}
+.list-row .name{font-size:12px;color:var(--muted)}
+.list-row .bar{height:10px;border-radius:999px;background:rgba(255,255,255,0.06);overflow:hidden;position:relative;}
+.list-row .bar span{position:absolute;inset:0 auto 0 0;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--green));}
+.list-row .value{font-size:12px;font-weight:700}
+
+/* Methodology steps */
+.method-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;flex:1;}
+.step-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;position:relative;display:flex;flex-direction:column;}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);}
+.step-card:nth-child(2)::before{background:var(--warm)}
+.step-card:nth-child(3)::before{background:var(--green)}
+.step-num{font-size:42px;font-weight:800;line-height:1;color:var(--accent);opacity:0.15;position:absolute;top:18px;right:22px;}
+.step-card:nth-child(2) .step-num{color:var(--warm)}
+.step-card:nth-child(3) .step-num{color:var(--green)}
+.step-card h5{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px;font-weight:700;}
+.step-card h4{font-size:16px;font-weight:700;margin-bottom:12px;line-height:1.3;max-width:220px;}
+.step-card p{font-size:12px;color:var(--muted);line-height:1.6;flex:1;}
+.step-card .formula{background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.1);border-radius:8px;padding:10px 12px;margin-top:12px;font-family:'Courier New',monospace;font-size:11px;color:var(--text);line-height:1.5;}
+
+/* Scenario funnel */
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;flex:1;}
+.scenario-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;position:relative;display:flex;flex-direction:column;}
+.scenario-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.scenario-card.min::before{background:var(--pink)}
+.scenario-card.prob::before{background:var(--warm)}
+.scenario-card.max::before{background:var(--green)}
+.scenario-card.prob{background:rgba(244,180,77,0.05);border:1px solid rgba(244,180,77,0.25);}
+.scenario-tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+.scenario-card.min .scenario-tag{background:rgba(255,92,115,0.15);color:var(--pink);}
+.scenario-card.prob .scenario-tag{background:rgba(244,180,77,0.15);color:var(--warm);}
+.scenario-card.max .scenario-tag{background:rgba(46,196,182,0.15);color:var(--green);}
+.scenario-card h4{font-size:15px;font-weight:700;margin-bottom:16px;}
+.scenario-metric{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.scenario-metric:last-child{border-bottom:none;}
+.scenario-metric .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;}
+.scenario-metric .v{font-size:20px;font-weight:700;}
+.scenario-metric .pct{font-size:10px;color:var(--dim);margin-left:6px;font-weight:400;}
+
+/* Phase bars */
+.phase-timeline{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;}
+.phase-bars{display:grid;grid-template-columns:20% 50% 20% 10%;gap:3px;height:60px;border-radius:10px;overflow:hidden;margin-bottom:18px;}
+.phase-bar{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:10px;color:#051416;font-weight:700;}
+.phase-bar .name{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:0.75;}
+.phase-bar .pct{font-size:20px;font-weight:800;}
+.phase-bar.aw{background:linear-gradient(135deg,var(--accent),#66eff2);}
+.phase-bar.co{background:linear-gradient(135deg,var(--warm),#ffd46e);}
+.phase-bar.es{background:linear-gradient(135deg,var(--purple),#c4b5fd);}
+.phase-bar.ci{background:linear-gradient(135deg,var(--pink),#ff95a7);}
+.phase-desc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.phase-desc{padding:12px;}
+.phase-desc h5{font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.phase-desc.aw h5{color:var(--accent);}
+.phase-desc.co h5{color:var(--warm);}
+.phase-desc.es h5{color:var(--purple);}
+.phase-desc.ci h5{color:var(--pink);}
+.phase-desc p{font-size:11px;color:var(--muted);line-height:1.55;}
+
+/* Profile cards */
+.profile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;flex:1;}
+.profile-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;}
+.profile-intensity{display:inline-block;padding:2px 8px;border-radius:6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;align-self:flex-start;}
+.pi-high{background:rgba(46,196,182,0.15);color:var(--green);}
+.pi-med{background:rgba(244,180,77,0.15);color:var(--warm);}
+.pi-low{background:rgba(146,166,183,0.15);color:var(--muted);}
+.profile-card h5{font-size:14px;font-weight:700;margin-bottom:8px;line-height:1.25;}
+.profile-card p{font-size:11px;color:var(--muted);line-height:1.5;flex:1;}
+.profile-card .motiv{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.04);font-weight:700;}
+
+/* Keyprofile */
+.key-profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;}
+.key-profile{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;position:relative;}
+.key-profile::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--accent);border-radius:3px 0 0 3px;}
+.key-profile:nth-child(2)::before{background:var(--warm);}
+.key-profile:nth-child(3)::before{background:var(--green);}
+.key-profile:nth-child(4)::before{background:var(--purple);}
+.key-profile h5{font-size:15px;font-weight:700;margin-bottom:4px;}
+.key-profile .intensity{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:block;}
+.key-profile p{font-size:11.5px;color:var(--muted);line-height:1.55;margin-bottom:8px;}
+.key-profile ul{list-style:none;padding:0;margin:0;}
+.key-profile li{font-size:11px;color:var(--text);padding:3px 0;line-height:1.4;}
+.key-profile li::before{content:'→ ';color:var(--accent);font-weight:700;}
+.key-profile:nth-child(2) li::before{color:var(--warm);}
+.key-profile:nth-child(3) li::before{color:var(--green);}
+.key-profile:nth-child(4) li::before{color:var(--purple);}
+
+/* Closing - KCS-like */
+.closing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;flex:1;}
+.closing-card{border-radius:14px;padding:22px;display:flex;flex-direction:column;}
+.closing-card h4{font-size:20px;font-weight:700;margin-bottom:12px;}
+.closing-card ul{list-style:none;padding:0;}
+.closing-card li{padding:7px 0;font-size:12.5px;line-height:1.55;border-bottom:1px solid rgba(255,255,255,0.04);}
+.closing-card li:last-child{border-bottom:none}
+.closing-card.c1{background:rgba(24,194,199,0.08);border:1px solid rgba(24,194,199,0.18);}
+.closing-card.c1 h4{color:var(--accent);}
+.closing-card.c2{background:rgba(244,180,77,0.08);border:1px solid rgba(244,180,77,0.18);}
+.closing-card.c2 h4{color:var(--warm);}
+.closing-card.c3{background:rgba(46,196,182,0.08);border:1px solid rgba(46,196,182,0.18);}
+.closing-card.c3 h4{color:var(--green);}
+
+@page{size:13.333in 7.5in;margin:0}
+@media print{
+  html,body{width:13.333in;margin:0;padding:0;background:#000}
+  body{gap:0}
+  .slide{width:13.333in;height:7.5in;margin:0;border:none;border-radius:0;page-break-after:always;break-after:page;}
+  .slide:last-of-type{page-break-after:auto;break-after:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ================== SLIDE 1: COVER ================== -->
+<div class="slide cover">
+  <div class="cover-label">mescalina ® — strategy & data intelligence</div>
+  <h1>Estrategia de Medición<br>para Promociones<br><em>Cómo estimar resultados antes de ejecutar</em></h1>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="lbl">Tipo</div><div class="val">Metodología</div></div>
+    <div class="cover-meta-item"><div class="lbl">Aplicación</div><div class="val">Promociones gamificadas</div></div>
+    <div class="cover-meta-item"><div class="lbl">Caso base</div><div class="val">Ejemplo de referencia</div></div>
+    <div class="cover-meta-item"><div class="lbl">Benchmarks</div><div class="val">3 promociones comparables</div></div>
+  </div>
+  <div class="slide-number">01 / 15</div>
+</div>
+
+<!-- ================== SLIDE 2: FRAMEWORK ================== -->
+<div class="slide">
+  <h3>¿Qué queremos responder?</h3>
+  <p class="subtitle">Toda promoción nueva arranca con una pregunta incómoda: <em>¿cuántos usuarios podemos esperar que participen?</em> Esta metodología convierte el histórico observado en una proyección concreta de sesiones, usuarios y registros, antes de que una nueva campaña salga al aire.</p>
+  <div class="fw-grid">
+    <div class="fw-card">
+      <div class="q">¿Qué nos ha enseñado el histórico de promociones anteriores?</div>
+      <div><span class="tag tag-a">Sesiones</span><span class="tag tag-a">Usuarios</span><span class="tag tag-a">Lotes</span></div>
+    </div>
+    <div class="fw-card">
+      <div class="q">¿Cómo traducimos ese histórico en un objetivo probable para la próxima promoción?</div>
+      <div><span class="tag tag-w">Coeficientes</span><span class="tag tag-w">Escenarios</span></div>
+    </div>
+    <div class="fw-card">
+      <div class="q">¿Cómo se comporta la curva de participación a lo largo del tiempo?</div>
+      <div><span class="tag tag-g">Awareness</span><span class="tag tag-g">Consideración</span><span class="tag tag-g">Cierre</span></div>
+    </div>
+    <div class="fw-card">
+      <div class="q">¿A quién estamos midiendo realmente detrás de los números?</div>
+      <div><span class="tag tag-p">Perfiles</span><span class="tag tag-p">Intensidad</span></div>
+    </div>
+  </div>
+  <div class="method-row">
+    <div class="method-item"><h4>Insumo primario</h4><p>Histórico consolidado de promociones anteriores del cliente o la categoría, con sus KPIs finales.</p></div>
+    <div class="method-item"><h4>Output</h4><p>3 escenarios (mínimo, probable, máximo) con metas por fase y perfiles de consumidor esperados.</p></div>
+    <div class="method-item"><h4>Uso en el ciclo</h4><p>Alimenta el dashboard operativo, el plan de medios y el reporte final comparativo.</p></div>
+  </div>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">02 / 15</div>
+</div>
+
+<!-- ================== SLIDE 3: DIVIDER 01 ================== -->
+<div class="slide divider">
+  <div class="sec-num">01 — BENCHMARKS HISTÓRICOS</div>
+  <h2>¿Qué nos ha enseñado<br>el histórico de <em>promociones anteriores</em>?</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">03 / 15</div>
+</div>
+
+
+<!-- ================== SLIDE 4: BENCHMARK TABLA ================== -->
+<div class="slide">
+  <h3>Tres promociones, tres lecturas</h3>
+  <p class="subtitle">Las tres promociones comparables del benchmark tienen dinámicas distintas pero patrones relacionados. La comparación directa revela cuánto varía la respuesta del consumidor entre categorías y mecánicas.</p>
+
+  <div class="m-row m-row-3">
+    <div class="m-card">
+      <div class="lbl">Prima Millonaria</div>
+      <div class="val" style="color:var(--accent);font-size:16px;">Ene–Abr 2024</div>
+      <div class="sub">17 semanas · mayor volumen de tráfico del trío</div>
+    </div>
+    <div class="m-card">
+      <div class="lbl">Sonic</div>
+      <div class="val" style="color:var(--warm);font-size:16px;">Ene–May 2025</div>
+      <div class="sub">21 semanas · mejor tasa U/S de referencia</div>
+    </div>
+    <div class="m-card">
+      <div class="lbl">Liga de la Justicia</div>
+      <div class="val" style="color:var(--green);font-size:16px;">Jul–Nov 2025</div>
+      <div class="sub">17 semanas · baseline más reciente antes de Bob</div>
+    </div>
+  </div>
+
+  <div class="table-wrap" style="margin-bottom:14px;">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Promoción</th>
+          <th style="text-align:right;">Sesiones</th>
+          <th style="text-align:right;">Usuarios</th>
+          <th style="text-align:right;">Tickets / Lotes</th>
+          <th style="text-align:right;">Sem. / prom</th>
+          <th style="text-align:right;">Sesiones / sem</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="promo-name">Prima Millonaria</span> <span class="pill pill-a">PM</span></td>
+          <td style="text-align:right;">268,400</td>
+          <td style="text-align:right;">16,245</td>
+          <td style="text-align:right;">123,340</td>
+          <td style="text-align:right;">17</td>
+          <td style="text-align:right;">15,788</td>
+        </tr>
+        <tr>
+          <td><span class="promo-name">Sonic</span> <span class="pill pill-w">SC</span></td>
+          <td style="text-align:right;">153,091</td>
+          <td style="text-align:right;">41,238</td>
+          <td style="text-align:right;">38,150</td>
+          <td style="text-align:right;">21.3</td>
+          <td style="text-align:right;">7,192</td>
+        </tr>
+        <tr>
+          <td><span class="promo-name">Liga de la Justicia</span> <span class="pill pill-g">LJ</span></td>
+          <td style="text-align:right;">48,482</td>
+          <td style="text-align:right;">11,219</td>
+          <td style="text-align:right;">24,933</td>
+          <td style="text-align:right;">17</td>
+          <td style="text-align:right;">2,852</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight"><strong>Qué nos dice:</strong> El volumen absoluto varía hasta 5× entre promociones, pero los <strong>ratios de conversión</strong> dentro del funnel son los que realmente importan. Un benchmark puede traer mucho tráfico y convertir poco; otro puede traer menos tráfico pero convertir mejor. Por eso el valor no está solo en el volumen, sino en la calidad del patrón.</div>
+
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">04 / 15</div>
+</div>
+
+<!-- ================== SLIDE 5: RATIOS Y RANGOS ================== -->
+<div class="slide">
+  <h3>Los tres ratios que importan</h3>
+  <p class="subtitle">De todas las métricas que puede generar una promoción, tres ratios resumen la salud del funnel completo. Son los que usamos para proyectar cualquier promoción nueva.</p>
+
+  <div class="m-row m-row-3">
+    <div class="m-card">
+      <div class="lbl">U/S · Usuarios por Sesión</div>
+      <div class="val" style="color:var(--accent)">18% – 27%</div>
+      <div class="sub">De todas las sesiones que llegan al sitio, ¿qué porcentaje son usuarios reales que interactuaron?</div>
+    </div>
+    <div class="m-card">
+      <div class="lbl">L/U · Lotes por Usuario</div>
+      <div class="val" style="color:var(--warm)">1.0 – 2.2</div>
+      <div class="sub">¿Cuántos códigos o lotes registra en promedio cada usuario activo?</div>
+    </div>
+    <div class="m-card">
+      <div class="lbl">L/S · Lotes por Sesión</div>
+      <div class="val" style="color:var(--green)">25% – 50%</div>
+      <div class="sub">¿Qué porcentaje de sesiones termina en un registro real (el indicador compuesto)?</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1;min-height:0;">
+    <div class="chart-wrap">
+      <h4>Ratios por promoción histórica</h4>
+      <div class="chart-area"><canvas id="ratiosChart"></canvas></div>
+    </div>
+    <div class="list-box">
+      <h4>Rangos de referencia del benchmark</h4>
+      <div class="list-row">
+        <div class="name">U/S — Prima Mill.</div>
+        <div class="bar"><span style="width:22%;background:linear-gradient(90deg,var(--accent),#5be6ea)"></span></div>
+        <div class="value">6.05%</div>
+      </div>
+      <div class="list-row">
+        <div class="name">U/S — Sonic</div>
+        <div class="bar"><span style="width:100%;background:linear-gradient(90deg,var(--accent),#5be6ea)"></span></div>
+        <div class="value">26.94%</div>
+      </div>
+      <div class="list-row">
+        <div class="name">U/S — Liga J.</div>
+        <div class="bar"><span style="width:86%;background:linear-gradient(90deg,var(--accent),#5be6ea)"></span></div>
+        <div class="value">23.14%</div>
+      </div>
+      <div class="list-row">
+        <div class="name">L/U — Prima Mill.</div>
+        <div class="bar"><span style="width:100%;background:linear-gradient(90deg,var(--warm),#ffd46e)"></span></div>
+        <div class="value">7.59</div>
+      </div>
+      <div class="list-row">
+        <div class="name">L/U — Sonic</div>
+        <div class="bar"><span style="width:12%;background:linear-gradient(90deg,var(--warm),#ffd46e)"></span></div>
+        <div class="value">0.93</div>
+      </div>
+      <div class="list-row">
+        <div class="name">L/U — Liga J.</div>
+        <div class="bar"><span style="width:29%;background:linear-gradient(90deg,var(--warm),#ffd46e)"></span></div>
+        <div class="value">2.22</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">05 / 15</div>
+</div>
+
+<!-- ================== SLIDE 6: DIVIDER 02 ================== -->
+<div class="slide divider">
+  <div class="sec-num">02 — METODOLOGÍA DEL COEFICIENTE</div>
+  <h2>¿Cómo traducimos ese histórico<br>en un <em>objetivo probable</em>?</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">06 / 15</div>
+</div>
+
+<!-- ================== SLIDE 7: METODOLOGÍA 3 PASOS ================== -->
+<div class="slide">
+  <h3>La metodología del coeficiente de multiplicación</h3>
+  <p class="subtitle">El coeficiente de multiplicación es la tasa de conversión de la audiencia potencial hacia cada KPI. Se construye en tres pasos, aplicando el histórico observado a la audiencia estimada de la nueva promoción.</p>
+
+  <div class="method-steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h5>Paso 1</h5>
+      <h4>Documentar máximos y mínimos del histórico</h4>
+      <p>Por cada KPI (sesiones, usuarios, lotes), se identifican los valores más bajos y más altos registrados en promociones comparables anteriores. Estos definen el rango del universo observable.</p>
+      <div class="formula">
+        Sesiones mínimas: 48,500<br>
+        Sesiones máximas: 268,400<br>
+        Promociones comparadas: 3
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h5>Paso 2</h5>
+      <h4>Calcular el coeficiente de multiplicación</h4>
+      <p>Cada valor (mínimo y máximo) se divide entre la audiencia potencial de la nueva promoción. El resultado es la tasa de conversión histórica expresada en formato decimal.</p>
+      <div class="formula">
+        Coef. mín = 48,500 / 5,000,000 = 0.0097<br>
+        Coef. máx = 268,400 / 5,000,000 = 0.05368<br>
+        (0.97% – 5.36%)
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h5>Paso 3</h5>
+      <h4>Proyectar el escenario probable</h4>
+      <p>El coeficiente probable es el promedio entre el mínimo y el máximo, multiplicado por la audiencia potencial. De ahí salen los tres escenarios completos (mínimo, probable, máximo).</p>
+      <div class="formula">
+        Coef. probable = (0.0097 + 0.05368) / 2 = 0.0316<br>
+        Sesiones probables = 5,000,000 × 0.0316 <br>
+        = <strong style="color:var(--warm)">158,000</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">07 / 15</div>
+</div>
+
+<!-- ================== SLIDE 8: ESCENARIOS 3x3 ================== -->
+<div class="slide">
+  <h3>Los tres escenarios del caso de referencia</h3>
+  <p class="subtitle">Aplicando la metodología a una audiencia estimada de <strong style="color:var(--accent)">5,000,000</strong> de personas, los tres escenarios del caso base quedan así. Esta tabla es la columna vertebral del forecasting operativo de una promoción comparable.</p>
+
+  <div class="scenario-grid">
+    <div class="scenario-card min">
+      <div class="scenario-tag">Escenario mínimo</div>
+      <h4>Lo peor que podríamos esperar</h4>
+      <div class="scenario-metric">
+        <span class="l">Sesiones</span>
+        <span><span class="v">48,500</span><span class="pct">0.97%</span></span>
+      </div>
+      <div class="scenario-metric">
+        <span class="l">Usuarios</span>
+        <span><span class="v">11,000</span><span class="pct">0.22%</span></span>
+      </div>
+      <div class="scenario-metric">
+        <span class="l">Lotes</span>
+        <span><span class="v">25,000</span><span class="pct">0.50%</span></span>
+      </div>
+    </div>
+    <div class="scenario-card prob">
+      <div class="scenario-tag">Escenario probable ★</div>
+      <h4>Lo que realmente esperamos</h4>
+      <div class="scenario-metric">
+        <span class="l">Sesiones</span>
+        <span><span class="v">158,000</span><span class="pct">3.16%</span></span>
+      </div>
+      <div class="scenario-metric">
+        <span class="l">Usuarios</span>
+        <span><span class="v">26,000</span><span class="pct">0.52%</span></span>
+      </div>
+      <div class="scenario-metric">
+        <span class="l">Lotes</span>
+        <span><span class="v">74,500</span><span class="pct">1.49%</span></span>
+      </div>
+    </div>
+    <div class="scenario-card max">
+      <div class="scenario-tag">Escenario máximo</div>
+      <h4>Lo mejor que podríamos alcanzar</h4>
+      <div class="scenario-metric">
+        <span class="l">Sesiones</span>
+        <span><span class="v">268,400</span><span class="pct">5.37%</span></span>
+      </div>
+      <div class="scenario-metric">
+        <span class="l">Usuarios</span>
+        <span><span class="v">41,000</span><span class="pct">0.82%</span></span>
+      </div>
+      <div class="scenario-metric">
+        <span class="l">Lotes</span>
+        <span><span class="v">123,300</span><span class="pct">2.46%</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight" style="margin-top:16px;"><strong>El escenario probable es el KPI oficial</strong> de la promoción. Es lo que se carga al dashboard como meta, lo que se comunica al cliente como objetivo y lo que el plan de medios debe poder alcanzar. El mínimo y el máximo son para calibrar expectativas.</div>
+
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">08 / 15</div>
+</div>
+
+
+<!-- ================== SLIDE 9: DIVIDER 03 ================== -->
+<div class="slide divider">
+  <div class="sec-num">03 — DISTRIBUCIÓN POR FASES</div>
+  <h2>¿Cómo se comporta la curva<br>de participación en <em>el tiempo</em>?</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">09 / 15</div>
+</div>
+
+<!-- ================== SLIDE 10: FASES DE LA PROMOCIÓN ================== -->
+<div class="slide">
+  <h3>Las cuatro fases de una promoción gamificada</h3>
+  <p class="subtitle">El total de sesiones, usuarios y lotes no llega de forma pareja durante toda la ejecución. Sigue una curva con cuatro fases identificables, cada una con su propio porcentaje del volumen total. Esta distribución está derivada del histórico comparable.</p>
+
+  <div class="phase-timeline">
+    <div class="phase-bars">
+      <div class="phase-bar aw">
+        <span class="name">Awareness</span>
+        <span class="pct">20%</span>
+      </div>
+      <div class="phase-bar co">
+        <span class="name">Consideración</span>
+        <span class="pct">50%</span>
+      </div>
+      <div class="phase-bar es">
+        <span class="name">Estabilización</span>
+        <span class="pct">20%</span>
+      </div>
+      <div class="phase-bar ci">
+        <span class="name">Cierre</span>
+        <span class="pct">10%</span>
+      </div>
+    </div>
+
+    <div class="phase-desc-grid">
+      <div class="phase-desc aw">
+        <h5>Awareness · 20%</h5>
+        <p>La audiencia descubre la promoción pero aún no decide participar. Visitas y registros bajos pero consistentes: curiosidad inicial, impacto del lanzamiento en anaquel y primeras menciones orgánicas.</p>
+      </div>
+      <div class="phase-desc co">
+        <h5>Consideración · 50%</h5>
+        <p>La fase más importante. Aquí ocurre la mayor adopción y aceleración del engagement. Por eso concentra el 50% del volumen total: captura al usuario que pasa de interesado a participante activo.</p>
+      </div>
+      <div class="phase-desc es">
+        <h5>Estabilización · 20%</h5>
+        <p>El sistema ya no crece exponencialmente pero tampoco cae. Participan los que ya están dentro y siguen acumulando, más usuarios tardíos. La curva se vuelve de retención y hábito, no de adquisición.</p>
+      </div>
+      <div class="phase-desc ci">
+        <h5>Cierre · 10%</h5>
+        <p>Último empuje: urgencia por aprovechar antes de que termine, recompra emocional para alcanzar metas, usuarios tardíos de "ya casi acaba". Existe pero es más pequeño, por eso solo 10%.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight" style="margin-top:14px;"><strong>Por qué importa:</strong> Si una promoción dura 22 semanas, no puedes esperar que cada semana aporte 4.5% del total. Consideración concentrará ~50% del volumen en las semanas centrales. Esa curva es la que usas para leer si la promoción va adelantada, a ritmo o rezagada en cada corte.</div>
+
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">10 / 15</div>
+</div>
+
+<!-- ================== SLIDE 11: CURVA PROYECTADA BOB ESPONJA ================== -->
+<div class="slide" style="padding:44px 56px;">
+  <h3>Curva proyectada aplicada al caso base</h3>
+  <p class="subtitle">El escenario probable de 158,000 sesiones distribuido en 22 semanas aplicando los porcentajes de fase. Así se ve la curva teórica que alimenta el dashboard de seguimiento de una promoción comparable.</p>
+
+  <div style="display:grid;grid-template-columns:1.3fr 0.7fr;gap:16px;flex:1;min-height:0;">
+    <div class="chart-wrap">
+      <h4>Distribución proyectada por semana · Escenario probable</h4>
+      <div class="chart-area"><canvas id="curveChart"></canvas></div>
+    </div>
+    <div class="list-box">
+      <h4>Volumen por fase · Probable</h4>
+      <div style="display:grid;gap:12px;">
+        <div style="padding:12px;border-radius:10px;background:rgba(24,194,199,0.08);border:1px solid rgba(24,194,199,0.2);">
+          <div style="font-size:10px;text-transform:uppercase;color:var(--accent);letter-spacing:1px;margin-bottom:4px;font-weight:700;">Awareness · 20%</div>
+          <div style="font-size:22px;font-weight:700;color:var(--accent);">31,600</div>
+          <div style="font-size:10px;color:var(--muted);">sesiones · semanas 1–4</div>
+        </div>
+        <div style="padding:12px;border-radius:10px;background:rgba(244,180,77,0.08);border:1px solid rgba(244,180,77,0.2);">
+          <div style="font-size:10px;text-transform:uppercase;color:var(--warm);letter-spacing:1px;margin-bottom:4px;font-weight:700;">Consideración · 50%</div>
+          <div style="font-size:22px;font-weight:700;color:var(--warm);">79,000</div>
+          <div style="font-size:10px;color:var(--muted);">sesiones · semanas 5–13</div>
+        </div>
+        <div style="padding:12px;border-radius:10px;background:rgba(159,140,255,0.08);border:1px solid rgba(159,140,255,0.2);">
+          <div style="font-size:10px;text-transform:uppercase;color:var(--purple);letter-spacing:1px;margin-bottom:4px;font-weight:700;">Estabilización · 20%</div>
+          <div style="font-size:22px;font-weight:700;color:var(--purple);">31,600</div>
+          <div style="font-size:10px;color:var(--muted);">sesiones · semanas 14–18</div>
+        </div>
+        <div style="padding:12px;border-radius:10px;background:rgba(255,92,115,0.08);border:1px solid rgba(255,92,115,0.2);">
+          <div style="font-size:10px;text-transform:uppercase;color:var(--pink);letter-spacing:1px;margin-bottom:4px;font-weight:700;">Cierre · 10%</div>
+          <div style="font-size:22px;font-weight:700;color:var(--pink);">15,800</div>
+          <div style="font-size:10px;color:var(--muted);">sesiones · semanas 19–22</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">11 / 15</div>
+</div>
+
+<!-- ================== SLIDE 12: DIVIDER 04 ================== -->
+<div class="slide divider">
+  <div class="sec-num">04 — PERFILES DE CONSUMIDOR</div>
+  <h2>¿A quién estamos midiendo<br>detrás de <em>los números</em>?</h2>
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">12 / 15</div>
+</div>
+
+<!-- ================== SLIDE 13: PERFILES ================== -->
+<div class="slide">
+  <h3>Ocho perfiles que viven en toda promoción</h3>
+  <p class="subtitle">Detrás de cada sesión y cada lote registrado hay un tipo de consumidor con motivaciones distintas. Estos ocho perfiles explican por qué la participación no es uniforme y por qué algunas promociones aceleran en la fase de consideración mientras otras se estancan.</p>
+
+  <div class="profile-grid">
+    <div class="profile-card">
+      <span class="profile-intensity pi-high">Intensidad alta</span>
+      <h5>Acumulador estratégico</h5>
+      <p>Va por el premio final. Compra de forma constante todo el periodo y acumula puntos sin impulsividad.</p>
+      <div class="motiv" style="color:var(--accent);">Transaccional</div>
+    </div>
+    <div class="profile-card">
+      <span class="profile-intensity pi-high">Intensidad alta</span>
+      <h5>Maximizador del ROI</h5>
+      <p>Compra los productos con mejor relación puntos/costo (paketikos, formatos pequeños). Optimiza cada decisión.</p>
+      <div class="motiv" style="color:var(--accent);">Transaccional</div>
+    </div>
+    <div class="profile-card">
+      <span class="profile-intensity pi-med">Intensidad media</span>
+      <h5>Competidor por corte</h5>
+      <p>Busca ganar cada corte relevante. Ajusta su consumo por etapa, crea picos de compra pero no sostiene todo el tiempo.</p>
+      <div class="motiv" style="color:var(--accent);">Transaccional</div>
+    </div>
+    <div class="profile-card">
+      <span class="profile-intensity pi-low">Intensidad baja</span>
+      <h5>Cazador de premio rápido</h5>
+      <p>Compra mucho al inicio buscando un premio rápido y abandona. Gran actividad inicial, muy baja retención.</p>
+      <div class="motiv" style="color:var(--accent);">Transaccional</div>
+    </div>
+    <div class="profile-card">
+      <span class="profile-intensity pi-low">Intensidad baja</span>
+      <h5>Coleccionista emocional</h5>
+      <p>Le atrae el personaje o la marca. Compra por afinidad y nostalgia más que por cálculo de puntos.</p>
+      <div class="motiv" style="color:var(--warm);">Emocional</div>
+    </div>
+    <div class="profile-card">
+      <span class="profile-intensity pi-med">Intensidad media</span>
+      <h5>Familiar motivado por hijos</h5>
+      <p>Compra para que los hijos participen o por el premio familiar. Variable, responde a premios visibles.</p>
+      <div class="motiv" style="color:var(--warm);">Emocional</div>
+    </div>
+    <div class="profile-card">
+      <span class="profile-intensity pi-low">Intensidad baja</span>
+      <h5>Oportunista por tendencia</h5>
+      <p>Participa porque vio la promo en redes, QR o en el súper. Una vez o muy poco, sin intención de competir.</p>
+      <div class="motiv" style="color:var(--green);">Ocasional</div>
+    </div>
+    <div class="profile-card">
+      <span class="profile-intensity pi-low">Intensidad baja</span>
+      <h5>Jugador explorador</h5>
+      <p>Solo prueba la dinámica por curiosidad. Baja retención, abandona rápido si no engancha en el primer intento.</p>
+      <div class="motiv" style="color:var(--green);">Ocasional</div>
+    </div>
+  </div>
+
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">13 / 15</div>
+</div>
+
+<!-- ================== SLIDE 14: PERFILES CLAVE ================== -->
+<div class="slide">
+  <h3>Los cuatro perfiles que mueven el KPI</h3>
+  <p class="subtitle">De los ocho perfiles, solo cuatro empujan realmente el resultado de la promoción. Son los que más lotes registran, los que sostienen la curva de participación y los que hay que medir de cerca para anticipar si la promoción va a llegar a su objetivo.</p>
+
+  <div class="key-profile-grid">
+    <div class="key-profile">
+      <h5>El Buscador del Premio Final</h5>
+      <span class="intensity">Intensidad muy alta y sostenida</span>
+      <p>No le interesan los premios intermedios, solo el premio máximo. Maximiza puntos para cerrar fuerte en la etapa final. Puede registrar 50+ lotes por corte sin pausas.</p>
+      <ul>
+        <li>Registra lotes estratégicamente, con picos cerca de cierres</li>
+        <li>Compra formatos grandes para acumular rápido</li>
+        <li>Observa y ajusta frecuencia según competidores</li>
+      </ul>
+    </div>
+    <div class="key-profile">
+      <h5>El Competidor Constante</h5>
+      <span class="intensity">Intensidad media/alta sostenida</span>
+      <p>Usuario disciplinado que quiere ganar cada corte o mantener su posición. No gasta de más pero sí juega con regularidad. Motivado por "seguir ganando".</p>
+      <ul>
+        <li>Registra 3–5 lotes por semana de forma constante</li>
+        <li>Compra formatos medianos o grandes para asegurar puntos</li>
+        <li>Sigue participando incluso después de ganar</li>
+      </ul>
+    </div>
+    <div class="key-profile">
+      <h5>El Calculador Estratega</h5>
+      <span class="intensity">Intensidad media/alta variable</span>
+      <p>Analiza cuánto gastar y cuánto ganar. Si percibe buen ROI emocional o material, sigue jugando. Si ve mucha competencia, baja intensidad; si afloja, la sube.</p>
+      <ul>
+        <li>Aprovecha combos y formatos con mayor valor</li>
+        <li>Registra de manera organizada, no impulsiva</li>
+        <li>Ajusta su ritmo según el leaderboard</li>
+      </ul>
+    </div>
+    <div class="key-profile">
+      <h5>El Competidor Gamificado</h5>
+      <span class="intensity">Intensidad alta · mentalidad gamer</span>
+      <p>Ama rankings, puntos y mecánicas acumulativas. Monitorea el leaderboard obsesivamente y tiene muy baja probabilidad de abandono. El perfil más fiel.</p>
+      <ul>
+        <li>Optimiza formato por punto, compra paketikos en volumen</li>
+        <li>Registra lotes casi diario sin saltarse días</li>
+        <li>Motiva y reta a amigos o familiares</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">14 / 15</div>
+</div>
+
+<!-- ================== SLIDE 15: CIERRE - CÓMO SE USA ================== -->
+<div class="slide">
+  <h3>Cómo se usa esta estrategia de medición</h3>
+  <p class="subtitle">Este documento no vive solo. Es el eslabón que conecta la planeación con la ejecución y el reporte final. Su output alimenta tres momentos clave del ciclo de una promoción gamificada.</p>
+
+  <div class="closing-grid">
+    <div class="closing-card c1">
+      <h4>Antes</h4>
+      <ul>
+        <li><strong>Define los 3 escenarios</strong> (mínimo, probable, máximo) con base en el histórico y la audiencia estimada del cliente.</li>
+        <li><strong>Alimenta el plan de medios</strong>: el escenario probable es el KPI que la pauta debe perseguir.</li>
+        <li><strong>Define metas por corte</strong> aplicando la distribución por fases al volumen probable.</li>
+        <li><strong>Mapea perfiles esperados</strong> para calibrar la estrategia creativa y de segmentación.</li>
+      </ul>
+    </div>
+    <div class="closing-card c2">
+      <h4>Durante</h4>
+      <ul>
+        <li><strong>Se carga al dashboard operativo</strong> como línea base contra la que se mide cada semana.</li>
+        <li><strong>Permite leer desvíos</strong>: si una semana va por debajo, se sabe si es normal según la fase o hay un problema real.</li>
+        <li><strong>Habilita ajustes de pauta</strong> cuando la curva se aleja del escenario probable hacia el mínimo.</li>
+        <li><strong>Da lenguaje común</strong> al cliente: "vamos en camino al probable", "estamos entre probable y máximo".</li>
+      </ul>
+    </div>
+    <div class="closing-card c3">
+      <h4>Después</h4>
+      <ul>
+        <li><strong>Baseline del reporte final</strong>: el resultado real se compara contra el probable proyectado.</li>
+        <li><strong>Alimenta la siguiente promoción</strong>: se suma al histórico de benchmarks para calibrar los próximos coeficientes.</li>
+        <li><strong>Valida o ajusta la distribución de fases</strong> según lo que realmente pasó en la curva real.</li>
+        <li><strong>Documenta aprendizajes</strong> de perfiles: cuáles dominaron, cuáles no aparecieron, cuáles hay que trabajar.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="insight" style="margin-top:16px;"><strong>El ciclo completo:</strong> Estrategia de Medición → Plan de Medios → Dashboard Operativo → Reporte Final → Estrategia de Medición del siguiente caso. Cada pieza se alimenta de la anterior y vuelve a alimentar a la primera. Por eso esta metodología mejora con cada promoción que pasa por ella.</div>
+
+  <div class="slide-brand"><img src="../assets/Logo_Mescalina_White.png" alt="mescalina"></div><div class="slide-number">15 / 15</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const C = {a:'#18c2c7',w:'#f4b44d',g:'#2ec4b6',r:'#ff5c73',p:'#9f8cff',muted:'#92a6b7',grid:'rgba(255,255,255,0.05)'};
+Chart.defaults.color = C.muted;
+Chart.defaults.font.family = "'Poppins',sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.animation = false;
+Chart.defaults.responsive = true;
+Chart.defaults.maintainAspectRatio = false;
+
+// Run directly - Chart.js script above is synchronous
+(function() {
+
+// Chart 1: Ratios por promoción
+new Chart(document.getElementById('ratiosChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Prima Millonaria','Sonic','Liga de la Justicia'],
+    datasets: [
+      {label:'U/S (%)', data:[6.05,26.94,23.14], backgroundColor:C.a, borderRadius:4},
+      {label:'L/S (%)', data:[45.95,24.92,51.43], backgroundColor:C.g, borderRadius:4}
+    ]
+  },
+  options: {
+    scales:{
+      x:{grid:{display:false},ticks:{font:{size:10}}},
+      y:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}}
+    },
+    plugins:{legend:{position:'bottom',labels:{boxWidth:10,padding:10,font:{size:10}}}}
+  }
+});
+
+// Chart 2: Curva proyectada del caso base
+const weekLabels = ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','S13','S14','S15','S16','S17','S18','S19','S20','S21','S22'];
+// 158,000 sesiones distribuidas: 20% aw (s1-4) 50% co (s5-13) 20% es (s14-18) 10% ci (s19-22)
+// Awareness 31600 / 4 = 7900 per week, growing
+// Consideration 79000 / 9 = 8778 per week, peak in middle
+// Estabilizacion 31600 / 5 = 6320 per week, stable
+// Cierre 15800 / 4 = 3950 per week, declining with pico al final
+const curveData = [
+  // Awareness (20% = 31600) - growing
+  5800, 7400, 8500, 9900,
+  // Consideración (50% = 79000) - peak
+  8200, 9000, 9500, 9800, 9800, 9300, 8700, 8000, 6700,
+  // Estabilización (20% = 31600) - steady
+  6800, 6500, 6400, 6100, 5800,
+  // Cierre (10% = 15800) - declining then final pico
+  4200, 3600, 3400, 4600
+];
+
+new Chart(document.getElementById('curveChart'), {
+  type: 'bar',
+  data: {
+    labels: weekLabels,
+    datasets: [{
+      label:'Sesiones proyectadas por semana',
+      data: curveData,
+      backgroundColor: curveData.map((_, i) => {
+        if (i < 4) return 'rgba(24,194,199,0.75)';       // awareness
+        if (i < 13) return 'rgba(244,180,77,0.85)';       // consideracion
+        if (i < 18) return 'rgba(159,140,255,0.75)';      // estabilizacion
+        return 'rgba(255,92,115,0.75)';                    // cierre
+      }),
+      borderRadius: 4
+    }]
+  },
+  options: {
+    scales:{
+      x:{grid:{display:false},ticks:{font:{size:9}}},
+      y:{grid:{color:C.grid},ticks:{font:{size:10},callback:v=>(v/1000).toFixed(1)+'k'}}
+    },
+    plugins:{legend:{display:false}}
+  }
+});
+
+})();
+</script>
+</body>
+</html>
